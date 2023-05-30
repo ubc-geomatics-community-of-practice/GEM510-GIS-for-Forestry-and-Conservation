@@ -1,0 +1,19 @@
+--- 
+title: "GEM 510: GIS for Forestry and Conservation"
+author: "Paul D. Pickell"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+github-repo: github.com/ubc-geomatics-community-of-practice/GEM510-GIS-for-Forestry-and-Conservation/book
+url: 'https\:github.com/ubc-geomatics-community-of-practice/GEM510-GIS-for-Forestry-and-Conservation/book/'
+description: "Open Educational Resources for GEM 510 course at the University of British Columbia"
+always_allow_html: true
+---
+
+# Welcome {-}
+
+These are the course materials for GEM 510 in the Master of Geomatics for Environmental Management program (MGEM) at the University of British Columbia (UBC). These Open Educational Resources (OER) were developed to foster the Geomatics Community of Practice that is hosted by the Faculty of Forestry at UBC. 
+
+These materials are primarily lab assignments that students enrolled in GEM 510 will complete and submit for credit in the program. Note that much of the data referenced are either public datasets or otherwise only available to students enrolled in the course for credit. Deliverables for these assignments are submitted through the UBC learning management system and only students enrolled in the course may submit these assignments for credit.
