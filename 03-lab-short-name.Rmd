@@ -2,7 +2,7 @@
 yml_content <- yaml::read_yaml("chapterauthors.yml")
 author <- yml_content[["lab3shortname"]][["author"]]
 ```
-# Lab Title {#lab-short-name}
+# Lab Title {#lab3-short-name}
 
 Written by
 ```{r results='asis', echo=FALSE}
