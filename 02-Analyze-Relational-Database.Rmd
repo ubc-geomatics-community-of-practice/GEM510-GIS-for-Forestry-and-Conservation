@@ -28,7 +28,7 @@ In this lab you will learn how to create, manage, and analyze your own relationa
 
 ## Deliverables {-}
 
-Here.
+- Dump SQL file from Task 2
 
 ------------------------------------------------------------------------
 
@@ -112,7 +112,7 @@ Data types are very important and the shorthand notation for these in PostgreSQL
 
 ``` {r echo = FALSE, warning = FALSE, results = 'asis'}
 library(common)
-n <- c("int2","int4","int8","bigserial","float4","float8","bool","char(n)","varchar(n)")
+n <- c("int2","int4","int8","bigserial","float4","float8","bool","char(n)","varchar(n)","date")
 d <- c("Signed 2-byte integer","Signed 4-byte integer","Signed 8-byte integer","Autoincrementing 8-byte integer","Single prevision floating-point number (4 bytes)","Double precision floating-point number (8 bytes)","Logical Boolean","Fixed length character string where n is the number of permitted characters","Variable length character string where n is the maximum number of permitted characters","Calendar date")
 v <- c("-32,768 to 32,767","-2,147,483,648 to 2,147,483,647","-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807","0 to 18,446,744,073,709,551,615",paste0("±10",supsc("38")," with 6 or 7 significant digits"),paste0("±10",supsc("308")," with 15 or 16 significant digits"),"True or False","'Hello world!'","'Hello world!' and 'Hello' and 'world' and '!'","31/12/2000")
 df <- data.frame(Name=n,Description=d,Values=v)
@@ -160,7 +160,7 @@ PRIMARY KEY(this_field_is_int2, this_field_is_bool)
 
 **Step 7:** Create a new table of assignments that are due next week. Include course code, assignment name, the percent weighting of the assignment on your final grade in that course, and the due date. Use the appropriate data types for each field and define a primary key.
 
-Now we will insert some data into the table you. Inserting data uses the `INSERT` keyword followed `VALUES` and a comma-separated list of the values you want to insert. For example:
+Now that the table and fields are defined, we will insert some data into the table. Inserting data uses the `INSERT` keyword followed by `VALUES` and then a comma-separated list of the values you want to insert in parentheses. For example:
 
 ```
 INSERT INTO my_new_table VALUES (32767, false, 'hello world!');
@@ -189,7 +189,7 @@ WHERE this_field_is_bool IS NULL;
 ```
 
 ```{r 02-psql-update, out.width= "75%", echo = FALSE}
-    knitr::include_graphics("images/02-psql-update.png")
+    knitr::include_graphics("images/02-psql-update.PNG")
 ```
 
 Dates require special handling because if you just try to insert them as strings or otherwise, they are treated as literals. For dates, we need to use the special `TO_DATE` function:
@@ -200,50 +200,85 @@ INSERT INTO my_new_table (this_field_is_date) VALUES (TO_DATE('31-12-1963', 'DD-
 
 **Step 8:** Now fill in your table of assignments by inserting and/or updating the values as needed. 
 
-Once you are satisfied with that state of your table, you will dump your entire PostGIS database to an output file and this will be one of your deliverables for this lab. PostgreSQL features a utility program called `pg_dump` that will take any database and output an SQL statement in a file that can be used to re-create the database. In other words, `pg_dump` is a backup method. This is also really handy if you want to create a local backup of a remote server! If you want more practice, try using it on the UBC PostgreSQL server.
+Once you are satisfied with the state of your table, you will dump your entire PostGIS database to an output SQL file and this will be one of your deliverables for this lab. PostgreSQL features a utility program called `pg_dump` that will take any database and output an SQL statement in a file that can be used to re-create the database. In other words, `pg_dump` is a backup method. This is also really handy if you want to create a local backup of a remote server! If you want more practice, try using it on the UBC PostgreSQL server.
 
-**Step 9:** Open a Windows command prompt (search "command"). Take note of your current working directory, which is probably something like `C:\Users\[your username]`. This is where your database will be saved to. To dump yourdatabase, use the following command: `pg_dump -d mypostgisdb -U postgres -h localhost > mypostgisdb.sql`. You will be prompted to enter your password and then the new file `mypostgisdb.sql` will be saved in your working directory. 
+**Step 9:** Open a Windows command prompt (search "command"). Take note of your current working directory, which is probably something like `C:\Users\[your username]`. This is where your database SQL file will be saved to. To dump your database, use the following command: `pg_dump -d mypostgisdb -U postgres -h localhost > mypostgisdb.sql`. You will be prompted to enter your password and then the new file `mypostgisdb.sql` will be saved in your working directory. 
 
-You can load the database back into PostgreSQL with the following command from the Windows command prompt: `psql -U postgres -h localhost mypostgisdb < mypostgisdb.sql`
+**Step 10:** Check to make sure that you can load the database back into PostgreSQL. In psql, create a new empty database named mypostgisdb_backup. Then, enter the following command from the Windows command prompt: `psql -U postgres -h localhost mypostgisdb_backup < mypostgisdb.sql`. You can now query the postgisdb_backup database to check that it is a copy of your other mypostgisdb database.
 
 ------------------------------------------------------------------------
 
 ## Task 3: Import Spatial Data Using GDAL {.unnumbered}
 
-**Step 1:**
+Now that you have some basic understanding of viewing and manipulating tables, we are going to look at some ways to import spatial data into your PostGIS database. To do this, we will be working with some utility programs in the Geospatial Data Abstraction Library (GDAL) pronounced "gee-dall". You will probably find the [GDAL documentation pages](https://gdal.org/programs/) very helpful for reference. GDAL is used in ArcGIS, GRASS, SAGA, QGIS, ENVI, Google Earth, and also has [Python bindings](https://gdal.org/api/python_bindings.html) and an [R package with bindings](https://cran.r-project.org/web/packages/rgdal/index.html). In short, GDAL is largely the workhorse behind most open source geospatial software packages.
 
-**Step 2:**
+**Step 1:** Open the OSGeo4W shell by searching for it in Windows. Enter the command `o-help` and inspect all the available programs.
 
-**Step 3:**
+You might notice `psql` can be run from the OSGeo4W shell and `pg_dump` is also there. Some others we will cover in later labs, including `pdal` (Point Data Abstraction Library) pronounced "poodle", which handles LiDAR data, and many of the raster and image manipulation programs. For this lab, we are going to focus on two commonly used vector programs: [ogrinfo](https://gdal.org/programs/ogrinfo.html) and [ogr2ogr](https://gdal.org/programs/ogr2ogr.html).
 
-**Step 4:**
+**Step 2:** Type `ogr2ogr --help` in the console and press "Enter" on your keyboard. Inspect all the flags `-` and arguments for this program.
 
-**Step 5:**
+ogr2ogr is the primary utility program for working with vector data and as you can see, there are a lot of options! To show you some of the power of this little application, we are going to export some data from the UBC PostgreSQL server to our local machine, manipulate it, and then import it to our local PostGIS database.
+
+**Step 3:** ogr2ogr is really useful for converting data between different formats and this is handy for exporting data out of a PostGIS database. Convert the ubcv_campus_trees table from the UBC PostgreSQL server with the following command: 
+
+```
+ogr2ogr -f "ESRI Shapefile" ubcv_campus_trees.shp PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_campus_trees"
+```
+
+Replace `STUDENT_PASSWORD_HERE` with the password that has been shared with the class. 
+
+This command tells ogr2ogr to connect to the ubcv PostGIS database on the PostgreSQL server `PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE"`, grab the table named `"ubcv_campus_trees"`, and then return it to the local machine as an ESRI Shapefile `-f "ESRI Shapefile"`. The file will be saved in your current working directory from the OSGeo4W shell.
+
+**Step 4:** You can also specify an SQL query on the input data. For example, the following command will only return the Forest Sciences Centre polygon from ubcv_buildings: 
+```
+ogr2ogr -where bldg_code='FSC' -f "ESRI Shapefile" ubcv_FSC.shp PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_buildings"
+```
+
+You can write more complex SQL statements with the `-sql` flag instead of `-where`.
+
+**Step 5:** Getting data into a PostGIS database is unremarkably similar as to taking it out. Import the FSC polygon into your **localhost PostGIS database** using the same command as Step 3, but change `"ESRI Shapefile"` to `"PostgreSQL"`, modify the connection parameters for your localhost server, change `"ubcv_campus_trees"` to `"ubcv_FSC.shp"`, and finally specify that we want these data reprojected into UTM Zone 10N coordinates `-t_srs EPSG:3157`. You will receive no feedback in the terminal if you were successful, but you can check in QGIS, ArcGIS Pro, or by using the ogrinfo program.
+
+ogrinfo is a utility that is able to read a wide-variety of spatial data formats and return metadata for inspection. This program is useful for getting the geometry type of a file, the spatial extent of the features, and the coordinate system or the datum. You can also apply SQL queries and even inspect the attributes of specific features.
+
+**Step 6:** Check that the FSC polygon was successfully added to your PostGIS database with the following command: 
+
+```
+ogrinfo PG:"host=localhost user=postgres dbname=mypostgisdb password=YOUR_LOCALHOST_PASSWORD" "ubcv_FSC" -so
+```
+
+The screenshot below is a small snippet of what is returned in the OSGeo4W terminal window. As you can see, we have access to the feature count, spatial extent, Spatial Reference System (SRS), and even all the field names and data types if you scroll farther down. The `-so` flag gives us this "summary output".
+
+```{r 02-ogrinfo-fsc, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/02-ogrinfo-fsc.png")
+```
+
+**Step 7:** Repeat this process to import the ubcv_campus_trees.shp you created in Step 3 to your localhost PostGIS database.
 
 ------------------------------------------------------------------------
 
-## Task 4: Manipulate Spatial Data Using GDAL {.unnumbered}
+## Task 4: Analyze a PostGIS Database using SQL {.unnumbered}
 
-**Step 1:**
+Now let us have some fun and explore some of the cool spatial processing features of our PostGIS database. PostGIS supports an unfathomable number of [spatial operations](https://postgis.net/docs/reference.html#Spatial_Relationships) that you would ordinarily find in GIS software like QGIS and ArcGIS. This task is merely to give you a taste of what is possible with SQL and PostGIS.
 
-**Step 2:**
+Suppose we want to know what species of trees are planted next to the Forest Sciences Centre at UBC. 
 
-**Step 3:**
+**Step 1:** Open psql and connect to your mypostgisdb database on your localhost PostgreSQL server.
 
-**Step 4:**
+**Step 2:** Buffer the ubcv_fsc polygon with the following SQL statement:
 
-**Step 5:**
+```
+SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer FROM ubcv_fsc;
+```
 
-------------------------------------------------------------------------
+This statement tells PostGIS to use the buffer function `ST_Buffer`, which requires a geometry field `wkb_geometry` and a buffer distance `15` (meters in our case, because we re-projected the polygon to UTM Zone 10N in the last task), on the FSC polygon `FROM ubcv_fsc`, and then write the resulting buffer to a new table `INTO ubcv_fsc_buffer`.
 
-## Task 5: Analyzea PostGIS Database using SQL {.unnumbered}
+**Step 3:** Open QGIS and then add ubcv_fsc and ubc_fsc_buffer to your map to inspect them.
 
-**Step 1:**
+```{r 02-qgis-fsc-buffer, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/02-qgis-fsc-buffer.png")
+```
 
-**Step 2:**
-
-**Step 3:**
-
-**Step 4:**
+**Step 4:** 
 
 **Step 5:**
