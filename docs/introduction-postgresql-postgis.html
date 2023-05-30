@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Lab 1 Introduction to PostgreSQL and PostGIS | open-geomatics-community-of-practice.knit</title>
+  <meta name="description" content="" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Lab 1 Introduction to PostgreSQL and PostGIS | open-geomatics-community-of-practice.knit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lab 1 Introduction to PostgreSQL and PostGIS | open-geomatics-community-of-practice.knit" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="analyze-relational-database.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html"><i class="fa fa-check"></i><b>1</b> Introduction to PostgreSQL and PostGIS</a><ul>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#lab-overview"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#data"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-1-set-up-pgadmin-and-connect-to-the-ubc-postgresql-server"><i class="fa fa-check"></i>Task 1: Set up pgAdmin and Connect to the UBC PostgreSQL server</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-2-explore-with-qgis"><i class="fa fa-check"></i>Task 2: Explore with QGIS</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-3-explore-with-arcgis-pro"><i class="fa fa-check"></i>Task 3: Explore with ArcGIS Pro</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-4-explore-with-psql-shell"><i class="fa fa-check"></i>Task 4: Explore with psql Shell</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html"><i class="fa fa-check"></i><b>2</b> Analyze a Relational Database</a><ul>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#lab-overview-1"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#learning-objectives-1"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#deliverables-1"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#data-1"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-1-host-your-own-postgresql-server"><i class="fa fa-check"></i>Task 1: Host your own PostgreSQL Server</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-2-create-a-postgis-database"><i class="fa fa-check"></i>Task 2: Create a PostGIS Database</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-3-import-spatial-data-using-gdal"><i class="fa fa-check"></i>Task 3: Import Spatial Data Using GDAL</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-4-analyze-a-postgis-database-using-sql"><i class="fa fa-check"></i>Task 4: Analyze a PostGIS Database using SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="lab3-short-name.html"><a href="lab3-short-name.html"><i class="fa fa-check"></i><b>3</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#lab-overview-2"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#learning-objectives-2"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#competencies-in-this-lab"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#deliverables-2"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#data-2"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#task-1-lorem-ipsum"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#task-2-lorem-ipsum"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="lab4-short-name.html"><a href="lab4-short-name.html"><i class="fa fa-check"></i><b>4</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#lab-overview-3"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#learning-objectives-3"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#competencies-in-this-lab-1"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#deliverables-3"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#data-3"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#task-1-lorem-ipsum-1"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#task-2-lorem-ipsum-1"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="lab5-short-name.html"><a href="lab5-short-name.html"><i class="fa fa-check"></i><b>5</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#lab-overview-4"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#learning-objectives-4"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#competencies-in-this-lab-2"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#deliverables-4"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#data-4"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#task-1-lorem-ipsum-2"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#task-2-lorem-ipsum-2"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lab6-short-name.html"><a href="lab6-short-name.html"><i class="fa fa-check"></i><b>6</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#lab-overview-5"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#learning-objectives-5"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#competencies-in-this-lab-3"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#deliverables-5"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#data-5"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#task-1-lorem-ipsum-3"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#task-2-lorem-ipsum-3"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="lab7-short-name.html"><a href="lab7-short-name.html"><i class="fa fa-check"></i><b>7</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#lab-overview-6"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#learning-objectives-6"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#competencies-in-this-lab-4"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#deliverables-6"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#data-6"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#task-1-lorem-ipsum-4"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#task-2-lorem-ipsum-4"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!--bookdown:title:end-->
+<!--bookdown:title:start-->
+<div id="introduction-postgresql-postgis" class="section level1 hasAnchor">
+<h1><span class="header-section-number">Lab 1</span> Introduction to PostgreSQL and PostGIS<a href="introduction-postgresql-postgis.html#introduction-postgresql-postgis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Written by
+Paul Pickell</p>
+<div id="lab-overview" class="section level2 unnumbered hasAnchor">
+<h2>Lab Overview<a href="introduction-postgresql-postgis.html#lab-overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this lab, you will be introduced to a Free and Open Source Software (FOSS) and widely-used database management system known as PostgreSQL. You will learn how to set up your own database, connect to an enterprise database, and write Structured Query Language (SQL) queries both from the command line and a popular postgres server admin graphical user interface. The software used in this lab includes PostgreSQL, psql, pgAdmin, and QGIS.</p>
+<hr />
+</div>
+<div id="learning-objectives" class="section level2 unnumbered hasAnchor">
+<h2>Learning Objectives<a href="introduction-postgresql-postgis.html#learning-objectives" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Distinguish between PostgreSQL server, PostGIS database, and layer views</li>
+<li>Practice executing SQL queries on an enterprise PostGIS database from various software interfaces</li>
+<li>Export layer views from a PostGIS database in QGIS and ArcGIS Pro</li>
+</ul>
+<hr />
+</div>
+<div id="deliverables" class="section level2 unnumbered hasAnchor">
+<h2>Deliverables<a href="introduction-postgresql-postgis.html#deliverables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here.</p>
+<hr />
+</div>
+<div id="data" class="section level2 unnumbered hasAnchor">
+<h2>Data<a href="introduction-postgresql-postgis.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>All data for this lab are accessible via the UBC PostgreSQL server. Instructions for connecting to the server are given in the tasks below.</p>
+<hr />
+</div>
+<div id="task-1-set-up-pgadmin-and-connect-to-the-ubc-postgresql-server" class="section level2 unnumbered hasAnchor">
+<h2>Task 1: Set up pgAdmin and Connect to the UBC PostgreSQL server<a href="introduction-postgresql-postgis.html#task-1-set-up-pgadmin-and-connect-to-the-ubc-postgresql-server" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Step 1:</strong> Ensure that you are authenticated through UBC myVPN. If you are at UBC, use your dedicated ethernet port or connect via the ubcprivate wireless network. If you are away from campus, you will need to first connect to the UBC myVPN service using Cisco AnyConnect Secure Mobility Client. Only authenticated users with a Campus Wide Login (CWL) and connected to the UBC myVPN may access the UBC PostgreSQL server.</p>
+<p><strong>Step 2:</strong> Start pgAdmin 4. This software is a a management tool for PostgreSQL databases, hence “pg”.</p>
+<p><strong>Step 3:</strong> Upon starting pgAdmin, you will be prompted to set a master password. This is an important step as this master password will be used to encrypt all other passwords you use to connect to various server databases. DO NOT USE THE SAME PASSWORD AS YOU WILL USE FOR ANY DATABASE!</p>
+<p><img src="images/01-pgadmin-master-password.png" width="75%" /></p>
+<p><strong>Step 4:</strong> From the pgAdmin dashboard, click “Add New Server”.</p>
+<p><img src="images/01-pgadmin-dashboard.png" width="75%" /></p>
+<p><strong>Step 5:</strong> Name the connection “UBC PostgreSQL Server”. Click the “Connection” tab, enter FRST-PostgreSQL.ead.ubc.ca for the Host Name, change the Username to “student”, and then enter the password that has been shared with the class. Leave everything else as the default, but you can choose to save the password if you want. Click “Save”. If the password is correct, then pgAdmin should automatically connect to the server and you will see it listed in the Browser, just expand “Servers”.</p>
+<p><img src="images/01-pgadmin-new-server-connection.png" width="75%" /></p>
+<p>Although the connection was automatic this time, each time you start pgAdmin, you will need to reconnect to the server after entering your master password. This is as simple as double-clicking the server name from the server list or right-click and select “Connect Server”.</p>
+<p><img src="images/01-pgadmin-connect.png" width="90%" /></p>
+<p><strong>Step 6:</strong> From the Browser pane on the left, expand the ubcv connection, then expand “Schemas”, then expand “public”, then expand “Tables” to view all the tables in the ubcv database.</p>
+<p><strong>Step 7:</strong> Right-click on a table and then select “View/Edit Data” &gt; “All Rows”. pgAdmin will create an SQL query and then show the result. This is one way to view the attribute table from pgAdmin.</p>
+<p><img src="images/01-pgadmin-ubcv-buildings.png" width="90%" /></p>
+<p><strong>Step 8:</strong> You can also execute your own SQL query. Right-click on a table and select “Query Tool”. At the top, you can write any SQL query you want then click the Run button that looks like a triangle from the top ribbon. pgAdmin will return the resulting table below.</p>
+<p><img src="images/01-pgadmin-ubcv-query.png" width="90%" /></p>
+<hr />
+</div>
+<div id="task-2-explore-with-qgis" class="section level2 unnumbered hasAnchor">
+<h2>Task 2: Explore with QGIS<a href="introduction-postgresql-postgis.html#task-2-explore-with-qgis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Step 1:</strong> Open QGIS. From the Browser pane on the left, right-click “PostgreSQL” and select “New Connection”.</p>
+<p><img src="images/01-qgis-postgres-connection.png" width="75%" /></p>
+<p><strong>Step 2:</strong> In your Browser pane, you should now see the ubcv database connection. Expand it to see the available public schema, then expand that to see all available tables that have geometries. You can double-click any of these or click-and-drag into your empty project to view them.</p>
+<p><img src="images/01-qgis-browser-ubcv.png" width="75%" /></p>
+<p><strong>Step 3:</strong> Spend some time exploring the data. Open the attribute tables. View the properties and metadata. What is the EPSG code for the Coordinate Reference System (CRS) for these data?</p>
+<p>At this point, keep in mind that all the data still live on the postgres server. You may have already seen the other databases on the server. If you want to view the data in those databases, you will need to create a new database connection for each database that you want to connect to. Feel free to explore the data in the other databases, noting that what is available at any given time may be different from what you see in the screenshots in this lab. The UBC PostgreSQL server hosts many databases that are used for research and teaching!</p>
+<p><strong>Step 4:</strong> You can also execute SQL queries in QGIS directly from the PostGIS database. From the Browser pane, right-click any available table in the PostGIS database and then select “Execute SQL…”. In the dialogue window that opens, you will see a default SQL query that will return the first 10 features (tuples) of the selected relation.</p>
+<p><img src="images/01-qgis-query.png" width="75%" /></p>
+<p><strong>Step 5:</strong> Write an SQL query to return some subset of the data then click the “Execute” button. QGIS will return a preview of the attribute table for the query. From here, you can export this as a layer to view the result in the map. Expand “Load as a new layer” and then toggle on “Column(s) with unique values” and ensure the field is set to “ogc_fid”, this is the primary key for the table in PostGIS. Toggle on “Geometry column” and ensure the field is set to “wbk_geometry”, this is the “Well Known Binary” format used to represent features in PostGIS. Finally, change the “Layer name” to something to distinguish your query from others and then click “Load layer” and then “Close”. The result of the SQL query should now appear as a layer in your QGIS map.</p>
+<p>Note that the layer you just created does not actually exist outside your QGIS project. If you navigate into the properties of this layer, you will see the Source is simply a reference to the data that are still stored on the postgres server. This can be a really efficient way to handle data without unnecessarily copying it to a new file!</p>
+<p><img src="images/01-qgis-query-properties.png" width="75%" /></p>
+<p><strong>Step 5:</strong> You can export any table in the PostGIS database to your local computer by right-clicking the table name in the PostGIS database and then selecting “Export Layer” &gt; “To File…”. From the new dialogue window, you can configure the output file however you want. You can do the same for the query layer by right-clicking the query layer created in Step 5 and selecting “Export” &gt; “Save Features As…”.</p>
+<hr />
+</div>
+<div id="task-3-explore-with-arcgis-pro" class="section level2 unnumbered hasAnchor">
+<h2>Task 3: Explore with ArcGIS Pro<a href="introduction-postgresql-postgis.html#task-3-explore-with-arcgis-pro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Step 1:</strong> Start ArcGIS Pro and create a new project.</p>
+<p><strong>Step 2:</strong> From the top ribbon, navigate to the “Insert” tab, then click “Connections”, and from the drop-down menu, select “New Database Connection”. Enter the database connection details in the same way that you did in the prior tasks. Once you have correctly entered the correct credentials, ArcGIS Pro will do a “soft” connection to the server to retrieve the available databases. From the “Database” drop-down menu, select “ubcv” and then click “OK”.</p>
+<p><img src="images/01-arcgispro-postgres-connection.png" width="75%" /></p>
+<p><strong>Step 3:</strong> From the top ribbon, navigate to the “Map” tab, then click “Add Data”. From the dialogue window that opens, expand “Databases”, and you will see your local project geodatabase that was created when you initiated the project and the newly added postgres server. Click the postgres server connection to view the tables and then add a layer to your map.</p>
+<p><img src="images/01-arcgispro-postrges-catalog.png" width="75%" /></p>
+<p><strong>Step 4:</strong> Once you have added a layer to your map, right-click it in your Contents pane and open the properties. Again, like the query layer you created in QGIS, you will see this layer is a dynamic reference to the data on the PostGIS database.</p>
+<p><img src="images/01-arcgispro-buildings-properties.png" width="75%" /></p>
+<p><strong>Step 5:</strong> Under Data Source, there is a Query field that includes a generic SQL query statement. Click the pencil icon on the right to open the Edit Query Layer dialogue window. This window is similar to the qeury window you used in QGIS. Enter the same query you used in Task 2 then click “Validate”. If the query is valid, ArcGIS Pro will allow you to click “Next”. Leave the “Let ArcGIS Pro discover spatial properties for this layer” toggled on. The next window will allow you to select the Unique Identifier Field(s), just like in QGIS. This should automatically have selected “ogc_fid” and automatically identified the geometry type, so you can leave everything as-is and click “Finish”.</p>
+<p><img src="images/01-arcgispro-buildings-query.png" width="75%" /></p>
+<p>You will be returned to the Properties dialogue of the layer you added in your map, but you should see that the Query field has now been updated. Click “OK” to exit the properties and the layer in the map should now only be showing the features that match your query.</p>
+<hr />
+</div>
+<div id="task-4-explore-with-psql-shell" class="section level2 unnumbered hasAnchor">
+<h2>Task 4: Explore with psql Shell<a href="introduction-postgresql-postgis.html#task-4-explore-with-psql-shell" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Step 1:</strong> From your Windows search bar, search for “psql” and open the SQL Shell (psql) application. This will open a command prompt and allow you to interact with the PostgreSQL server directly using mostly SQL statements.</p>
+<p>The prompt should say <code>Server [localhost]:</code>. Type “FRST-PostgreSQL.ead.ubc.ca” and then hit “Enter” on your keyboard.</p>
+<p>The prompt should then say <code>Database [postgres]:</code>. Type “ubcv” and then press “Enter” on your keyboard.</p>
+<p>The prompt should then say <code>Port [5432]:</code>. This is the default port that the PostgreSQL server uses. Press “Enter” on your keyboard to accept the default port.</p>
+<p>The prompt should then say <code>Username [postgres]:</code>. Type “student” and then press “Enter” on your keyboard.</p>
+<p>The prompt should then ask you for the password, <code>Password for user student:</code>. Type the password that was shared with the class and then press “Enter” on your keyboard.</p>
+<p>If everything is successful, then you should see <code>ubcv=&gt;</code>, which indicates you can now enter either psql commands or SQL statements. (See screenshot below)</p>
+<p><img src="images/01-psql-postgres-connection.png" width="90%" /></p>
+<p><strong>Step 2:</strong> List all the available databases on the postgres server with the <code>\l</code> command. If your psql window is too small, you might see <code>-- More --</code>. Just continue to press “Enter” to list more tables. You can change to any of these databases by using the <code>\c [database name]</code> command like <code>\c postgres</code>.</p>
+<p><strong>Step 3:</strong> List the tables in the ubcv database with the <code>\dt</code> command. You can view a full list of psql commands and their useage with the <code>\?</code> command.</p>
+<p><img src="images/01-psql-list-tables.png" width="90%" /></p>
+<p><strong>Step 4:</strong> List all the fields for any table with the <code>\d [table name]</code> command. For example, <code>\d ubcv_buildings</code>.</p>
+<p><img src="images/01-psql-list-fields.png" width="90%" /></p>
+<p><strong>Step 5:</strong> In addition to using psql commands you can also execute SQL statements directly in the console. For example, type <code>SELECT COUNT(*) FROM ubcv_buildings;</code> to get a count of all the rows in a table. Notice that <code>SELECT</code> statements return tables, the table below has one row and one field.</p>
+<p><img src="images/01-psql-count.png" width="90%" /></p>
+<p><strong>Step 6:</strong> You can get the unique values of any field by using the <code>DISTINCT</code> keyword. For example, <code>SELECT DISTINCT green_status FROM ubcv_buildings;</code>. Note that in this returned table, the blank space below “REAP Bronze” is a valid empty value for this field.</p>
+<p><img src="images/01-psql-distinct.png" width="90%" /></p>
+<p><strong>Step 7:</strong> You can execute the SQL query like you did in the previous tasks, but the psql console is not ideal for wielding large tables with many fields and the formatting will not be very readable. So it is best to return only the fields that you actually need to inspect. For example, <code>SELECT name, bldg_usage, constr_type, postal_code FROM ubcv_buildings WHERE postal_code = 'V6T 1Z1';</code>.</p>
+<p><img src="images/01-psql-select.png" width="90%" /></p>
+<p>Some useful psql commands:</p>
+<ul>
+<li><code>\l</code> List all databases on the current PostgreSQL server</li>
+<li><code>\c</code> [database name] Connect or switch to any database on the PostgreSQL server</li>
+<li><code>\dt</code> List tables in the current database</li>
+<li><code>\?</code> List all psql commands</li>
+<li><code>\q</code> Quit the SQL Shell</li>
+</ul>
+<hr />
+</div>
+<div id="summary" class="section level2 unnumbered hasAnchor">
+<h2>Summary<a href="introduction-postgresql-postgis.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You should now have a working knowledge of PostGIS databases, PostgreSQL servers, and how to connect and manage them from pgAdmin, QGIS, and ArcGIS Pro. You will continue to practice and extend these skills as nearly all data used in later labs will be accessed via the UBC PostgreSQL server.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="analyze-relational-database.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

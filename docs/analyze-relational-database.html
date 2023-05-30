@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Lab 2 Analyze a Relational Database | open-geomatics-community-of-practice.knit</title>
+  <meta name="description" content="" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Lab 2 Analyze a Relational Database | open-geomatics-community-of-practice.knit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lab 2 Analyze a Relational Database | open-geomatics-community-of-practice.knit" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-postgresql-postgis.html"/>
+<link rel="next" href="lab3-short-name.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html"><i class="fa fa-check"></i><b>1</b> Introduction to PostgreSQL and PostGIS</a><ul>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#lab-overview"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#data"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-1-set-up-pgadmin-and-connect-to-the-ubc-postgresql-server"><i class="fa fa-check"></i>Task 1: Set up pgAdmin and Connect to the UBC PostgreSQL server</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-2-explore-with-qgis"><i class="fa fa-check"></i>Task 2: Explore with QGIS</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-3-explore-with-arcgis-pro"><i class="fa fa-check"></i>Task 3: Explore with ArcGIS Pro</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-4-explore-with-psql-shell"><i class="fa fa-check"></i>Task 4: Explore with psql Shell</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html"><i class="fa fa-check"></i><b>2</b> Analyze a Relational Database</a><ul>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#lab-overview-1"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#learning-objectives-1"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#deliverables-1"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#data-1"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-1-host-your-own-postgresql-server"><i class="fa fa-check"></i>Task 1: Host your own PostgreSQL Server</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-2-create-a-postgis-database"><i class="fa fa-check"></i>Task 2: Create a PostGIS Database</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-3-import-spatial-data-using-gdal"><i class="fa fa-check"></i>Task 3: Import Spatial Data Using GDAL</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-4-analyze-a-postgis-database-using-sql"><i class="fa fa-check"></i>Task 4: Analyze a PostGIS Database using SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="lab3-short-name.html"><a href="lab3-short-name.html"><i class="fa fa-check"></i><b>3</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#lab-overview-2"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#learning-objectives-2"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#competencies-in-this-lab"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#deliverables-2"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#data-2"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#task-1-lorem-ipsum"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#task-2-lorem-ipsum"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="lab4-short-name.html"><a href="lab4-short-name.html"><i class="fa fa-check"></i><b>4</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#lab-overview-3"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#learning-objectives-3"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#competencies-in-this-lab-1"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#deliverables-3"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#data-3"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#task-1-lorem-ipsum-1"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#task-2-lorem-ipsum-1"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="lab5-short-name.html"><a href="lab5-short-name.html"><i class="fa fa-check"></i><b>5</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#lab-overview-4"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#learning-objectives-4"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#competencies-in-this-lab-2"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#deliverables-4"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#data-4"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#task-1-lorem-ipsum-2"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#task-2-lorem-ipsum-2"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lab6-short-name.html"><a href="lab6-short-name.html"><i class="fa fa-check"></i><b>6</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#lab-overview-5"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#learning-objectives-5"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#competencies-in-this-lab-3"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#deliverables-5"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#data-5"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#task-1-lorem-ipsum-3"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#task-2-lorem-ipsum-3"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="lab7-short-name.html"><a href="lab7-short-name.html"><i class="fa fa-check"></i><b>7</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#lab-overview-6"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#learning-objectives-6"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#competencies-in-this-lab-4"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#deliverables-6"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#data-6"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#task-1-lorem-ipsum-4"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#task-2-lorem-ipsum-4"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="analyze-relational-database" class="section level1 hasAnchor">
+<h1><span class="header-section-number">Lab 2</span> Analyze a Relational Database<a href="analyze-relational-database.html#analyze-relational-database" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Written by</p>
+<div id="lab-overview-1" class="section level2 unnumbered hasAnchor">
+<h2>Lab Overview<a href="analyze-relational-database.html#lab-overview-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this lab you will learn how to create, manage, and analyze your own relational database. You will continue to practice with the tools that you learned in the prior lab: pgAdmin, QGIS, ArcGIS Pro, and psql. You will also be introduced to the Geospatial Data Abstraction Library (GDAL) and some of the handy programs that are available from this software library for managing data. You will learn more advanced Structured Query Language (SQL) statements that will allow you join tables, insert and update data, and analyze data in a relational database.</p>
+<hr />
+</div>
+<div id="learning-objectives-1" class="section level2 unnumbered hasAnchor">
+<h2>Learning Objectives<a href="analyze-relational-database.html#learning-objectives-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Create and host your own PostgreSQL server with a PostGIS database</li>
+<li>Apply best practices for handling, organizing, and managing data</li>
+<li>Import geospatial data using the Geospatial Data Abstraction Library (GDAL)</li>
+<li>Practice joining and relating tables</li>
+<li>Practice inserting and updating data</li>
+<li>Analyze data in a relational database using SQL</li>
+</ul>
+<hr />
+</div>
+<div id="deliverables-1" class="section level2 unnumbered hasAnchor">
+<h2>Deliverables<a href="analyze-relational-database.html#deliverables-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Dump SQL file from Task 2</li>
+</ul>
+<hr />
+</div>
+<div id="data-1" class="section level2 unnumbered hasAnchor">
+<h2>Data<a href="analyze-relational-database.html#data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Lorem ipsum</p>
+<hr />
+</div>
+<div id="task-1-host-your-own-postgresql-server" class="section level2 unnumbered hasAnchor">
+<h2>Task 1: Host your own PostgreSQL Server<a href="analyze-relational-database.html#task-1-host-your-own-postgresql-server" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Step 1:</strong> Open pgAdmin.</p>
+<p><strong>Step 2:</strong> From the Browser pane on the left, right-click Servers and then select “Register” &gt; “Server…”. We are going to add another server, but this time, it will be hosted on your local machine.</p>
+<p><strong>Step 3:</strong> Name the server “localhost” then click the “Connection” tab and set the “Host Name/Address” also as “localhost”. Enter a password for the server and leave everything else as the default. When finished, click “Save”. The new localhost server should now appear in your Browser. You can expand it, navigate through Databases, postgres, Schemas, public, and Tables to find that it is indeed empty.</p>
+<p><img src="images/01-pgadmin-localhost-connection.png" width="50%" /></p>
+<p><strong>Step 4:</strong> Open the psql shell.</p>
+<p>If you are already connected to the UBC PostgreSQL server, you can switch this connection to the localhost server you just made in pgAdmin with the following command: <code>\c "dbname=postgres host=localhost port=5432 user=postgres"</code>. You will then be prompted to enter your password.</p>
+<p>Alternatively, you can open a new psql terminal window. The prompt should say <code>Server [localhost]:</code>. Press “Enter” on your keyboard to accept localhost as the server host name.</p>
+<p>The prompt should then say <code>Database [postgres]:</code>. This is the default name of the database that was created when you hosted the server from pgAdmin. Press “Enter” on your keyboard to accept postgres as the database to connect to.</p>
+<p>The prompt should then say <code>Port [5432]:</code>. This is the default port that the PostgreSQL server uses. Press “Enter” on your keyboard to accept the default port.</p>
+<p>The prompt should then say <code>Username [postgres]:</code>. This is the default username that you created when you set up the PostgreSQL server in pgAdmin. Press “Enter” on your keyboard to accept the postgres username.</p>
+<p>The prompt should then ask you for your password, <code>Password for user postgres:</code>. Type your password and then press “Enter” on your keyboard.</p>
+<p>If everything is successful, then you should see <code>postgres=#</code>, which indicates you can now enter either psql commands or SQL statements. Note that the hashtag <code>#</code> indicates that you are connected to the current database with the “SUPERUSER” role, which is essentially the highest admin privilege.</p>
+<hr />
+</div>
+<div id="task-2-create-a-postgis-database" class="section level2 unnumbered hasAnchor">
+<h2>Task 2: Create a PostGIS Database<a href="analyze-relational-database.html#task-2-create-a-postgis-database" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Step 1:</strong> Create a new database called “mypostgisdb” with the following SQL command <code>CREATE DATABASE mypostgisdb;</code>. It is important to always escape SQL statements with a semi-colon otherwise psql will interpret your input as spanning multiple lines! If you forget the semi-colon, you can always just type it in the console and hit “Enter” on your keyboard and psql will interpret this as a two-line statement.</p>
+<p><strong>Step 2:</strong> Connect to your new database by using the psql command <code>\c mypostgisdb</code>. Note that this is NOT an SQL statement, so there is no need to escape the command with a semi-colon. Your console should now say <code>mypostgisdb=#</code>, which indicates you are now connected.</p>
+<p><strong>Step 3:</strong> Currently this is just a plain-vanilla PostgreSQL relational database that cannot handle spatial data. In order to convert this to a PostGIS database, we need to enable the PostGIS extension using the following SQL: <code>CREATE EXTENSION postgis;</code>.</p>
+<p><img src="images/02-psql-create-mypostgisdb.png" width="75%" /></p>
+<p><strong>Step 4:</strong> Listing the tables <code>\dt</code> will reveal the database has a table called “spatial_ref_sys”. List the fields of this table with <code>\d spatial_ref_sys</code>.</p>
+<p>In addition to the field names, you will see there is an index called “spatial_ref_sys_pkey”, which is the dedicated field for the primary key for this table, and a constraint check to ensure that srid’s are valid only between 1 and 998999. You can test this constraint by trying to insert a new srid value of 0: <code>INSERT INTO spatial_ref_sys (srid) VALUES (0);</code>. The returned message,</p>
+<pre><code>ERROR:  new row for relation &quot;spatial_ref_sys&quot; violates check constraint spatial_ref_sys_srid_check&quot;
+DETAIL:  Failing row contains (0, null, null, null, null).</code></pre>
+<p>DO NOT modify this table with any srids in the valid range otherwise you will need to recreate the PostGIS database!</p>
+<p><strong>Step 5:</strong> Return the first ten rows of the table for the fields “auth_name” and “auth_srid” with <code>SELECT auth_name,auth_srid FROM spatial_ref_sys LIMIT 10;</code>.</p>
+<p>This table contains EPSG codes, which are used to easily relate spheroids, datums, and measurement units to geospatial data. You will find these codes used everywhere when you look at metadata and the properties of different data layers. One very commonly used code is EPSG 4326, which references the WGS 1984 datum.</p>
+<p><strong>Step 6:</strong> Write an SQL query to return the proj4text of the WGS 1984 datum from the spatial_ref_sys table.</p>
+<p>Now we will create some new data, just to show you how to use some useful SQL keywords. We will start with aspatial data first, then move on to spatial data. You can create a new table in your database with the syntax</p>
+<pre><code>CREATE TABLE table-name (
+colunm-name-1 datatype,
+colunm-name-2 datatype,
+colunm-name-3 datatype,
+...
+);</code></pre>
+<p>Data types are very important and the shorthand notation for these in PostgreSQL are <a href="https://www.postgresql.org/docs/current/datatype.html">listed on this web page</a> and some commonly used data types are reproduced below with examples.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-5">Table 2.1: </span>Some PostgreSQL data types with example value ranges.</caption>
+<colgroup>
+<col width="7%" />
+<col width="56%" />
+<col width="36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Description</th>
+<th align="left">Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">int2</td>
+<td align="left">Signed 2-byte integer</td>
+<td align="left">-32,768 to 32,767</td>
+</tr>
+<tr class="even">
+<td align="left">int4</td>
+<td align="left">Signed 4-byte integer</td>
+<td align="left">-2,147,483,648 to 2,147,483,647</td>
+</tr>
+<tr class="odd">
+<td align="left">int8</td>
+<td align="left">Signed 8-byte integer</td>
+<td align="left">-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td>
+</tr>
+<tr class="even">
+<td align="left">bigserial</td>
+<td align="left">Autoincrementing 8-byte integer</td>
+<td align="left">0 to 18,446,744,073,709,551,615</td>
+</tr>
+<tr class="odd">
+<td align="left">float4</td>
+<td align="left">Single prevision floating-point number (4 bytes)</td>
+<td align="left">±10³8 with 6 or 7 significant digits</td>
+</tr>
+<tr class="even">
+<td align="left">float8</td>
+<td align="left">Double precision floating-point number (8 bytes)</td>
+<td align="left">±10³°8 with 15 or 16 significant digits</td>
+</tr>
+<tr class="odd">
+<td align="left">bool</td>
+<td align="left">Logical Boolean</td>
+<td align="left">True or False</td>
+</tr>
+<tr class="even">
+<td align="left">char(n)</td>
+<td align="left">Fixed length character string where n is the number of permitted characters</td>
+<td align="left">‘Hello world!’</td>
+</tr>
+<tr class="odd">
+<td align="left">varchar(n)</td>
+<td align="left">Variable length character string where n is the maximum number of permitted characters</td>
+<td align="left">‘Hello world!’ and ‘Hello’ and ‘world’ and ‘!’</td>
+</tr>
+<tr class="even">
+<td align="left">date</td>
+<td align="left">Calendar date</td>
+<td align="left">31/12/2000</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example of creating a new table with some different data types:</p>
+<pre><code>CREATE TABLE my_new_table (
+this_field_is_int2 int2,
+this_field_is_bool bool,
+this_field_is_varchar_50 varchar(50)
+);</code></pre>
+<p><img src="images/02-psql-mynewtable.png" width="75%" /></p>
+<p>You can experiment with creating as many new tables as you want. If you need to delete a table, use the <code>DROP</code> keyword like this <code>DROP TABLE my_new_table;</code>.</p>
+<p>It is good practice to assign a field (multiple fields) as a primary key when you create a table. This is done by simply adding <code>PRIMARY KEY</code> after the field definition when you make the table. For example:</p>
+<pre><code>CREATE TABLE my_new_table (
+this_field_is_bigserial bigserial PRIMARY KEY,
+this_field_is_int2 int2,
+this_field_is_bool bool,
+this_field_is_varchar_50 varchar(50)
+);</code></pre>
+<p>The bigserial data type is especially useful for this purpose because it auto-increments as you add rows and can accommodate more than 18 <em>quintrillion</em> rows, that is more than 18 million trillions! You can also create composite primary keys that are comprised of two or more fields to uniquely identify all rows:</p>
+<pre><code>CREATE TABLE my_new_table ( 
+this_field_is_int2 int2,
+this_field_is_bool bool,
+this_field_is_varchar_50 varchar(50),
+PRIMARY KEY(this_field_is_int2, this_field_is_bool)
+);</code></pre>
+<p><strong>Step 7:</strong> Create a new table of assignments that are due next week. Include course code, assignment name, the percent weighting of the assignment on your final grade in that course, and the due date. Use the appropriate data types for each field and define a primary key.</p>
+<p>Now that the table and fields are defined, we will insert some data into the table. Inserting data uses the <code>INSERT</code> keyword followed by <code>VALUES</code> and then a comma-separated list of the values you want to insert in parentheses. For example:</p>
+<pre><code>INSERT INTO my_new_table VALUES (32767, false, &#39;hello world!&#39;);</code></pre>
+<p><img src="images/02-psql-insert.png" width="75%" /></p>
+<p>If you want to insert a value for specific fields, then specify the field name(s) after the table name:</p>
+<pre><code>INSERT INTO my_new_table (this_field_is_int2, this_field_is_varchar_50) VALUES (-32768,&#39;hi again!&#39;);</code></pre>
+<p><img src="images/02-psql-insert-2.png" width="75%" /></p>
+<p>If you make a mistake or need to update a field later, then you use <code>UPDATE</code> and <code>SET</code> to identify the set of fields that should be updated. You can also test for NULL (empty values) using <code>IS NULL</code> or <code>IS NOT NULL</code>:</p>
+<pre><code>UPDATE my_new_table
+SET this_field_is_bool = true, this_field_is_varchar_50 = &#39;whoops!&#39;
+WHERE this_field_is_bool IS NULL;</code></pre>
+<p><img src="images/02-psql-update.PNG" width="75%" /></p>
+<p>Dates require special handling because if you just try to insert them as strings or otherwise, they are treated as literals. For dates, we need to use the special <code>TO_DATE</code> function:</p>
+<pre><code>INSERT INTO my_new_table (this_field_is_date) VALUES (TO_DATE(&#39;31-12-1963&#39;, &#39;DD-MM-YYYY&#39;));</code></pre>
+<p><strong>Step 8:</strong> Now fill in your table of assignments by inserting and/or updating the values as needed.</p>
+<p>Once you are satisfied with the state of your table, you will dump your entire PostGIS database to an output SQL file and this will be one of your deliverables for this lab. PostgreSQL features a utility program called <code>pg_dump</code> that will take any database and output an SQL statement in a file that can be used to re-create the database. In other words, <code>pg_dump</code> is a backup method. This is also really handy if you want to create a local backup of a remote server! If you want more practice, try using it on the UBC PostgreSQL server.</p>
+<p><strong>Step 9:</strong> Open a Windows command prompt (search “command”). Take note of your current working directory, which is probably something like <code>C:\Users\[your username]</code>. This is where your database SQL file will be saved to. To dump your database, use the following command: <code>pg_dump -d mypostgisdb -U postgres -h localhost &gt; mypostgisdb.sql</code>. You will be prompted to enter your password and then the new file <code>mypostgisdb.sql</code> will be saved in your working directory.</p>
+<p><strong>Step 10:</strong> Check to make sure that you can load the database back into PostgreSQL. In psql, create a new empty database named mypostgisdb_backup. Then, enter the following command from the Windows command prompt: <code>psql -U postgres -h localhost mypostgisdb_backup &lt; mypostgisdb.sql</code>. You can now query the postgisdb_backup database to check that it is a copy of your other mypostgisdb database.</p>
+<hr />
+</div>
+<div id="task-3-import-spatial-data-using-gdal" class="section level2 unnumbered hasAnchor">
+<h2>Task 3: Import Spatial Data Using GDAL<a href="analyze-relational-database.html#task-3-import-spatial-data-using-gdal" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that you have some basic understanding of viewing and manipulating tables, we are going to look at some ways to import spatial data into your PostGIS database. To do this, we will be working with some utility programs in the Geospatial Data Abstraction Library (GDAL) pronounced “gee-dall”. You will probably find the <a href="https://gdal.org/programs/">GDAL documentation pages</a> very helpful for reference. GDAL is used in ArcGIS, GRASS, SAGA, QGIS, ENVI, Google Earth, and also has <a href="https://gdal.org/api/python_bindings.html">Python bindings</a> and an <a href="https://cran.r-project.org/web/packages/rgdal/index.html">R package with bindings</a>. In short, GDAL is largely the workhorse behind most open source geospatial software packages.</p>
+<p><strong>Step 1:</strong> Open the OSGeo4W shell by searching for it in Windows. Enter the command <code>o-help</code> and inspect all the available programs.</p>
+<p>You might notice <code>psql</code> can be run from the OSGeo4W shell and <code>pg_dump</code> is also there. Some others we will cover in later labs, including <code>pdal</code> (Point Data Abstraction Library) pronounced “poodle”, which handles LiDAR data, and many of the raster and image manipulation programs. For this lab, we are going to focus on two commonly used vector programs: <a href="https://gdal.org/programs/ogrinfo.html">ogrinfo</a> and <a href="https://gdal.org/programs/ogr2ogr.html">ogr2ogr</a>.</p>
+<p><strong>Step 2:</strong> Type <code>ogr2ogr --help</code> in the console and press “Enter” on your keyboard. Inspect all the flags <code>-</code> and arguments for this program.</p>
+<p>ogr2ogr is the primary utility program for working with vector data and as you can see, there are a lot of options! To show you some of the power of this little application, we are going to export some data from the UBC PostgreSQL server to our local machine, manipulate it, and then import it to our local PostGIS database.</p>
+<p><strong>Step 3:</strong> ogr2ogr is really useful for converting data between different formats and this is handy for exporting data out of a PostGIS database. Convert the ubcv_campus_trees table from the UBC PostgreSQL server with the following command:</p>
+<pre><code>ogr2ogr -f &quot;ESRI Shapefile&quot; ubcv_campus_trees.shp PG:&quot;host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE&quot; &quot;ubcv_campus_trees&quot;</code></pre>
+<p>Replace <code>STUDENT_PASSWORD_HERE</code> with the password that has been shared with the class.</p>
+<p>This command tells ogr2ogr to connect to the ubcv PostGIS database on the PostgreSQL server <code>PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE"</code>, grab the table named <code>"ubcv_campus_trees"</code>, and then return it to the local machine as an ESRI Shapefile <code>-f "ESRI Shapefile"</code>. The file will be saved in your current working directory from the OSGeo4W shell.</p>
+<p><strong>Step 4:</strong> You can also specify an SQL query on the input data. For example, the following command will only return the Forest Sciences Centre polygon from ubcv_buildings:</p>
+<pre><code>ogr2ogr -where bldg_code=&#39;FSC&#39; -f &quot;ESRI Shapefile&quot; ubcv_FSC.shp PG:&quot;host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE&quot; &quot;ubcv_buildings&quot;</code></pre>
+<p>You can write more complex SQL statements with the <code>-sql</code> flag instead of <code>-where</code>.</p>
+<p><strong>Step 5:</strong> Getting data into a PostGIS database is unremarkably similar as to taking it out. Import the FSC polygon into your <strong>localhost PostGIS database</strong> using the same command as Step 3, but change <code>"ESRI Shapefile"</code> to <code>"PostgreSQL"</code>, modify the connection parameters for your localhost server, change <code>"ubcv_campus_trees"</code> to <code>"ubcv_FSC.shp"</code>, and finally specify that we want these data reprojected into UTM Zone 10N coordinates <code>-t_srs EPSG:3157</code>. You will receive no feedback in the terminal if you were successful, but you can check in QGIS, ArcGIS Pro, or by using the ogrinfo program.</p>
+<p>ogrinfo is a utility that is able to read a wide-variety of spatial data formats and return metadata for inspection. This program is useful for getting the geometry type of a file, the spatial extent of the features, and the coordinate system or the datum. You can also apply SQL queries and even inspect the attributes of specific features.</p>
+<p><strong>Step 6:</strong> Check that the FSC polygon was successfully added to your PostGIS database with the following command:</p>
+<pre><code>ogrinfo PG:&quot;host=localhost user=postgres dbname=mypostgisdb password=YOUR_LOCALHOST_PASSWORD&quot; &quot;ubcv_FSC&quot; -so</code></pre>
+<p>The screenshot below is a small snippet of what is returned in the OSGeo4W terminal window. As you can see, we have access to the feature count, spatial extent, Spatial Reference System (SRS), and even all the field names and data types if you scroll farther down. The <code>-so</code> flag gives us this “summary output”.</p>
+<p><img src="images/02-ogrinfo-fsc.png" width="75%" /></p>
+<p><strong>Step 7:</strong> Repeat this process to import the ubcv_campus_trees.shp you created in Step 3 to your localhost PostGIS database.</p>
+<hr />
+</div>
+<div id="task-4-analyze-a-postgis-database-using-sql" class="section level2 unnumbered hasAnchor">
+<h2>Task 4: Analyze a PostGIS Database using SQL<a href="analyze-relational-database.html#task-4-analyze-a-postgis-database-using-sql" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now let us have some fun and explore some of the cool spatial processing features of our PostGIS database. PostGIS supports an unfathomable number of <a href="https://postgis.net/docs/reference.html#Spatial_Relationships">spatial operations</a> that you would ordinarily find in GIS software like QGIS and ArcGIS. This task is merely to give you a taste of what is possible with SQL and PostGIS.</p>
+<p>Suppose we want to know what species of trees are planted next to the Forest Sciences Centre at UBC.</p>
+<p><strong>Step 1:</strong> Open psql and connect to your mypostgisdb database on your localhost PostgreSQL server.</p>
+<p><strong>Step 2:</strong> Buffer the ubcv_fsc polygon with the following SQL statement:</p>
+<pre><code>SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer FROM ubcv_fsc;</code></pre>
+<p>This statement tells PostGIS to use the buffer function <code>ST_Buffer</code>, which requires a geometry field <code>wkb_geometry</code> and a buffer distance <code>15</code> (meters in our case, because we re-projected the polygon to UTM Zone 10N in the last task), on the FSC polygon <code>FROM ubcv_fsc</code>, and then write the resulting buffer to a new table <code>INTO ubcv_fsc_buffer</code>.</p>
+<p><strong>Step 3:</strong> Open QGIS and then add ubcv_fsc and ubc_fsc_buffer to your map to inspect them.</p>
+<p><img src="images/02-qgis-fsc-buffer.png" width="75%" /></p>
+<p><strong>Step 4:</strong></p>
+<p><strong>Step 5:</strong></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-postgresql-postgis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lab3-short-name.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
