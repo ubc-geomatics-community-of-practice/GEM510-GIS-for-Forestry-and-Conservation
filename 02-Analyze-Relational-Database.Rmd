@@ -237,7 +237,7 @@ ogr2ogr -where bldg_code='FSC' -f "ESRI Shapefile" ubcv_FSC.shp PG:"host=FRST-Po
 
 You can write more complex SQL statements with the `-sql` flag instead of `-where`.
 
-**Step 5:** Getting data into a PostGIS database is unremarkably similar as to taking it out. Import the FSC polygon into your **localhost PostGIS database** using the same command as Step 3, but change `"ESRI Shapefile"` to `"PostgreSQL"`, modify the connection parameters for your localhost server, change `"ubcv_campus_trees"` to `"ubcv_FSC.shp"`, and finally specify that we want these data reprojected into UTM Zone 10N coordinates `-t_srs EPSG:3157`. You will receive no feedback in the terminal if you were successful, but you can check in QGIS, ArcGIS Pro, or by using the ogrinfo program.
+**Step 5:** Getting data into a PostGIS database is unremarkably similar as to taking it out. Import the FSC polygon into your **localhost PostGIS database** using the same command as Step 3, but change `"ESRI Shapefile"` to `"PostgreSQL"`, delete `ubcv_campus_trees.shp`, modify the connection parameters for your localhost server, change `"ubcv_campus_trees"` to `ubcv_FSC.shp`, and finally specify that we want these data reprojected into UTM Zone 10N coordinates `-t_srs EPSG:3157`. You will receive no feedback in the terminal if you were successful, but you can check in QGIS, ArcGIS Pro, or by using the ogrinfo program.
 
 ogrinfo is a utility that is able to read a wide-variety of spatial data formats and return metadata for inspection. This program is useful for getting the geometry type of a file, the spatial extent of the features, and the coordinate system or the datum. You can also apply SQL queries and even inspect the attributes of specific features.
 
@@ -273,12 +273,49 @@ SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer FROM ubcv_fsc;
 
 This statement tells PostGIS to use the buffer function `ST_Buffer`, which requires a geometry field `wkb_geometry` and a buffer distance `15` (meters in our case, because we re-projected the polygon to UTM Zone 10N in the last task), on the FSC polygon `FROM ubcv_fsc`, and then write the resulting buffer to a new table `INTO ubcv_fsc_buffer`.
 
-**Step 3:** Open QGIS and then add ubcv_fsc and ubc_fsc_buffer to your map to inspect them.
+**Step 3:** Intersect the ubcv_campus_trees with the ubcv_fsc_buffer polygon you just made with the following SQL statement:
+
+
+```
+SELECT * INTO ubcv_fsc_trees FROM ubcv_campus_trees, ubcv_fsc_buffer WHERE ST_Intersects(wkb_geometry, st_buffer);
+```
+
+The `ST_Intersects` takes two geometry fields `wkb_geometry` (ubcv_campus_trees) and `st_buffer` (ubcv_fsc_buffer), computes the intersection, and returns the features from the first geometry argument (ubcv_campus_trees) to a new table `INTO ubcv_fsc_trees`.
+
+If you get an error here like this, `ERROR:  ST_Intersects: Operation on mixed SRID geometries (Point, 4326) != (Polygon, 3157)` then you know that you have not correctly changed the projection of the ubcv_campus_trees data when you imported it into your localhost postgres database. Go back to the last task and check Steps 5-7. 
+
+**Step 4:** Open QGIS and then add ubcv_fsc, ubc_fsc_buffer, and ubcv_fsc_trees.wkb_geometry to your map to inspect them.
 
 ```{r 02-qgis-fsc-buffer, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/02-qgis-fsc-buffer.png")
 ```
 
-**Step 4:** 
+**Step 5:** Now we will do a simple SQL query to determine the species that are planted around the Forest Sciences Building:
 
-**Step 5:**
+```
+SELECT taxa, COUNT(*) AS frequency FROM ubcv_fsc_trees GROUP BY taxa ORDER BY COUNT(*) DESC;
+```
+
+```{r 02-psql-final-analysis, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/02-psql-final-analysis.png")
+```
+
+**Step 6:** Modify the statement above to sort these species alphabetically.
+
+These last few steps are just to illustrate that you can run the same SQL statements above directly in QGIS.
+
+**Step 7:** Open QGIS. From the top menu toolbar, select "Database" > "DB Manager..." This will open a new window where you can do basically everything you did in this task and the prior task. You can import/export data to whatever format you want, inspect the database, tables, and even preview the spatial features.
+
+```{r 02-qgis-db-manager, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/02-qgis-db-manager.png")
+```
+
+**Step 8:** At the top of the DB Manager window there is a small button to open an SQL tab. Click that and then enter the buffer statement again, but modify the output table name so that you do not create a conflict:
+
+```
+SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer_qgis FROM ubcv_fsc;
+```
+
+You should now have a new table in the database now. 
+
+**Step 9:** 
