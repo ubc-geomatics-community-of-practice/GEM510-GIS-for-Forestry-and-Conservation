@@ -22,19 +22,20 @@ In this lab you will learn how to create, manage, and analyze your own relationa
 - Import geospatial data using the Geospatial Data Abstraction Library (GDAL)
 - Practice joining and relating tables
 - Practice inserting and updating data
-- Analyze data in a relational database using SQL
+- Analyze geospatial data in a relational database using SQL and PostGIS
 
 ------------------------------------------------------------------------
 
 ## Deliverables {-}
 
 - Dump SQL file from Task 2
+- SQL statement (just the text) from Task 4
 
 ------------------------------------------------------------------------
 
 ## Data {-}
 
-Lorem ipsum
+All data for this lab are accessible via the UBC PostgreSQL server. Instructions for connecting to the server are given in the tasks below.
 
 ------------------------------------------------------------------------
 
@@ -221,7 +222,6 @@ You might notice `psql` can be run from the OSGeo4W shell and `pg_dump` is also 
 ogr2ogr is the primary utility program for working with vector data and as you can see, there are a lot of options! To show you some of the power of this little application, we are going to export some data from the UBC PostgreSQL server to our local machine, manipulate it, and then import it to our local PostGIS database.
 
 **Step 3:** ogr2ogr is really useful for converting data between different formats and this is handy for exporting data out of a PostGIS database. Convert the ubcv_campus_trees table from the UBC PostgreSQL server with the following command: 
-
 ```
 ogr2ogr -f "ESRI Shapefile" ubcv_campus_trees.shp PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_campus_trees"
 ```
@@ -296,11 +296,13 @@ If you get an error here like this, `ERROR:  ST_Intersects: Operation on mixed S
 SELECT taxa, COUNT(*) AS frequency FROM ubcv_fsc_trees GROUP BY taxa ORDER BY COUNT(*) DESC;
 ```
 
+This will return the "taxa" column and create a new column called "frequency" that contains values of the `COUNT()` function. The `GROUP BY` statement is needed when we use an aggregation method like `COUNT()`. Finally, the relation is ordered by the aggregation result in descending `DESC` order.
+
 ```{r 02-psql-final-analysis, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/02-psql-final-analysis.png")
 ```
 
-**Step 6:** Modify the statement above to sort these species alphabetically.
+**Step 6:** Modify the statement above to sort the taxa alphabetically.
 
 These last few steps are just to illustrate that you can run the same SQL statements above directly in QGIS.
 
@@ -316,6 +318,18 @@ These last few steps are just to illustrate that you can run the same SQL statem
 SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer_qgis FROM ubcv_fsc;
 ```
 
-You should now have a new table in the database now. 
+You should now have a new table in the database now called "ubcv_fsc_buffer_qgis". You can also save the query by giving it a name in the Name field and even output the SQL query to a file. This can be helpful for managing large complex queries. The "Create a view" button 
 
-**Step 9:** 
+**Step 9:** Using the `WITH` clause, combine all of our independent queries above into a single query in QGIS that buffers the FSC polygon by 15 m, intersects the buffer with the campus trees, and then reports the number of unique taxa around the building. See the screenshot below.
+
+```{r 02-qgis-complex-sql, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/02-qgis-complex-sql.png")
+```
+
+The `WITH` clause allows us to create temporary relations that can be referenced by name in subsequent `SELECT` statements. In the case above, "ubcv_fsc_buffer_temporary" is the temporary result from the buffer and "ubcv_fsc_trees_temporary" is the temporary result from intersecting the buffer with the campus trees. 
+
+As you will see, this is slightly different than using the `INTO` method from our prior examples, which creates a new relation in our database. The benefit of `WITH` and `AS` is that the relation is ephemeral and only exists for the moment that the SQL entire statement is executed; no new relation is written into our database.
+
+**Step 10:** Using what you have learned, select one of the other [PostGIS overlay methods](https://postgis.net/docs/reference.html#Overlay_Functions) and then apply it to any two datasets in the `ubcv` database on the UBC PostgreSQL server. You must use the `WITH` clause and you must also use one of the [SQL aggreegation functions](https://www.postgresql.org/docs/9.5/functions-aggregate.html). It is not important that your analysis makes sense, but it is important that your entire SQL statement can be executed from either QGIS or psql. Once your are satisfied with your SQL statement, copy and paste it to the assignment submission page on the UBC course management system.
+
+Hint: Check what the geometry column name is called for the layers that you choose to use and enter those exactly as you see them into your overlay function. Make sure that you are using compatible geometries for the overlay method you choose and read the linked documentation above if you have any doubts!
