@@ -333,3 +333,9 @@ As you will see, this is slightly different than using the `INTO` method from ou
 **Step 10:** Using what you have learned, select one of the other [PostGIS overlay methods](https://postgis.net/docs/reference.html#Overlay_Functions) and then apply it to any two datasets in the `ubcv` database on the UBC PostgreSQL server. You must use the `WITH` clause and you must also use one of the [SQL aggreegation functions](https://www.postgresql.org/docs/9.5/functions-aggregate.html). It is not important that your analysis makes sense, but it is important that your entire SQL statement can be executed from either QGIS or psql. Once your are satisfied with your SQL statement, copy and paste it to the assignment submission page on the UBC course management system.
 
 Hint: Check what the geometry column name is called for the layers that you choose to use and enter those exactly as you see them into your overlay function. Make sure that you are using compatible geometries for the overlay method you choose and read the linked documentation above if you have any doubts!
+
+------------------------------------------------------------------------
+
+## Summary {.unnumbered}
+
+PostGIS has many powerful functions for handling geospatial data directly within a PostgreSQL database. These are not always practical for day-to-day use when compared with user-friendly applications like QGIS or ArcGIS Pro. However, you should now appreciate that you can remotely manipulate geospatial data on a server and this opens the possibility of very powerful web-based applications, cloud-based GIS solutions, and automated scripting that requires little visualization. If you are interested in learning more about what others have done, you can check out the [Crunchy Data YouTube channel](https://www.youtube.com/@CrunchyDataPostgres) to see past "PostGIS Day" recordings.
