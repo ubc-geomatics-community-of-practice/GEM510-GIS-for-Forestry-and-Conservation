@@ -35,7 +35,7 @@ In this lab you will learn how to create, manage, and analyze your own relationa
 
 ## Data {-}
 
-All data for this lab are accessible via the UBC PostgreSQL server. Instructions for connecting to the server are given in the tasks below.
+All data for this lab are accessible via the UBC PostgreSQL server. Instructions for connecting to the server are given in the tasks below. We will be using data from the `ubcv` database.
 
 ------------------------------------------------------------------------
 
