@@ -18,6 +18,8 @@ cat(author)
 
 ## Lab Overview {.unnumbered}
 
+hello
+
 In this lab, you will be introduced to a Free and Open Source Software (FOSS) and widely-used database management system known as PostgreSQL. You will learn how to set up your own database, connect to an enterprise database, and write Structured Query Language (SQL) queries both from the command line and a popular postgres server admin graphical user interface. The software used in this lab includes PostgreSQL, psql, pgAdmin, and QGIS.
 
 ------------------------------------------------------------------------
