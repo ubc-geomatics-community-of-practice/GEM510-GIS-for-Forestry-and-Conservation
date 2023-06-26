@@ -18,8 +18,6 @@ cat(author)
 
 ## Lab Overview {.unnumbered}
 
-hello
-
 In this lab, you will be introduced to a Free and Open Source Software (FOSS) and widely-used database management system known as PostgreSQL. You will learn how to set up your own database, connect to an enterprise database, and write Structured Query Language (SQL) queries both from the command line and a popular postgres server admin graphical user interface. The software used in this lab includes PostgreSQL, psql, pgAdmin, and QGIS.
 
 ------------------------------------------------------------------------
@@ -34,7 +32,13 @@ In this lab, you will be introduced to a Free and Open Source Software (FOSS) an
 
 ## Deliverables {.unnumbered}
 
-Here.
+Create a simple map of UBC Vancouver campus using at least five layers from the ubcv database. Try querying a layer or two and showing only a subset of the total features. Symbolize each layer however you want in either QGIS or ArcGIS Pro. The goal here is to practice changing symbologies and creating a professional layout. At a minimum, your map should have:
+- At least five layers symbolized from the ubcv database
+- Informative title based on the layers you chose (do not use "UBC Vancouver Campus" as your title)
+- North arrow
+- Scale bar or other representation of scale
+- Your name and date
+- Projected in NAD83(CSRS) Canada Atlas Lambert (EPSG:3979)
 
 ------------------------------------------------------------------------
 
@@ -48,7 +52,7 @@ All data for this lab are accessible via the UBC PostgreSQL server. Instructions
 
 **Step 1:** Ensure that you are authenticated through UBC myVPN. If you are at UBC, use your dedicated ethernet port or connect via the ubcprivate wireless network. If you are away from campus, you will need to first connect to the UBC myVPN service using Cisco AnyConnect Secure Mobility Client. Only authenticated users with a Campus Wide Login (CWL) and connected to the UBC myVPN may access the UBC PostgreSQL server.
 
-**Step 2:** Start pgAdmin 4. This software is a a management tool for PostgreSQL databases, hence "pg". 
+**Step 2:** Start pgAdmin 4. This software is a management tool for PostgreSQL databases, hence "pg". 
 
 **Step 3:** Upon starting pgAdmin, you will be prompted to set a master password. This is an important step as this master password will be used to encrypt all other passwords you use to connect to various server databases. DO NOT USE THE SAME PASSWORD AS YOU WILL USE FOR ANY DATABASE!
 
