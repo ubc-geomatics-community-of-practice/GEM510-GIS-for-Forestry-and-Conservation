@@ -275,7 +275,6 @@ This statement tells PostGIS to use the buffer function `ST_Buffer`, which requi
 
 **Step 3:** Intersect the ubcv_campus_trees with the ubcv_fsc_buffer polygon you just made with the following SQL statement:
 
-
 ```
 SELECT * INTO ubcv_fsc_trees FROM ubcv_campus_trees, ubcv_fsc_buffer WHERE ST_Intersects(wkb_geometry, st_buffer);
 ```
