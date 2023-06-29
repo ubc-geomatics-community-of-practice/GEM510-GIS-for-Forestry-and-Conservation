@@ -9,13 +9,13 @@ Written by
 cat(author)
 ```
 
-## Lab Overview {-}
+## Lab Overview {.unnumbered}
 
 In this lab you will learn how to create, manage, and analyze your own relational database. You will continue to practice with the tools that you learned in the prior lab: pgAdmin, QGIS, ArcGIS Pro, and psql. You will also be introduced to the Geospatial Data Abstraction Library (GDAL) and some of the handy programs that are available from this software library for managing data. You will learn more advanced Structured Query Language (SQL) statements that will allow you join tables, insert and update data, and analyze data in a relational database.
 
 ------------------------------------------------------------------------
 
-## Learning Objectives {-}
+## Learning Objectives {.unnumbered}
 
 - Create and host your own PostgreSQL server with a PostGIS database
 - Apply best practices for handling, organizing, and managing data
@@ -26,14 +26,14 @@ In this lab you will learn how to create, manage, and analyze your own relationa
 
 ------------------------------------------------------------------------
 
-## Deliverables {-}
+## Deliverables {#lab2-deliverables .unnumbered}
 
-- Dump SQL file from Task 2
-- SQL statement (just the text) from Task 4
+<input type="checkbox" unchecked> Dump SQL file from Task 2 (15 points)</input>
+<input type="checkbox" unchecked> SQL statement (just the text) from Task 4 (15 points)</input>
 
 ------------------------------------------------------------------------
 
-## Data {-}
+## Data {.unnumbered}
 
 All data for this lab are accessible via the UBC PostgreSQL server. Instructions for connecting to the server are given in the tasks below. We will be using data from the `ubcv` database.
 
@@ -43,9 +43,9 @@ All data for this lab are accessible via the UBC PostgreSQL server. Instructions
 
 **Step 1:** Open pgAdmin.
 
-**Step 2:** From the Browser pane on the left, right-click Servers and then select "Register" > "Server...". We are going to add another server, but this time, it will be hosted on your local machine.
+**Step 2:** From the **Browser** pane on the left, right-click **Servers** and then select **Register** then **Server...**. We are going to add another server, but this time, it will be hosted on your local machine.
 
-**Step 3:** Name the server "localhost" then click the "Connection" tab and set the "Host Name/Address" also as "localhost". Enter a password for the server and leave everything else as the default. When finished, click "Save". The new localhost server should now appear in your Browser. You can expand it, navigate through Databases, postgres, Schemas, public, and Tables to find that it is indeed empty. 
+**Step 3:** Name the server **localhost** then click the **Connection** tab and set the **Host Name/Address** also as **localhost**. Enter a password for the server and leave everything else as the default. When finished, click **Save**. The new localhost server should now appear in your Browser. You can expand it, navigate through **Databases**, **postgres**, **Schemas**, **public**, and **Tables** to find that it is indeed empty. 
 
 ```{r 01-pgadmin-localhost-connection, out.width= "50%", echo = FALSE}
     knitr::include_graphics("images/01-pgadmin-localhost-connection.png")
@@ -83,7 +83,7 @@ If everything is successful, then you should see `postgres=#`, which indicates y
 
 **Step 4:** Listing the tables `\dt` will reveal the database has a table called "spatial_ref_sys". List the fields of this table with `\d spatial_ref_sys`.
 
-In addition to the field names, you will see there is an index called "spatial_ref_sys_pkey", which is the dedicated field for the primary key for this table, and a constraint check to ensure that srid's are valid only between 1 and 998999. You can test this constraint by trying to insert a new srid value of 0: `INSERT INTO spatial_ref_sys (srid) VALUES (0);`. The returned message,
+In addition to the field names, you will see there is an index called "spatial_ref_sys_pkey", which is the dedicated field for the primary key for this table, and a constraint check to ensure that srid's are valid only between $1$ and $998999$. You can test this constraint by trying to insert a new srid value of $0$: `INSERT INTO spatial_ref_sys (srid) VALUES (0);`. The returned message,
 
 ```
 ERROR:  new row for relation "spatial_ref_sys" violates check constraint spatial_ref_sys_srid_check"
@@ -305,7 +305,7 @@ This will return the "taxa" column and create a new column called "frequency" th
 
 These last few steps are just to illustrate that you can run the same SQL statements above directly in QGIS.
 
-**Step 7:** Open QGIS. From the top menu toolbar, select "Database" > "DB Manager..." This will open a new window where you can do basically everything you did in this task and the prior task. You can import/export data to whatever format you want, inspect the database, tables, and even preview the spatial features.
+**Step 7:** Open QGIS. From the top menu toolbar, select **Database** then **DB Manager...** This will open a new window where you can do basically everything you did in this task and the prior task. You can import/export data to whatever format you want, inspect the database, tables, and even preview the spatial features.
 
 ```{r 02-qgis-db-manager, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/02-qgis-db-manager.png")
@@ -317,7 +317,7 @@ These last few steps are just to illustrate that you can run the same SQL statem
 SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer_qgis FROM ubcv_fsc;
 ```
 
-You should now have a new table in the database now called "ubcv_fsc_buffer_qgis". You can also save the query by giving it a name in the Name field and even output the SQL query to a file. This can be helpful for managing large complex queries. The "Create a view" button 
+You should now have a new table in the database now called **ubcv_fsc_buffer_qgis**. You can also save the query by giving it a name in the **Name** field and even output the SQL query to a file. This can be helpful for managing large complex queries. The **Create a view** button will display the layer in your map view.
 
 **Step 9:** Using the `WITH` clause, combine all of our independent queries above into a single query in QGIS that buffers the FSC polygon by 15 m, intersects the buffer with the campus trees, and then reports the number of unique taxa around the building. See the screenshot below.
 
@@ -325,7 +325,7 @@ You should now have a new table in the database now called "ubcv_fsc_buffer_qgis
     knitr::include_graphics("images/02-qgis-complex-sql.png")
 ```
 
-The `WITH` clause allows us to create temporary relations that can be referenced by name in subsequent `SELECT` statements. In the case above, "ubcv_fsc_buffer_temporary" is the temporary result from the buffer and "ubcv_fsc_trees_temporary" is the temporary result from intersecting the buffer with the campus trees. 
+The `WITH` clause allows us to create temporary relations that can be referenced by name in subsequent `SELECT` statements. In the case above, **ubcv_fsc_buffer_temporary** is the temporary result from the buffer and **ubcv_fsc_trees_temporary** is the temporary result from intersecting the buffer with the campus trees. 
 
 As you will see, this is slightly different than using the `INTO` method from our prior examples, which creates a new relation in our database. The benefit of `WITH` and `AS` is that the relation is ephemeral and only exists for the moment that the SQL entire statement is executed; no new relation is written into our database.
 
@@ -338,3 +338,5 @@ Hint: Check what the geometry column name is called for the layers that you choo
 ## Summary {.unnumbered}
 
 PostGIS has many powerful functions for handling geospatial data directly within a PostgreSQL database. These are not always practical for day-to-day use when compared with user-friendly applications like QGIS or ArcGIS Pro. However, you should now appreciate that you can remotely manipulate geospatial data on a server and this opens the possibility of very powerful web-based applications, cloud-based GIS solutions, and automated scripting that requires little visualization. If you are interested in learning more about what others have done, you can check out the [Crunchy Data YouTube channel](https://www.youtube.com/@CrunchyDataPostgres) to see past "PostGIS Day" recordings.
+
+Return to the **[Deliverables](#lab2-deliverables)** section to check off everything you need to submit for credit in the course management system.

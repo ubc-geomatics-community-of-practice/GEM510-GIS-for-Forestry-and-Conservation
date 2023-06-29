@@ -4,11 +4,11 @@ analyze-relational-database:
   author: Paul Pickell
 suitability-overlay-analysis:
   author: Annie Mejaes
-lab4shortname:
+qgis-openstreetmap:
   author: Paul Pickell
-lab5shortname:
+documentation-gdal:
   author: Paul Pickell
-lab6shortname:
+raster-analysis:
   author: Paul Pickell
-lab7shortname:
+digitization-editing-kart:
   author: Paul Pickell
