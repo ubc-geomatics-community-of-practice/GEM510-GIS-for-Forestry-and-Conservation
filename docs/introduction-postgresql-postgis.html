@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Lab 1 Introduction to PostgreSQL and PostGIS | GEM 510: GIS for Forestry and Conservation</title>
   <meta name="description" content="Open Educational Resources for GEM 510 course at the University of British Columbia" />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Lab 1 Introduction to PostgreSQL and PostGIS | GEM 510: GIS for Forestry and Conservation" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2023-05-30" />
+<meta name="date" content="2023-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,6 +56,10 @@
 
 
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 </head>
 
@@ -69,11 +73,17 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li><a href="./">An Open Geomatics Community of Practice</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-these-resources"><i class="fa fa-check"></i>How to use these resources</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-get-involved"><i class="fa fa-check"></i>How to get involved</a></li>
+</ul></li>
 <li class="chapter" data-level="1" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html"><i class="fa fa-check"></i><b>1</b> Introduction to PostgreSQL and PostGIS</a><ul>
 <li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#lab-overview"><i class="fa fa-check"></i>Lab Overview</a></li>
 <li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
-<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#lab1-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
 <li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#data"><i class="fa fa-check"></i>Data</a></li>
 <li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-1-set-up-pgadmin-and-connect-to-the-ubc-postgresql-server"><i class="fa fa-check"></i>Task 1: Set up pgAdmin and Connect to the UBC PostgreSQL server</a></li>
 <li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-2-explore-with-qgis"><i class="fa fa-check"></i>Task 2: Explore with QGIS</a></li>
@@ -84,58 +94,69 @@
 <li class="chapter" data-level="2" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html"><i class="fa fa-check"></i><b>2</b> Analyze a Relational Database</a><ul>
 <li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#lab-overview-1"><i class="fa fa-check"></i>Lab Overview</a></li>
 <li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#learning-objectives-1"><i class="fa fa-check"></i>Learning Objectives</a></li>
-<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#deliverables-1"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#lab2-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
 <li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#data-1"><i class="fa fa-check"></i>Data</a></li>
 <li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-1-host-your-own-postgresql-server"><i class="fa fa-check"></i>Task 1: Host your own PostgreSQL Server</a></li>
 <li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-2-create-a-postgis-database"><i class="fa fa-check"></i>Task 2: Create a PostGIS Database</a></li>
 <li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-3-import-spatial-data-using-gdal"><i class="fa fa-check"></i>Task 3: Import Spatial Data Using GDAL</a></li>
 <li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-4-analyze-a-postgis-database-using-sql"><i class="fa fa-check"></i>Task 4: Analyze a PostGIS Database using SQL</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#summary-1"><i class="fa fa-check"></i>Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="lab3-short-name.html"><a href="lab3-short-name.html"><i class="fa fa-check"></i><b>3</b> Lab Title</a><ul>
-<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#lab-overview-2"><i class="fa fa-check"></i>Lab Overview</a></li>
-<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#learning-objectives-2"><i class="fa fa-check"></i>Learning Objectives</a></li>
-<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#competencies-in-this-lab"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
-<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#deliverables-2"><i class="fa fa-check"></i>Deliverables</a></li>
-<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#data-2"><i class="fa fa-check"></i>Data</a></li>
-<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#task-1-lorem-ipsum"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
-<li class="chapter" data-level="" data-path="lab3-short-name.html"><a href="lab3-short-name.html#task-2-lorem-ipsum"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+<li class="chapter" data-level="3" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html"><i class="fa fa-check"></i><b>3</b> Suitability and Overlay Analysis</a><ul>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#lab-overview-2"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#learning-objectives-2"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#lab3-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#data-2"><i class="fa fa-check"></i>Data</a><ul>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#data-organization"><i class="fa fa-check"></i>Data Organization</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#files-to-create"><i class="fa fa-check"></i>Files to Create</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="lab4-short-name.html"><a href="lab4-short-name.html"><i class="fa fa-check"></i><b>4</b> Lab Title</a><ul>
-<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#lab-overview-3"><i class="fa fa-check"></i>Lab Overview</a></li>
-<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#learning-objectives-3"><i class="fa fa-check"></i>Learning Objectives</a></li>
-<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#competencies-in-this-lab-1"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
-<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#deliverables-3"><i class="fa fa-check"></i>Deliverables</a></li>
-<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#data-3"><i class="fa fa-check"></i>Data</a></li>
-<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#task-1-lorem-ipsum-1"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
-<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#task-2-lorem-ipsum-1"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-1-export-relevant-data-from-biologically-important-areas-shapefile"><i class="fa fa-check"></i>Task 1: Export Relevant Data from Biologically Important Areas Shapefile</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-2-identify-the-bia-of-the-humpback-whale-that-is-not-within-the-established-marine-sanctuary"><i class="fa fa-check"></i>Task 2: Identify the BIA of the Humpback Whale that is not within the established Marine Sanctuary</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-3-calculate-the-density-of-cetacean-sightings-using-the-bia-for-humpback-whales"><i class="fa fa-check"></i>Task 3: Calculate the Density of Cetacean Sightings using the BIA for Humpback Whales</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-4-extract-the-boats-from-ocean-uses-and-identity-the-vessels-within-the-bia-polygons"><i class="fa fa-check"></i>Task 4: Extract the Boats from Ocean Uses and Identity the Vessels within the BIA Polygons</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-5-calculate-suitability-and-identify-most-suitable-locations-for-the-marine-sanctuary"><i class="fa fa-check"></i>Task 5: Calculate Suitability and Identify Most Suitable Locations for the Marine Sanctuary</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#summary-2"><i class="fa fa-check"></i>Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="lab5-short-name.html"><a href="lab5-short-name.html"><i class="fa fa-check"></i><b>5</b> Lab Title</a><ul>
-<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#lab-overview-4"><i class="fa fa-check"></i>Lab Overview</a></li>
-<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#learning-objectives-4"><i class="fa fa-check"></i>Learning Objectives</a></li>
-<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#competencies-in-this-lab-2"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
-<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#deliverables-4"><i class="fa fa-check"></i>Deliverables</a></li>
-<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#data-4"><i class="fa fa-check"></i>Data</a></li>
-<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#task-1-lorem-ipsum-2"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
-<li class="chapter" data-level="" data-path="lab5-short-name.html"><a href="lab5-short-name.html#task-2-lorem-ipsum-2"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+<li class="chapter" data-level="4" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html"><i class="fa fa-check"></i><b>4</b> Exploring QGIS and OpenStreetMap</a><ul>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#lab-overview-3"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#learning-objectives-3"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#lab4-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#data-3"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-1-downloading-openstreetmap-data-to-qgis"><i class="fa fa-check"></i>Task 1: Downloading OpenStreetMap data to QGIS</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-2-inspecting-and-processing-openstreetmap-data"><i class="fa fa-check"></i>Task 2: Inspecting and processing OpenStreetMap data</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-3-simple-spatial-analysis-with-qgis"><i class="fa fa-check"></i>Task 3: Simple spatial analysis with QGIS</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#summary-3"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="lab4-short-name.html"><a href="lab4-short-name.html"><i class="fa fa-check"></i><b>5</b> Documentation and GDAL</a><ul>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#lab-overview-4"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#learning-objectives-4"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#competencies-in-this-lab"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#data-4"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#task-1-lorem-ipsum"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#task-2-lorem-ipsum"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="lab6-short-name.html"><a href="lab6-short-name.html"><i class="fa fa-check"></i><b>6</b> Lab Title</a><ul>
 <li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#lab-overview-5"><i class="fa fa-check"></i>Lab Overview</a></li>
 <li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#learning-objectives-5"><i class="fa fa-check"></i>Learning Objectives</a></li>
-<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#competencies-in-this-lab-3"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
-<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#deliverables-5"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#competencies-in-this-lab-1"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#deliverables-1"><i class="fa fa-check"></i>Deliverables</a></li>
 <li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#data-5"><i class="fa fa-check"></i>Data</a></li>
-<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#task-1-lorem-ipsum-3"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
-<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#task-2-lorem-ipsum-3"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#task-1-lorem-ipsum-1"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#task-2-lorem-ipsum-1"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="lab7-short-name.html"><a href="lab7-short-name.html"><i class="fa fa-check"></i><b>7</b> Lab Title</a><ul>
 <li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#lab-overview-6"><i class="fa fa-check"></i>Lab Overview</a></li>
 <li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#learning-objectives-6"><i class="fa fa-check"></i>Learning Objectives</a></li>
-<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#competencies-in-this-lab-4"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
-<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#deliverables-6"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#competencies-in-this-lab-2"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#deliverables-2"><i class="fa fa-check"></i>Deliverables</a></li>
 <li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#data-6"><i class="fa fa-check"></i>Data</a></li>
-<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#task-1-lorem-ipsum-4"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
-<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#task-2-lorem-ipsum-4"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#task-1-lorem-ipsum-2"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#task-2-lorem-ipsum-2"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
 </ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
 </ul>
 
       </nav>
@@ -171,9 +192,16 @@ Paul Pickell</p>
 </ul>
 <hr />
 </div>
-<div id="deliverables" class="section level2 unnumbered hasAnchor">
-<h2>Deliverables<a href="introduction-postgresql-postgis.html#deliverables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Here.</p>
+<div id="lab1-deliverables" class="section level2 unnumbered hasAnchor">
+<h2>Deliverables<a href="introduction-postgresql-postgis.html#lab1-deliverables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><input type="checkbox" unchecked> Create a simple map of UBC Vancouver campus using at least five layers from the ubcv database (30 points)</input></p>
+<p>Try querying a layer or two and showing only a subset of the total features. Symbolize each layer however you want in either QGIS or ArcGIS Pro. The goal here is to practice changing symbologies and creating a professional layout. At a minimum, your map should have:
+- At least five layers symbolized from the ubcv database
+- Informative title based on the layers you chose (do not use “UBC Vancouver Campus” as your title)
+- North arrow
+- Scale bar or other representation of scale
+- Your name and date
+- Projected in NAD83(CSRS) Canada Atlas Lambert (EPSG:3979)</p>
 <hr />
 </div>
 <div id="data" class="section level2 unnumbered hasAnchor">
@@ -184,7 +212,7 @@ Paul Pickell</p>
 <div id="task-1-set-up-pgadmin-and-connect-to-the-ubc-postgresql-server" class="section level2 unnumbered hasAnchor">
 <h2>Task 1: Set up pgAdmin and Connect to the UBC PostgreSQL server<a href="introduction-postgresql-postgis.html#task-1-set-up-pgadmin-and-connect-to-the-ubc-postgresql-server" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Step 1:</strong> Ensure that you are authenticated through UBC myVPN. If you are at UBC, use your dedicated ethernet port or connect via the ubcprivate wireless network. If you are away from campus, you will need to first connect to the UBC myVPN service using Cisco AnyConnect Secure Mobility Client. Only authenticated users with a Campus Wide Login (CWL) and connected to the UBC myVPN may access the UBC PostgreSQL server.</p>
-<p><strong>Step 2:</strong> Start pgAdmin 4. This software is a a management tool for PostgreSQL databases, hence “pg”.</p>
+<p><strong>Step 2:</strong> Start pgAdmin 4. This software is a management tool for PostgreSQL databases, hence “pg”.</p>
 <p><strong>Step 3:</strong> Upon starting pgAdmin, you will be prompted to set a master password. This is an important step as this master password will be used to encrypt all other passwords you use to connect to various server databases. DO NOT USE THE SAME PASSWORD AS YOU WILL USE FOR ANY DATABASE!</p>
 <p><img src="images/01-pgadmin-master-password.png" width="75%" /></p>
 <p><strong>Step 4:</strong> From the pgAdmin dashboard, click “Add New Server”.</p>
@@ -264,6 +292,7 @@ Paul Pickell</p>
 <div id="summary" class="section level2 unnumbered hasAnchor">
 <h2>Summary<a href="introduction-postgresql-postgis.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You should now have a working knowledge of PostGIS databases, PostgreSQL servers, and how to connect and manage them from pgAdmin, QGIS, and ArcGIS Pro. You will continue to practice and extend these skills as nearly all data used in later labs will be accessed via the UBC PostgreSQL server.</p>
+<p>Return to the <strong><a href="introduction-postgresql-postgis.html#lab1-deliverables">Deliverables</a></strong> section to check off everything you need to submit for credit in the course management system.</p>
 
 </div>
 </div>
@@ -315,7 +344,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["open-geomatics-community-of-practice.pdf"],
 "search": {
 "engine": "fuse",
 "options": null
@@ -327,6 +356,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Lab 4 Exploring QGIS and OpenStreetMap | GEM 510: GIS for Forestry and Conservation</title>
+  <meta name="description" content="Open Educational Resources for GEM 510 course at the University of British Columbia" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Lab 4 Exploring QGIS and OpenStreetMap | GEM 510: GIS for Forestry and Conservation" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Open Educational Resources for GEM 510 course at the University of British Columbia" />
+  <meta name="github-repo" content="github.com/ubc-geomatics-community-of-practice/GEM510-GIS-for-Forestry-and-Conservation/book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lab 4 Exploring QGIS and OpenStreetMap | GEM 510: GIS for Forestry and Conservation" />
+  
+  <meta name="twitter:description" content="Open Educational Resources for GEM 510 course at the University of British Columbia" />
+  
+
+<meta name="author" content="Paul D. Pickell" />
+
+
+<meta name="date" content="2023-07-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="suitability-overlay-analysis.html"/>
+<link rel="next" href="lab4-short-name.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Open Geomatics Community of Practice</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-these-resources"><i class="fa fa-check"></i>How to use these resources</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-get-involved"><i class="fa fa-check"></i>How to get involved</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html"><i class="fa fa-check"></i><b>1</b> Introduction to PostgreSQL and PostGIS</a><ul>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#lab-overview"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#lab1-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#data"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-1-set-up-pgadmin-and-connect-to-the-ubc-postgresql-server"><i class="fa fa-check"></i>Task 1: Set up pgAdmin and Connect to the UBC PostgreSQL server</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-2-explore-with-qgis"><i class="fa fa-check"></i>Task 2: Explore with QGIS</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-3-explore-with-arcgis-pro"><i class="fa fa-check"></i>Task 3: Explore with ArcGIS Pro</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-4-explore-with-psql-shell"><i class="fa fa-check"></i>Task 4: Explore with psql Shell</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html"><i class="fa fa-check"></i><b>2</b> Analyze a Relational Database</a><ul>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#lab-overview-1"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#learning-objectives-1"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#lab2-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#data-1"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-1-host-your-own-postgresql-server"><i class="fa fa-check"></i>Task 1: Host your own PostgreSQL Server</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-2-create-a-postgis-database"><i class="fa fa-check"></i>Task 2: Create a PostGIS Database</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-3-import-spatial-data-using-gdal"><i class="fa fa-check"></i>Task 3: Import Spatial Data Using GDAL</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-4-analyze-a-postgis-database-using-sql"><i class="fa fa-check"></i>Task 4: Analyze a PostGIS Database using SQL</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#summary-1"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html"><i class="fa fa-check"></i><b>3</b> Suitability and Overlay Analysis</a><ul>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#lab-overview-2"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#learning-objectives-2"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#lab3-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#data-2"><i class="fa fa-check"></i>Data</a><ul>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#data-organization"><i class="fa fa-check"></i>Data Organization</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#files-to-create"><i class="fa fa-check"></i>Files to Create</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-1-export-relevant-data-from-biologically-important-areas-shapefile"><i class="fa fa-check"></i>Task 1: Export Relevant Data from Biologically Important Areas Shapefile</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-2-identify-the-bia-of-the-humpback-whale-that-is-not-within-the-established-marine-sanctuary"><i class="fa fa-check"></i>Task 2: Identify the BIA of the Humpback Whale that is not within the established Marine Sanctuary</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-3-calculate-the-density-of-cetacean-sightings-using-the-bia-for-humpback-whales"><i class="fa fa-check"></i>Task 3: Calculate the Density of Cetacean Sightings using the BIA for Humpback Whales</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-4-extract-the-boats-from-ocean-uses-and-identity-the-vessels-within-the-bia-polygons"><i class="fa fa-check"></i>Task 4: Extract the Boats from Ocean Uses and Identity the Vessels within the BIA Polygons</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-5-calculate-suitability-and-identify-most-suitable-locations-for-the-marine-sanctuary"><i class="fa fa-check"></i>Task 5: Calculate Suitability and Identify Most Suitable Locations for the Marine Sanctuary</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#summary-2"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html"><i class="fa fa-check"></i><b>4</b> Exploring QGIS and OpenStreetMap</a><ul>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#lab-overview-3"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#learning-objectives-3"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#lab4-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#data-3"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-1-downloading-openstreetmap-data-to-qgis"><i class="fa fa-check"></i>Task 1: Downloading OpenStreetMap data to QGIS</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-2-inspecting-and-processing-openstreetmap-data"><i class="fa fa-check"></i>Task 2: Inspecting and processing OpenStreetMap data</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-3-simple-spatial-analysis-with-qgis"><i class="fa fa-check"></i>Task 3: Simple spatial analysis with QGIS</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#summary-3"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="lab4-short-name.html"><a href="lab4-short-name.html"><i class="fa fa-check"></i><b>5</b> Documentation and GDAL</a><ul>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#lab-overview-4"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#learning-objectives-4"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#competencies-in-this-lab"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#data-4"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#task-1-lorem-ipsum"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab4-short-name.html"><a href="lab4-short-name.html#task-2-lorem-ipsum"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lab6-short-name.html"><a href="lab6-short-name.html"><i class="fa fa-check"></i><b>6</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#lab-overview-5"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#learning-objectives-5"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#competencies-in-this-lab-1"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#deliverables-1"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#data-5"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#task-1-lorem-ipsum-1"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab6-short-name.html"><a href="lab6-short-name.html#task-2-lorem-ipsum-1"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="lab7-short-name.html"><a href="lab7-short-name.html"><i class="fa fa-check"></i><b>7</b> Lab Title</a><ul>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#lab-overview-6"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#learning-objectives-6"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#competencies-in-this-lab-2"><i class="fa fa-check"></i>Competencies in This Lab</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#deliverables-2"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#data-6"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#task-1-lorem-ipsum-2"><i class="fa fa-check"></i>Task 1: Lorem ipsum</a></li>
+<li class="chapter" data-level="" data-path="lab7-short-name.html"><a href="lab7-short-name.html#task-2-lorem-ipsum-2"><i class="fa fa-check"></i>Task 2: Lorem ipsum</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEM 510: GIS for Forestry and Conservation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="qgis-openstreetmap" class="section level1 hasAnchor">
+<h1><span class="header-section-number">Lab 4</span> Exploring QGIS and OpenStreetMap<a href="qgis-openstreetmap.html#qgis-openstreetmap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Written by
+Paul Pickell</p>
+<div id="lab-overview-3" class="section level2 unnumbered hasAnchor">
+<h2>Lab Overview<a href="qgis-openstreetmap.html#lab-overview-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this lab you will learn some basic functionality of handling data with the QGIS software and learn how to extract and import an important source of Volunteered Geographic Information (VGI): <a href="https://www.openstreetmap.org/">OpenStreetMap</a> (OSM). <a href="https://www.qgis.org/en/site/">QGIS</a> (Quantum GIS) is a Free and Open Source Software (FOSS) that is a flagship project maintained by the <a href="https://www.osgeo.org/">Open Source Geospatial Foundation</a> (OSGeo). QGIS features much of the same functionality as other proprietary software like ESRI’s ArcGIS and navigating the interface will be the primary purpose of this lab. OpenStreetMap is one of the most popular and comprehensive VGI datasets available for the planet and contains geographic information that is crowd-sourced. The spatial data model of OpenStreetMap data is significantly different from other vector models and therefore requires some special handling and consideration. At the end of this lab, you will produce a map of some OpenStreetMap data using QGIS.</p>
+<hr />
+</div>
+<div id="learning-objectives-3" class="section level2 unnumbered hasAnchor">
+<h2>Learning Objectives<a href="qgis-openstreetmap.html#learning-objectives-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Import and export various types of geospatial data in QGIS</li>
+<li>Practice spatial and attribute queries</li>
+<li>Calculate fields with new values</li>
+<li>Install plugins and extensions for QGIS</li>
+<li>Create map layouts and modify layer symbologies</li>
+</ul>
+<hr />
+</div>
+<div id="lab4-deliverables" class="section level2 unnumbered hasAnchor">
+<h2>Deliverables<a href="qgis-openstreetmap.html#lab4-deliverables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><input type="checkbox" unchecked> Answers to the questions posed throughout the lab (15 points)</input></p>
+<p><input type="checkbox" unchecked> Your final symbolized map (15 points)</input></p>
+<hr />
+</div>
+<div id="data-3" class="section level2 unnumbered hasAnchor">
+<h2>Data<a href="qgis-openstreetmap.html#data-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Data for this lab will be downloaded directly from OpenStreetMap following the tasks below.</p>
+<hr />
+</div>
+<div id="task-1-downloading-openstreetmap-data-to-qgis" class="section level2 unnumbered hasAnchor">
+<h2>Task 1: Downloading OpenStreetMap data to QGIS<a href="qgis-openstreetmap.html#task-1-downloading-openstreetmap-data-to-qgis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Step 1:</strong> Start QGIS and click <strong>New Empty Project</strong> from the Project Templates on your screen.</p>
+<p><img src="images/04-qgis-project-template.png" width="50%" /></p>
+<p>The Project Templates prompt will disappear to a white canvas, which is where you are able to view mapped data. On the left of your screen you will see two panes: <strong>Browser</strong> and <strong>Layers</strong>. These are where you can find data sources on your computer or network and the layers that are currently loaded into your map view. Currently, we do not have any data to view, so the Layers pane will be blank. But we do have many sources for data, so let us look at those. Depending on your computer and networking connections, your Browser pane may look different than what is shown below.</p>
+<p><img src="images/04-qgis-add-tiles.png" width="50%" /></p>
+<p><strong>Step 2:</strong> Save your project. In the top menu, select <strong>Project</strong> then click <strong>Save As…</strong> and navigate to a location on your computer where you want to store your project and related files. You should create a directory specifically for this purpose.</p>
+<p><strong>Step 3:</strong> Expand <strong>XYZ Tiles</strong> and then either double-click <strong>OpenStreetMap</strong> or right-click and select <strong>Add Layer to Project</strong>.</p>
+<p><img src="images/04-qgis-osm-layers.png" width="50%" /></p>
+<p>This will add the OpenStreetMap base map to your map view, so you should now see your first layer in the Layer pane and the map view should automatically display the new base map.</p>
+<p><img src="images/04-qgis-navigation-bar.png" width="75%" /></p>
+<p><strong>Step 4:</strong> Locate the Map Navigation Toolbar at the top. Use the magnifying glass to zoom into the area for Metro Vancouver. Once you find Metro Vancouver, change the scale of the map to 1:250000 at the bottom of your QGIS interface.</p>
+<p><img src="images/04-qgis-osm-basemap-vancouver.png" width="75%" /></p>
+<p>This current view does not directly show you the OpenStreetMap data. Instead, you are looking at a tile service provided by OpenStreetMap, which symbolizes the OpenStreetMap data and then, depending on your zoom level and location, sends the necessary information to your computer in the form of a tile like the one pictured below showing a 256x256 pixel tile at zoom level 10 (zoom level 1 is the smallest scale world map).</p>
+<p><img src="images/04-qgis-tile.png" width="256pt" /></p>
+<p>In order to get the OpenStreetMap data, we need to install a plugin for QGIS. Plugins are written by a community of volunteer developers, some from organizations that pay for the plugin to be developed and then released as FOSS, and others just volunteer their time. Plugins are incredibly important for QGIS, because only basic features end up in the core GIS software. If there is ever something you want to do that is not a basic feature of QGIS, you probably need to search for a plugin or write one yourself!</p>
+<p><strong>Step 5:</strong> From the menu bar at the top, click <strong>Plugins</strong> and then select <strong>Manage and Install Plugins…</strong> to open the <strong>Plugin Manager</strong>. Since these plugins are fetched from a server, you need to be connected to the internet to see plugins available for download. In the search bar, search for the <strong>OSMDownloader</strong> plugin. Click <strong>Install Plugin</strong>.</p>
+<p><img src="images/04-qgis-osm-downloader-plugin.png" width="75%" /></p>
+<p>Once the plugin is installed, you can click <strong>Close</strong> to dismiss the Plugin Manager. Most plugins will automatically add an icon to your toolbar at the top, so search for and click the OSMDownloader icon that looks like this:</p>
+<p><img src="images/04-qgis-osm-downloader-icon.png" width="30pt" /></p>
+<p>Your cursor should now appear as a crosshair on your map and now you can select a rectangular area to fetch the OpenStreetMap data from.</p>
+<p><strong>Step 6:</strong> Click and drag your cursor on the base map to select the UBC campus. A dialogue box will open showing you the extent of your selection. Save the file to the project folder your created earlier. Name the file <strong>UBC.osm</strong> and toggle on <strong>Load layer after download</strong>. Your coordinates need not be exactly the same as the image below, but you can modify your selection if you want by either manually editing the extent values (in decimal degrees) or clicking <strong>Cancel</strong> and then selecting again with your cursor.</p>
+<p><img src="images/04-qgis-osm-downloader-extent.png" width="50%" /></p>
+<p><img src="images/04-qgis-osm-downloader-success.png" width="25%" /></p>
+<p>A progress bar will appear at the top and then a message will be displayed that the download was successful. You should now see an updated list of layers available in your Layers pane.</p>
+<p><img src="images/04-qgis-osm-layers-toggle.png" width="25%" /></p>
+<p><strong>Step 7:</strong> Toggle off the OpenStreetMap base map and depending on how you made your selection in the last step, you should see something like this in your map view:</p>
+<p><img src="images/04-qgis-osm-map.png" width="75%" /></p>
+<p>You can also download OpenStreetMap data directly from the OpenStreetMap website and then drag and drop the .osm file directly into the QGIS map view or the Layers pane.</p>
+<hr />
+</div>
+<div id="task-2-inspecting-and-processing-openstreetmap-data" class="section level2 unnumbered hasAnchor">
+<h2>Task 2: Inspecting and processing OpenStreetMap data<a href="qgis-openstreetmap.html#task-2-inspecting-and-processing-openstreetmap-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Step 1:</strong> Right-click the osm point layer in the Layers pane, select <strong>Properties…</strong> and then select the <strong>Information</strong> tab on the left navigation menu of the <strong>Layer Properties</strong> dialogue box.</p>
+<p><img src="images/04-qgis-layer-properties.png" width="75%" /></p>
+<p>You should notice under <strong>Information from provider</strong> the <strong>Storage</strong> type is <strong>OSM</strong> and the <strong>Coordinate Reference System (CRS)</strong> is <strong>EPSG:4326 – WGS 84</strong>. OpenStreetMap data will always be distributed with these characteristics. At this point, it is important to recognize how different the OSM spatial data model is from other data structures like an ESRI Shapefile.</p>
+<p>OSM files are comprised of <strong>nodes</strong>, <strong>ways</strong>, and <strong>relations</strong>. These generally correspond to points, lines, and polygons, but not exactly. Each of these feature types are described by <strong>tags</strong> or attributes. Nodes are a pair of latitude/longitude coordinates and can either be a building block for another type of feature (e.g., a way or relation) or they can have attributes of their own or both. A way is a list of two or more nodes that connect and form a line. Ways can be open (lines) or closed (areas). It is important to recognize that a node can participate in multiple ways simultaneously, while also describing itself as a discrete point feature. Relations are just that: they allow us to model relationships between existing nodes, ways, and even other relations. For example, individual islands might be represented by a closed way, but an archipelago would be represented by a relation that contains the closed ways for all the islands. In this way, the OSM data model is flexible and eliminates redundancies of spatial information such that nodes and ways can be recycled into all kinds of relationships.</p>
+<div id="q1.-interpret-the-osm-entity-relationship-data-model-shown-below.-in-a-brief-sentence-describe-each-of-the-seven-connections-between-nodes-ways-relations-and-tags.-1-point-each-for-7-points-total" class="section level5 unnumbered hasAnchor">
+<h5>Q1. Interpret the OSM entity-relationship data model shown below. In a brief sentence, describe each of the seven connections between nodes, ways, relations, and tags. (1 point each for 7 points total)<a href="qgis-openstreetmap.html#q1.-interpret-the-osm-entity-relationship-data-model-shown-below.-in-a-brief-sentence-describe-each-of-the-seven-connections-between-nodes-ways-relations-and-tags.-1-point-each-for-7-points-total" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="figure"><span style="display:block;" id="fig:04-osm-data-model"></span>
+<img src="images/04-osm-data-model.png" alt="Figure Credit: &lt;a href='https://media.jochentopf.com/media/2018-07-30-talk-sotm2018-data-model-en-slides.pdf'&gt;Jochen Topf&lt;/a&gt;" width="75%" />
+<p class="caption">
+Figure 4.1: Figure Credit: <a href='https://media.jochentopf.com/media/2018-07-30-talk-sotm2018-data-model-en-slides.pdf'>Jochen Topf</a>
+</p>
+</div>
+<p><strong>Step 2:</strong> Dismiss the <strong>Layer Properties</strong> dialogue box and then right-click the OSM point layer again in the Layers pane, but this time select <strong>Open Attribute Table</strong>. Your table might have a different number of features and different values for the attributes than what is shown below.</p>
+<p><img src="images/04-osm-attribute-table.png" width="75%" /></p>
+<p>The first field <strong>osm_id</strong> is the primary key of the node for the data you have downloaded. This is the primary key of all nodes in the planetary database of OpenStreetMap data (not just your file), which is why it starts from a very large number, 9,653,108,813 in the image above.</p>
+<p>The remaining attributes are the tags, which might look random, and that is because OpenStreetMap was originally designed to store street information, but then evolved into a larger participatory community mapping project. Thus, we see there are some initial keys that relate to streets: <strong>barrier</strong>, <strong>highway</strong>, <strong>address</strong>, etc. But not all OpenStreetMap nodes are related to streets, so over time, the community has added many new tags, and most of these will not apply to every node, which is why we see so many <strong>NULL</strong> values.</p>
+<p><strong>Step 3:</strong> Click and drag the <strong>other_tags</strong> attribute column to expand it so that you can see the other tags for each node. You might need to also scroll to the right to view it or maximize the attribute table view.</p>
+<p><img src="images/04-osm-other-tags.png" width="75%" /></p>
+<p>Notice how the <strong>other_tags</strong> are encoded as a comma-separated string list. These tags are structured as key-value pairs. For example, <span class="math inline">\(“amenity” =&gt; “bench”\)</span> indicates the key <span class="math inline">\(“amenity”\)</span> has a value <span class="math inline">\(“bench”\)</span>. All the keys and values are always strings, even numerical values. On the one hand, this data scheme allows for many tags to be stored for any given node and irrelevant tags or attributes need not be stored at all. This type of data encoding is known as <strong>Hstore</strong> and is an alternative way to store information and reduces the size of an attribute table.</p>
+</div>
+<div id="q2.-how-could-an-hstore-data-encoding-affect-how-you-can-interact-with-and-query-the-data-in-a-relational-database-3-points" class="section level5 unnumbered hasAnchor">
+<h5>Q2. How could an Hstore data encoding affect how you can interact with and query the data in a relational database? (3 points)<a href="qgis-openstreetmap.html#q2.-how-could-an-hstore-data-encoding-affect-how-you-can-interact-with-and-query-the-data-in-a-relational-database-3-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>In order to actually access any of the attributes in the other_tags field, we need to explode the Hstore. Exploding the Hstore means to parse all the tags for each tuple/node and create a new dataset that contains an attribute table with all the unique attribute fields in the way that we are normally accustomed to with the relational database model.</p>
+<p><strong>Step 3:</strong> From the top navigation menu, click <strong>Processing</strong>, then select <strong>Toolbox</strong>. This opens the <strong>Processing Toolbox</strong> pane for QGIS where you can find all available tools.</p>
+<p><strong>Step 4:</strong> In the search bar, search for the tool <strong>Explode HStore field</strong> and then double click the tool to open it. For the <strong>Input Layer</strong>, select the osm point layer from the drop-down menu and for <strong>HStore field</strong> select <strong>other_tags</strong>. For <strong>Exploded</strong>, enter <strong>osm_points_exploded.gpkg</strong> for the output file name geopackage and optionally the path to the directory where your project is located. You can click the icon to the right of the field and select <strong>Save to File…</strong> to navigate to your project directory.</p>
+<p><img src="images/04-qgis-explode-hstore.png" width="50%" /></p>
+<p>You should now find a new copy of your osm points in your <strong>Layers</strong> pane. It is also possible to achieve these results by using another popular plugin called <strong>QuickOSM</strong>, which allows you to refine your query based on available tags and it can also parse local .osm and .pbf files (the planetary OpenStreetMap dataset is distributed as a .pbf).</p>
+<p><strong>Step 5:</strong> Repeat the last step again for the other OpenStreetMap layers, ensuring that you name the outputs to correspond to the data type (e.g., polygon, LineString, MultiLineString). You may need to inspect the layer properties to distinguish the two line layers.</p>
+<p><strong>Step 6:</strong> Inspect the attribute table for the MultiLineString layer.</p>
+</div>
+<div id="q3.-what-do-these-features-all-have-in-common-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q3. What do these features all have in common? (1 point)<a href="qgis-openstreetmap.html#q3.-what-do-these-features-all-have-in-common-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>MultiLineString is a multipart line feature that is represented as a single tuple in the attribute table with multiple line parts. The line parts need not be connected or continuous, so this feature type allows for multiple line segments to be represented as a single tuple in the attribute table.</p>
+<p><img src="images/04-qgis-identify-tool.png" width="30pt" /></p>
+<p><strong>Step 7:</strong> Toggle on the osm_polygons_exploded layer in the map view and then use the <strong>Identify tool</strong> to explore the polygon data and find a key that identifies the UBC campus boundary. Select and export that polygon to a new geopackage file in your project called <strong>osm_ubc_campus_boundary</strong>. Make sure you toggle on <strong>Save only selected features</strong> when you do the export. There might be several options, so you will need to sort through them until you get the proper boundary shown below.</p>
+<p><img src="images/04-qgis-osm-ubcv-boundary.png" width="75%" /></p>
+<p><strong>Step 8:</strong> Use the <strong>Select by Location</strong> tool to select the osm_points_exploded by the campus polygon you just exported. Toggle on Intersect for the selection. Export the selected points to a new geopackage in your project called <strong>osm_points_exploded_campus</strong>. Ensure that <strong>Save only selected features</strong> is toggled on when you do the export.</p>
+<p><img src="images/04-qgis-select-by-location-tool.png" width="30pt" /></p>
+<p>Once you are satisfied with the export, return to the attribute table and click the <strong>Deselect all features</strong> from the layer button at the top. This is an important step, because if you leave the selection, then all future geoprocessing may only occur on the features that you have selected!</p>
+<p><img src="images/04-qgis-deselect-all-features-tool.png" width="30pt" /></p>
+<p><strong>Step 9:</strong> Open the attribute table for the <strong>osm_points_exploded_campus</strong> layer and click the <strong>Select features using an expression</strong> icon.</p>
+<p><img src="images/04-qgis-select-features-using-expression-tool.png" width="30pt" /></p>
+<p>This displays the Select by Expression dialogue and you can enter in a query to subset the data. The expression goes into the blank left side of the dialogue, the center of the dialogue gives you options for constructing your query, and the right-side displays help information based on what is selected from the center. From the center, expand the <strong>Fields and Values</strong> item. There are a ton of tags! Let us search for a tag instead. Using the search bar above, type <strong>natural</strong>, then under Fields and Values double-click <strong>natural</strong>. This will add the field name to your statement on the left. On the right, click the <strong>All Unique</strong> button to see what values are available for this tag. We will select all trees, so double-click <strong>tree</strong>. Add an equal sign to your statement so that it reads <span class="math inline">\(“natural” = ‘tree’\)</span>, as shown below. Notice how the key is in “double quotes” and the value is in ‘single quotes’. Click <strong>Select Features</strong> to execute the statement then close the dialogue and inspect the result.</p>
+<p><img src="images/04-qgis-select-by-expression.png" width="75%" /></p>
+<p><strong>Step 10:</strong> With the selection active from the last step, right-click the osm_points_exploded_campus layer in the Layers pane and select <strong>Export</strong> and then <strong>Save Selected Features As…</strong> and name the output <strong>osm_campus_trees</strong>. Ensure that <strong>Save only selected features</strong> is toggled on then click <strong>OK</strong>. Inspect the output in the map. Remember to deselect the attribute table!</p>
+<p>Notice that a lot of street trees are missing on campus? You can rectify this if you want, just sign up for an account at <a href="https://www.openstreetmap.org/">OpenStreetMap.org</a> and start digitizing! You can also use <a href="https://wiki.openstreetmap.org/wiki/IOS">any of a number of free apps on iOS and Android</a> to start mapping from your phone or to record GPS tracks.</p>
+<p><strong>Step 11:</strong> Open the attribute table and use the Identify tool to find a key in the osm_polygons_exploded that you can use to identify buildings. Once you have identified the key, select all the buildings with an expression. Hint: statements involving <span class="math inline">\(NULL\)</span> values for keys need to use the <span class="math inline">\(IS\)</span> and <span class="math inline">\(NOT\)</span> operators, rather than <span class="math inline">\(=\)</span> (equal to) and <span class="math inline">\(!=\)</span> (not equal to).</p>
+<p><strong>Step 12:</strong> We are now going to modify the selection from the last step to only include buildings that are located on campus. Open the <strong>Select by Location</strong> tool and change <strong>Select features</strong> from to the <strong>osm_polygons_exploded</strong> layer. Toggle on <strong>are within</strong> for the geometric predicate and then <strong>By comparing to the features from</strong> should be set to the osm_ubc_campus_boundary polygon. Change <strong>Modify current selection by</strong> to <strong>selecting within current selection</strong>. This last part is important as we are basically taking what we select in the last step and selecting from that selection the buildings that are geographically within the UBC boundary. Click Run and then inspect the output to make sure only buildings within the UBC boundary are selected. When you are satisfied, export the selection to a new geopackage in your project called <strong>osm_campus_buildings</strong>. Again, make sure you toggle on <strong>Save only selected features</strong> and then deselect the layer when you are done.</p>
+</div>
+<div id="q4.-how-could-a-value-of-yes-for-a-key-impact-your-analysis-of-that-key-instead-of-a-more-specific-value-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q4. How could a value of “YES” for a key impact your analysis of that key instead of a more specific value? (1 point)<a href="qgis-openstreetmap.html#q4.-how-could-a-value-of-yes-for-a-key-impact-your-analysis-of-that-key-instead-of-a-more-specific-value-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<hr />
+</div>
+</div>
+<div id="task-3-simple-spatial-analysis-with-qgis" class="section level2 unnumbered hasAnchor">
+<h2>Task 3: Simple spatial analysis with QGIS<a href="qgis-openstreetmap.html#task-3-simple-spatial-analysis-with-qgis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Step 1:</strong> From the top menu, select <strong>Vector</strong>, then <strong>Geometry Tools</strong>, then <strong>Voronoi Polygons…</strong> For the <strong>Input layer</strong>, select <strong>osm_points_exploded_campus</strong> and change the <strong>Buffer region</strong> to <strong>100</strong>.</p>
+<p><img src="images/04-qgis-ellipse-icon.png" width="30pt" /></p>
+<p>Click the ellipse button next to the blank field for <strong>Voronoi polygons</strong> and select <strong>Save to GeoPackage…</strong> Name the output <strong>osm_campus_voronoi</strong> and then click <strong>Run</strong>. Inspect the output in the map. You should now have a Voronoi diagram that is a little larger than campus.</p>
+<p><strong>Step 2:</strong> From the main menu, click <strong>Processing</strong> and then <strong>Toolbox</strong> to open the <strong>Processing toolbox</strong> pane (if it is not already open). Search for the <strong>Clip</strong> tool and then clip the Voronoi polygons by the UBC campus boundary and name the output <strong>osm_campus_voronoi_clip</strong> then click <strong>Run</strong>. Inspect the output in the map. You should now see Voronoi polygons within the campus boundary as shown below.</p>
+<p><img src="images/04-qgis-voronoi-polygons.png" width="75%" /></p>
+<p><img src="images/04-qgis-field-calculator-icon.png" width="30pt" /></p>
+<p><strong>Step 3:</strong> Open the attribute table for the clipped Voronoi polygons and click the <strong>Open field calculator</strong> button that looks like an abacus. This will display the <strong>Field Calculator</strong> dialogue. We are going to calculate the polygon areas and save those values to a new field.</p>
+<p><strong>Step 4:</strong> Ensure that <strong>Create a new field</strong> is toggled on. In <strong>Output field name</strong>, the new field is going to be called <strong>Area</strong>. Then type <span class="math inline">\(\$area\)</span> into the <strong>Expression</strong> box on the left and click <strong>OK</strong>. The units of this new Area field are square meters because your QGIS project properties default to the WGS 84 ellipsoid with square meters as the unit for area measurements. You can change this if you want by navigating to <strong>Project</strong> in the main menu, selecting <strong>Properties</strong>, and then changing the units and ellipsoid to whatever you want.</p>
+<p><strong>Step 5:</strong> Open the osm_campus_voronoi_clip layer properties. On the left, select <strong>Symbology</strong>. By default, all features are symbolized the same, called <strong>Single Symbol</strong>. At the top drop-down menu, select <strong>Graduated</strong>.</p>
+<p><strong>Step 6:</strong> For <strong>Value</strong>, select the <strong>Area</strong> field that you calculated earlier. The <strong>Symbol</strong> determines how the features will be filled and should be a solid color. Leave the Symbol as-is.</p>
+<p><strong>Step 7:</strong> The <strong>Legend format</strong> is used to programmatically modify the legend text entry in the final map. Because we have selected a Graduated symbology, we will have values that range from <span class="math inline">\(\%1\)</span> to the next value for that color <span class="math inline">\(\%2\)</span>. You can add additional text here to indicate units. For example, <span class="math inline">\(\%1 m² - \%2 m²\)</span> will yield a legend entry that looks like “2425 m2 – 3425 m2”. Add units of square meters to the legend format.</p>
+<p><strong>Step 8:</strong> The <strong>Color Ramp</strong> controls the range of hues (H) and their saturation (S) and value (V). If you click directly on the default color ramp icon, it will open the Select Color Ramp dialogue window where you can modify both discrete and continuous color ramps. You can even control opacity of these values to get some interesting effects on your map. If you opened the Select Color Ramp dialogue, close it. Another option, is to choose a pre-defined color ramp using the downward pointing triangle just to the right of the color ramp. Select <strong>Spectral</strong>.</p>
+<p><strong>Step 9:</strong> You should now see values and colors appear below in the <strong>Classes</strong> tab. If you do not see anything, then look for the <strong>Mode</strong> drop-down menu towards the bottom of the dialogue window and select <strong>Equal Count (Quantile)</strong>. Click <strong>Apply</strong> and inspect how the Voronoi polygons are now symbolized in your map. Try the other modes and increase or decrease the number of <strong>Classes</strong>, applying the changes each time so that you can inspect the map. Return the Mode to <strong>Equal Count (Quantile)</strong>.</p>
+<p><img src="images/04-qgis-symbology.png" width="75%" /></p>
+<p><strong>Step 10:</strong> If you closed it, open the symbology of the Voronoi polygons again, and then expand the <strong>Layer Rendering</strong> at the bottom of the dialogue window. Change the <strong>Opacity</strong> of the layer to <span class="math inline">\(50\%\)</span> then click <strong>Apply</strong>. Make sure you have other layers toggled off and the OpenStreetMap base map toggled on. Use the Voronoi diagram and the newly created symbology to interpret the density of OpenStreetMap nodes across campus.</p>
+<div id="q5.-which-areas-of-campus-have-a-high-density-of-nodes-in-openstreetmap-on-ubc-campus-what-are-some-possible-reasons-why-there-might-be-low-node-density-in-the-other-areas-3-points" class="section level5 unnumbered hasAnchor">
+<h5>Q5. Which areas of campus have a high density of nodes in OpenStreetMap on UBC Campus? What are some possible reasons why there might be low node density in the other areas? (3 points)<a href="qgis-openstreetmap.html#q5.-which-areas-of-campus-have-a-high-density-of-nodes-in-openstreetmap-on-ubc-campus-what-are-some-possible-reasons-why-there-might-be-low-node-density-in-the-other-areas-3-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<hr />
+</div>
+</div>
+<div id="summary-3" class="section level2 unnumbered hasAnchor">
+<h2>Summary<a href="qgis-openstreetmap.html#summary-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Return to the <strong><a href="qgis-openstreetmap.html#lab4-deliverables">Deliverables</a></strong> section to check off everything you need to submit for credit in the course management system.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="suitability-overlay-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lab4-short-name.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["open-geomatics-community-of-practice.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -80,7 +80,7 @@ This will add the OpenStreetMap base map to your map view, so you should now see
 
 This current view does not directly show you the OpenStreetMap data. Instead, you are looking at a tile service provided by OpenStreetMap, which symbolizes the OpenStreetMap data and then, depending on your zoom level and location, sends the necessary information to your computer in the form of a tile like the one pictured below showing a 256x256 pixel tile at zoom level 10 (zoom level 1 is the smallest scale world map).
 
-```{r 04-qgis-tile, out.width="256px", echo = FALSE}
+```{r 04-qgis-tile, out.width="256pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-tile.png")
 ```
 
@@ -94,7 +94,7 @@ In order to get the OpenStreetMap data, we need to install a plugin for QGIS. Pl
 
 Once the plugin is installed, you can click **Close** to dismiss the Plugin Manager. Most plugins will automatically add an icon to your toolbar at the top, so search for and click the OSMDownloader icon that looks like this:
 
-```{r 04-qgis-osm-downloader-icon, out.width= "30px", echo = FALSE}
+```{r 04-qgis-osm-downloader-icon, out.width= "30pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-osm-downloader-icon.png")
 ```
 
@@ -185,7 +185,7 @@ You should now find a new copy of your osm points in your **Layers** pane. It is
 
 MultiLineString is a multipart line feature that is represented as a single tuple in the attribute table with multiple line parts. The line parts need not be connected or continuous, so this feature type allows for multiple line segments to be represented as a single tuple in the attribute table.
 
-```{r 04-qgis-identify-tool, out.width= "30px", echo = FALSE}
+```{r 04-qgis-identify-tool, out.width= "30pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-identify-tool.png")
 ```
 
@@ -197,19 +197,19 @@ MultiLineString is a multipart line feature that is represented as a single tupl
 
 **Step 8:** Use the **Select by Location** tool to select the osm_points_exploded by the campus polygon you just exported. Toggle on Intersect for the selection. Export the selected points to a new geopackage in your project called **osm_points_exploded_campus**. Ensure that **Save only selected features** is toggled on when you do the export. 
 
-```{r 04-qgis-select-by-location-tool, out.width= "30px", echo = FALSE}
+```{r 04-qgis-select-by-location-tool, out.width= "30pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-select-by-location-tool.png")
 ```
 
 Once you are satisfied with the export, return to the attribute table and click the **Deselect all features** from the layer button at the top. This is an important step, because if you leave the selection, then all future geoprocessing may only occur on the features that you have selected!
 
-```{r 04-qgis-deselect-all-features-tool, out.width= "30px", echo = FALSE}
+```{r 04-qgis-deselect-all-features-tool, out.width= "30pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-deselect-all-features-tool.png")
 ```
 
 **Step 9:** Open the attribute table for the **osm_points_exploded_campus** layer and click the **Select features using an expression** icon. 
 
-```{r 04-qgis-select-features-using-expression-tool, out.width= "30px", echo = FALSE}
+```{r 04-qgis-select-features-using-expression-tool, out.width= "30pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-select-features-using-expression-tool.png")
 ```
 
@@ -235,7 +235,7 @@ Notice that a lot of street trees are missing on campus? You can rectify this if
 
 **Step 1:** From the top menu, select **Vector**, then **Geometry Tools**, then **Voronoi Polygons…** For the **Input layer**, select **osm_points_exploded_campus** and change the **Buffer region** to **100**.
 
-```{r 04-qgis-ellipse-icon, out.width= "30px", echo = FALSE}
+```{r 04-qgis-ellipse-icon, out.width= "30pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-ellipse-icon.png")
 ```
 
@@ -247,7 +247,7 @@ Click the ellipse button next to the blank field for **Voronoi polygons** and se
     knitr::include_graphics("images/04-qgis-voronoi-polygons.png")
 ```
 
-```{r 04-qgis-field-calculator-icon, out.width= "30px", echo = FALSE}
+```{r 04-qgis-field-calculator-icon, out.width= "30pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-field-calculator-icon.png")
 ```
 
