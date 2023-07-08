@@ -39,6 +39,7 @@ Considered one of the world’s most important humpback whale habitats, the Hawa
 ## Deliverables {#lab3-deliverables .unnumbered}
 
 <input type="checkbox" unchecked> Answers to the questions posed throughout the lab (10 points)</input>
+
 <input type="checkbox" unchecked> Map of the final suitability analysis, requirements listed below (20 points)</input>
 
 - The map should show the proposed sanctuary locations
@@ -218,4 +219,4 @@ You just conducted a suitability analysis and produced a map of how to potential
 
 Suitability modeling is a very common type of analysis that usually integrates multiple factors as geospatial layers using overlay and proximity tools. As you can imagine, there are many ways to structure this analysis and different weightings in the suitability calculation will yield entirely different results. Therefore, it is always important to maintain good justification and rationale for the weightings that you choose and any limitations in the analysis (e.g., missing data/information, incomplete or unavailable attributes, etc.) are clearly communicated in any recommendations that you make from your analysis. In this lab, you were also exposed to significant data manipulation and management. Using good data organization and naming conventions helps others understand your analysis and output data, including your future self if you ever need to return to your old work.
 
-Return to the **[Deliverables](#lab2-deliverables)** section to check off everything you need to submit for credit in the course management system.
+Return to the **[Deliverables](#lab3-deliverables)** section to check off everything you need to submit for credit in the course management system.

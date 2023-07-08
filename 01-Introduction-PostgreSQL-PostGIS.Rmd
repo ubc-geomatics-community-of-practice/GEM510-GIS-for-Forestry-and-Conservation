@@ -35,6 +35,7 @@ In this lab, you will be introduced to a Free and Open Source Software (FOSS) an
 <input type="checkbox" unchecked> Create a simple map of UBC Vancouver campus using at least five layers from the ubcv database (30 points)</input>
 
 Try querying a layer or two and showing only a subset of the total features. Symbolize each layer however you want in either QGIS or ArcGIS Pro. The goal here is to practice changing symbologies and creating a professional layout. At a minimum, your map should have:
+
 - At least five layers symbolized from the ubcv database
 - Informative title based on the layers you chose (do not use "UBC Vancouver Campus" as your title)
 - North arrow

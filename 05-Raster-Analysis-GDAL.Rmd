@@ -1,8 +1,8 @@
 ```{r echo=FALSE}
 yml_content <- yaml::read_yaml("chapterauthors.yml")
-author <- yml_content[["lab6shortname"]][["author"]]
+author <- yml_content[["raster-analysis-gdal"]][["author"]]
 ```
-# Lab Title {#lab6-short-name}
+# Raster analysis with GDAL {#raster-analysis-gdal}
 
 Written by
 ```{r results='asis', echo=FALSE}

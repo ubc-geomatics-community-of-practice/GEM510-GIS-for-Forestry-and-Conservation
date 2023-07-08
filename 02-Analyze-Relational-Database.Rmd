@@ -1,6 +1,6 @@
 ```{r echo=FALSE}
 yml_content <- yaml::read_yaml("chapterauthors.yml")
-author <- yml_content[["manage-relational-database"]][["author"]]
+author <- yml_content[["analyze-relational-database"]][["author"]]
 ```
 # Analyze a Relational Database {#analyze-relational-database}
 
@@ -29,6 +29,7 @@ In this lab you will learn how to create, manage, and analyze your own relationa
 ## Deliverables {#lab2-deliverables .unnumbered}
 
 <input type="checkbox" unchecked> Dump SQL file from Task 2 (15 points)</input>
+
 <input type="checkbox" unchecked> SQL statement (just the text) from Task 4 (15 points)</input>
 
 ------------------------------------------------------------------------
