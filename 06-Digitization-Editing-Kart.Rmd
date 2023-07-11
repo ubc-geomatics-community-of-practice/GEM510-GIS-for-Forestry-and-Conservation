@@ -11,27 +11,20 @@ cat(author)
 
 ## Lab Overview {-}
 
-Lorem ipsum
+Version control is an important concept to software development that has recently been adopted and adapted for use in GIS. The ability to track data changes, manage versions, and collaborate on data editing are significant advances for managing geospatial data assets in an enterprise environment. 
+
+In this lab, you will learn about version control using both Git and Kart software. Git is a widely used distributed version control software system for tracking changes to files. Kart simply extends this distributed version control to geospatial vector data including points, lines, polygons, and point cloud datasets. You will also practice digitizing and editing datasets in QGIS and ArcGIS Pro and 
 
 ------------------------------------------------------------------------
 
 ## Learning Objectives {-}
 
--   Lorem ipsum
-
--   Lorem ipsum 
-
--   Lorem ipsum 
-
-------------------------------------------------------------------------
-
-## Competencies in This Lab {-}
-
--   Lorem ipsum
-
--   Lorem ipsum
-
--   Lorem ipsum
+- Practice using distributed version control software systems Git and Kart
+- Digitize and edit geospatial features in QGIS and ArcGIS Pro
+- Commit edits to a local repository
+- Push local edits to a remote repository
+- Pull edits from a remote repository
+- Manage merge conflicts and diffs between working copies of a repository
 
 ------------------------------------------------------------------------
 
@@ -47,25 +40,67 @@ Lorem ipsum
 
 ## Data {-}
 
-Lorem ipsum
+All data for this lab are accessible via the UBC PostgreSQL server and the pbulic MGEM Data Store. Instructions for connecting to the server and data store are given in the tasks below.
 
 ------------------------------------------------------------------------
 
-## Task 1: Lorem ipsum {-}
+## Task 1: Install Kart and create your first repository {-}
 
-Lorem ipsum
+**Step 1:** Open QGIS and install the Kart plugin using the Plugin Manager from the top toolbar. If you have not already installed the latest version of Kart on your computer, then you will be prompted to download and install the latest version.
 
-**Step 1:** Lorem ipsum.
+```{r 06-kart-qgis-plugin, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-kart-qgis-plugin.png")
+```
 
-**Step 2:** Lorem ipsum.
+**Step 2:** Create a directory on your computer where you can store your first Kart repository, which we will call `ubcv`. For example, `C:\Kart\ubcv`.
 
-**Step 3:** Lorem ipsum.
+**Step 3:** From the QGIS navigation bar at the top, select "Plugins" > "Kart" > "Repositories...". This opens the Kart repositories pane.
 
-__HINT: Lorem ipsum.__
+```{r 06-kart-repository-options, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-kart-repository-options.png")
+```
 
-##### Q1. LOREM IPSUM? {-}
+**Step 4:** From the Kart repositories pane, right-click "Repositories" and select "Create new repository...". Add the path to the directory you created in Step 2, ensure "Storage Type" is set to Geopackage and click "OK" to initiate the Kart repository.
 
-##### Q2. LOREM IPSUM? {-}
+```{r 06-new-kart-repository, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-new-kart-repository.png")
+```
+
+Expand your repositories list and you should see your new repostiory. If you expand "Datasets", you will see nothing there. What we have done is basically told Kart to watch this directory for any changes to the files. If you navigate to the folder in your file system, you will see some new files `KART_README.txt`, `.git`, and `.kart` that Kart has added, which enables version control in this new repository. Now let us add some data and visualize it in QGIS.
+
+**Step 5:** Right-click the repository "C:\Kart\ubcv [main]" and then select "Import dataset from database...". We are going to connect to the ubcv database on the UBC PostgreSQL server.
+
+```{r 06-import-data-kart-repository, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-import-data-kart-repository.png")
+```
+
+**Step 6:** Add the parameters to connect to the UBC PostgreSQL server. Be sure to switch to the "Basic" tab for credentials and add the student credential that was provided to the class. Once you have added the credential, click the "Load Tables" button to so a soft connection to the database. If the connection was successful, then select "ubcv_campus_trees" from the drop-down menu and then click "OK" to add the table to your Kart repository.
+
+```{r 06-import-postgres-database-kart, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-import-postgres-database-kart.png")
+```
+
+We will be comparing this point dataset to a recent orthophoto of UBC Vancouver campus and then making some edits.
+
+**Step 7:** Add the most recent UBC orthophoto to your QGIS project. Navigate to the [MGEM Orthophoto Data Store](https://206-12-122-94.cloud.computecanada.ca/UBC_ORTHOPHOTOS/) and then right-click the most recently dated "UBC_ORTHOPHOTO_YEAR_COG.tif" file listed there and then select "Copy Link". Return to your QGIS project, open the Data Source Manager, select "Raster" from the left navigation bar, change "Source Type" to "Protocol: HTTP(S), cloud, etc.", and then paste the link that you copied into the "URI" field and press "Add".
+
+```{r 06-add-ubc-orthophoto, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-add-ubc-orthophoto.png")
+```
+
+UBC orthophotos are publicly available datasets that are also encoded as Cloud Optimized Geotiffs (COG), which enables fast retrieval and zoom levels for cloud-hosted raster datasets. If you find that the file hosted on the server is not very responsive, you can also download the geotiff to your computer and add it as a regular file. Note that these orthophotos are large files (~7 GB) and ensure you have enough disk space in the location you want to save it.
+
+**Step 8:** Drag and drop the "ubcv_campus_trees" dataset into your map from the Kart repository pane. Your QGIS project should look something like what is shown below.
+
+```{r 06-ubcv-campus-trees-orthophoto-qgis, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-ubcv-campus-trees-orthophoto-qgis.png")
+```
+
+**Step 9:** Zoom in to inspect the trees and the orthophoto.
+
+##### Q1. WHAT TIME OF YEAR DO YOU THINK THE ORTHOPHOTO WAS COLLECTED? HOW DO YOU KNOW? (1 POINT) {-}
+
+##### Q2. DISCUSS THREE REASONS WHY THE CAMPUS TREES DO NOT PERFECTLY MATCH THE LOCATIONS IN THE ORTHOPHOTO. (3 POINTS) {-}
 
 ------------------------------------------------------------------------
 
