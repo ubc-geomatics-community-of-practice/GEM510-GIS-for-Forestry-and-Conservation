@@ -104,15 +104,43 @@ UBC orthophotos are publicly available datasets that are also encoded as Cloud O
 
 ------------------------------------------------------------------------
 
-## Task 2: Lorem ipsum {-}
+## Task 2: Edit a layer with version control {-}
 
-Lorem ipsum
+Since the campus trees do not perfectly align with the locations in the orthophoto, we will practice editing some of them and then use the version control capabilities of Kart to inspect and manage the changes.
 
-**Step 1:** Lorem ipsum.
+**Step 1:** From your QGIS toolbar, click the "Toggle Editing" icon to start an editing session.
 
-**Step 2:** Lorem ipsum.
+```{r 06-qgis-toggle-editing, out.width= "30pt", echo = FALSE}
+    knitr::include_graphics("images/06-qgis-toggle-editing.png")
+```
 
-**Step 3:** Lorem ipsum.
+**Step 2:** Once an editing session is started, you will be given the option to add new points or edit the vertices of existing points. Click the "Vertex Tool" icon to edit the existing point dataset.
+
+```{r 06-qgis-vertex-editor, out.width= "30pt", echo = FALSE}
+    knitr::include_graphics("images/06-qgis-vertex-editor.png")
+```
+
+**Step 3:** Zoom into an area where you can easily see where some points are not perfectly intersecting with the bottom of the tree trunk in the orthophoto. In the example below, we are looking at some trees just outside the Forest Sciences Centre at UBC on Agronomy Road. Right-click on the point you want to edit to show its current coordinate and it will highlight red in the map. Then left-click the same point and your cursor will now have a red "x" to indicate you are ready to place the new coordinate. Left-click again to move the point to the location of your cursor at the base of the tree in the orthophoto. If you are not satisfied with the location, just left-click the point and then left-click again to place it where you want. Repeat this step for 3-5 more points.
+
+**Step 4:** Add a missing tree by clicking the "Add Point Feature" icon. Your cursor will now have a cross-hair and you simply left-click again anywhere on the map canvas to add the new point.
+
+```{r 06-qgis-add-point-icon, out.width= "30pt", echo = FALSE}
+    knitr::include_graphics("images/06-qgis-add-point-icon.png")
+```
+
+**Step 5:** A dialogue window should appear that prompts you to add values for the attributes. Since we do not really know any of these values, just let Kart autopopulate most of the values. Scroll down to "notes" and add a short message to this field then click "OK". Add at least one point this way and then click the "Save Layer Edits" on the toolbar.
+
+```{r 06-qgis-save-edits-icon, out.width= "30pt", echo = FALSE}
+    knitr::include_graphics("images/06-qgis-save-edits-icon.png")
+```
+
+**Step 6:** Right-click the repository from the Kart repositories pane and select "Show working copy changes...". This will open the Diff viewer that allows you to inspect the changes you just made to the layer. In the screenshot below, you can see that we added one point and modified four others. You can click the "Geometries" tab to view the change you made to the geometry of the feature, which is really handy. 
+
+```{r 06-qgis-diff-viewer, out.width= "30pt", echo = FALSE}
+    knitr::include_graphics("images/06-qgis-diff-viewer.png")
+```
+
+**Step 7:** Right-click the repository again and this time select "Commit working copy changes...". You will be prompted to enter a commit message. Commit messages help you and your collaborators understand what is happening in the changes that you just made. For this commit message, we are going to indicate that we edited four point locations and added one point. It is good practice to commit changes that are related to each other so that the commit messages can be concise and informative.
 
 __HINT: Lorem ipsum.__
 
