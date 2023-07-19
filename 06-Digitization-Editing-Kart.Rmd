@@ -40,7 +40,7 @@ In this lab, you will learn about version control using both Git and Kart softwa
 
 ## Data {-}
 
-All data for this lab are accessible via the UBC PostgreSQL server and the pbulic MGEM Data Store. Instructions for connecting to the server and data store are given in the tasks below.
+All data for this lab are accessible via the UBC PostgreSQL server and the public MGEM Data Store. Instructions for connecting to the server and data store are given in the tasks below.
 
 ------------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ UBC orthophotos are publicly available datasets that are also encoded as Cloud O
 
 ------------------------------------------------------------------------
 
-## Task 2: Edit a layer with version control {-}
+## Task 2: Edit a layer in QGIS with version control {-}
 
 Since the campus trees do not perfectly align with the locations in the orthophoto, we will practice editing some of them and then use the version control capabilities of Kart to inspect and manage the changes.
 
@@ -136,14 +136,62 @@ Since the campus trees do not perfectly align with the locations in the orthopho
 
 **Step 6:** Right-click the repository from the Kart repositories pane and select "Show working copy changes...". This will open the Diff viewer that allows you to inspect the changes you just made to the layer. In the screenshot below, you can see that we added one point and modified four others. You can click the "Geometries" tab to view the change you made to the geometry of the feature, which is really handy. 
 
-```{r 06-qgis-diff-viewer, out.width= "30pt", echo = FALSE}
+```{r 06-qgis-diff-viewer, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-qgis-diff-viewer.png")
 ```
 
-**Step 7:** Right-click the repository again and this time select "Commit working copy changes...". You will be prompted to enter a commit message. Commit messages help you and your collaborators understand what is happening in the changes that you just made. For this commit message, we are going to indicate that we edited four point locations and added one point. It is good practice to commit changes that are related to each other so that the commit messages can be concise and informative.
+**Step 7:** Right-click the repository again and this time select "Commit working copy changes...". You will be prompted to enter a commit message. Commit messages help you and your collaborators understand what is happening in the changes that you just made. For this commit message, we are going to indicate that we edited four point locations and added one point. 
 
-__HINT: Lorem ipsum.__
+You can think of committing as a way of saving your work progress in your repository. Every commit can be inspected and/or reverted if needed, so it is good practice to commit changes that are related to each other so that the commit messages can be concise and informative. Avoid committing every single edit separately as this can make navigating and interpreting the commit history difficult.
 
-##### Q3. LOREM IPSUM? {-}
+**Step 8:** Right-click the repository again and this time select "Show log...". This will open the commit history for the repository and you should see the most recent commit you just made at the top along with the commit message you just entered in the last step. You can right-click any of the commits and select "Show changes introduced by this commit...", which is another way to inspect the changes to attributes and geometries of the features with the diff viewer.
 
-##### Q4. LOREM IPSUM? {-}
+------------------------------------------------------------------------
+
+## Task 3: Working on and merging different branches
+
+**Step 1:** Right-click the repository and select "Show log..." to display the commit history.
+
+**Step 2:** Right-click the commit you made in Task 2 and select "Create branch at this commit...". You will be prompted to enter a branch name, name it "mybranch". You should now see both "main" and "mybranch" noted on the top commit.
+
+```{r 06-qgis-kart-create-branch, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-qgis-kart-create-branch.png")
+```
+
+**Step 3:** Right-click the top commit again and select "Switch to branch 'mybranch'...".
+
+**Step 4:** Now working on `mybranch`, start an editing session, pan around the orthophoto and add 5-10 more missing tree points. Do not change anything about the attributes, just click "OK" to dismiss after creating the point. Be sure to save your edits to the layer and then commit the change.
+
+**Step 5:** Open the commit history of the repository. You will see now that "mybranch" is ahead of "main" by the commit you just made.
+
+**Step 6:** Switch the branch back to "main" by right-clicking the commit tagged with "main" and then digitize 5-10 different tree points. Do not change anything about the attributes, just click "OK" to dismiss after creating the point. Commit your edits to the repository.
+
+**Step 7:** Right-click the repository and select "Merge into current branch...". In the dialogue window that appears, select "mybranch" from the drop-down menu for "Branch" and click "OK". Since we are currently on the "main" branch, this will merge the edits/commits in "mybranch" into "main".
+
+```{r 06-qgis-kart-merge-branch, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/06-qgis-kart-merge-branch.png")
+```
+
+**Step 8:** You should see an error message appear warning you about a merge conflict between the two branches. Inspect the merge conflict by right-clicking the repository and selecting "Resolve conflicts...". Inspect the conflicting commits then answer the question below. You may need to close the Merge Conflicts window and inspect the ubcv_campus_trees attribute table to really appreciate what is going on here.
+
+```{r 06-qgis-kart-merge-conflict, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/06-qgis-kart-merge-conflict.png")
+```
+
+##### Q3. DESCRIBE WHY THE MERGE CONFLICT OCCURRED. (3 POINTS) {-}
+
+**Step 9:** Once you have answered the question above, open the Merge Conflicts window again. Click each feature one-at-a-time listed in the left then click "Use modified feature". This is going to force Kart to recognize the most recent edits we made in "mybranch" and overwrite the conflicts in the "main" branch (our current branch). Once you have accepted all the modified feature edits, the Merge Conflict window will automatically close.
+
+```{r 06-qgis-kart-merge-conflicts, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-qgis-kart-merge-conflicts.png")
+```
+
+**Step 10:** Open the commit history for the repository. You should now see the commit history between both branches, and we are now back to a single up-to-date branch ("main").
+
+```{r 06-qgis-kart-merge-conflicts, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-qgis-kart-merge-history.png")
+```
+
+In this example, we simulated two different branches to explore these tools. We generally try to avoid merge conflicts rather than produce them intentionally! Branches are really helpful for managing collaborative work on different aspects of the same project. 
+
+We can allocate specific work to a specific branch, like a "digitizetrees" branch might be for digitizing trees only and a "identifytrees" branch might be for changing the attribute values for the tree species of the points that are made from the other branch. Then that leaves the "main" branch as the merge point for all the work. In this way, it is possible to collaboratively edit a large dataset with multiple people without causing merge conflicts between branches.
