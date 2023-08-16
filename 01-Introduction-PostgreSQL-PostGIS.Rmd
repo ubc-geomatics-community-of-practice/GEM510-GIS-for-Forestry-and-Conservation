@@ -27,7 +27,7 @@ In this lab, you will be introduced to a Free and Open Source Software (FOSS) an
 - Distinguish between PostgreSQL server, PostGIS database, and layer views
 - Practice executing SQL queries on an enterprise PostGIS database from various software interfaces
 - Export layer views from a PostGIS database in QGIS and ArcGIS Pro
-sdf
+
 ------------------------------------------------------------------------
 
 ## Deliverables {#lab1-deliverables .unnumbered}
