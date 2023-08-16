@@ -203,6 +203,10 @@ For example, we can allocate specific work to a specific branch, like a "digitiz
 
 **Step 2:** Navigate to the MGEM Geoserver in your preferred web browser at the following URL: [https://206-12-122-94.cloud.computecanada.ca/geoserver/web/](https://206-12-122-94.cloud.computecanada.ca/geoserver/web/). From the home page, select "Layer Preview" on the left panel under "Data". Navigate through the pages until you find the UBC orthophoto series listed. Find the most recently published orthophoto, then click the "OpenLayers" link to the right of it to show a preview of the data in your browser. You should be able to zoom in and out with exceptional speed because these are encoded as COGs.
 
+```{r 06-geoserver-preview, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/06-geoserver-preview.png")
+```
+
 **Step 3:** Return to the Geoserver homepage and on the right you will see a bunch of acronyms listed with different version numbers under "Service Capabilities". Find "WMS", right-click "1.3.0", and copy the link to your clip board.
 
 **Step 4:** Return to ArcGIS Pro, click the "Insert" tab, then click the "Connections" icon, and finally select "New WMS Server". In the dialogue window that appears, paste the link you just copied for the WMS into the "Server URL" field, leave everything else as default and click "OK".
@@ -214,6 +218,10 @@ In the following steps, we are going to digitize a building on campus. To do so 
 **Step 6:** In a Catalog window pane, expand "Databases" and then right-click the geodatabase for your project. Select "New" and then "Feature Class". Name it "my_ubc_buildings" and make sure the type is set to "Polygon". Click "Next" to view fields. Add two fields: "Name" (data type is text) and "Vertices" (data type is double). Click "Next" to view the spatial reference. Probably the default is set to WGS 1984. Under "Projected Coordinate System" find NAD 1983 UTM Zone 10N. You can continue clicking "Next" to view more properties that you can set, but we will leave these as the defaults, so you can click "Finish" when you are done. You should now have an empty polygon feature class in you map.
 
 **Step 7:** Click the "Edit" tab and click the "Create" button to start creating new features. The "Create Features" pane will open. Click on "my_ubc_buildings" to highlight it and start the editing session. Now pick a building and zoom in so that you can clearly see its borders, then start left-clicking to add vertices along the building perimeter. Be sure to work either in a clockwise or counter-clockwise pattern otherwise you will criss-cross the boundary. Once you are happy, you can simply double left-click in the last position to finish the edit or press F2. Ta-da! You have now digitized your first building.
+
+```{r 06-arcgis-pro-editing, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/06-arcgis-pro-editing.png")
+```
 
 **Step 8:** At the top ribbon on the "Edit" tab, click "Attributes" to open the attribute editor for the selected feature. Change the name to the name of the building and click "Apply".
 
@@ -232,6 +240,10 @@ Next, we are going to validate and compare your digitized buildings against the 
 ##### Q7. HOW COULD RELIEF DISPLACEMENT HAVE IMPACTED YOUR DIGITIZATION? (2 POINTS) {-}
 
 **Step 12:** Open the attribute table of the "ubcv_buildings_utm" layer and add a field called "Vertices" with double data type. Save the change then return to the attribute table, find the new field, right-click it, select "Calculate Geometry" and then under the "Property" drop-down, select "Number of vertices" and click "OK". Repeat this step for "my_ubc_buildings".
+
+```{r 06-arcgis-pro-calculate-geometry, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/06-arcgis-pro-calculate-geometry.png")
+```
 
 **Step 13:** Inspect the attribute tables of "ubcv_buildings_utm" and "my_ubc_buildings" and compare the "Shape_Area", "Shape_Length", and "Vertices" fields then answer the questions below.
 
