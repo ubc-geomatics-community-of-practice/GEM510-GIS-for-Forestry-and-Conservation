@@ -27,7 +27,7 @@ In this lab, you will learn about version control using both Git and Kart softwa
 
 ------------------------------------------------------------------------
 
-## Deliverables {-}
+## Deliverables {#lab6-deliverables .unnumbered}
 
 <input type="checkbox" unchecked> Answers to the questions posed throughout the lab (20 points)</input>
 
