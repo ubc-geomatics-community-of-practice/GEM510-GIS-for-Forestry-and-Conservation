@@ -22,25 +22,22 @@ In this lab, you will learn about version control using both Git and Kart softwa
 - Practice using distributed version control software systems Git and Kart
 - Digitize and edit geospatial features in QGIS and ArcGIS Pro
 - Commit edits to a local repository
-- Push local edits to a remote repository
-- Pull edits from a remote repository
+- Push edits to a local repository
 - Manage merge conflicts and diffs between working copies of a repository
 
 ------------------------------------------------------------------------
 
 ## Deliverables {-}
 
--   Lorem ipsum
+<input type="checkbox" unchecked> Answers to the questions posed throughout the lab (20 points)</input>
 
--   Lorem ipsum
-
--   Lorem ipsum
+<input type="checkbox" unchecked> Map response to the question posed at the end of Task 4 (10 points)</input>
 
 ------------------------------------------------------------------------
 
 ## Data {-}
 
-All data for this lab are accessible via the UBC PostgreSQL server and the public MGEM Data Store. Instructions for connecting to the server and data store are given in the tasks below.
+All data for this lab are accessible via the UBC PostgreSQL server, the public MGEM Data Store, and the public MGEM Geoserver. Instructions for connecting to the server and data store are given in the tasks below and prior labs.
 
 ------------------------------------------------------------------------
 
@@ -160,7 +157,7 @@ You can think of committing as a way of saving your work progress in your reposi
 
 **Step 3:** Right-click the top commit again and select "Switch to branch 'mybranch'...".
 
-**Step 4:** Now working on `mybranch`, start an editing session, pan around the orthophoto and add 5-10 more missing tree points. Do not change anything about the attributes, just click "OK" to dismiss after creating the point. Be sure to save your edits to the layer and then commit the change.
+**Step 4:** Now working on "mybranch", start an editing session, pan around the orthophoto and add 5-10 more missing tree points. Do not change anything about the attributes, just click "OK" to dismiss after creating the point. Be sure to save your edits to the layer and then commit the change.
 
 **Step 5:** Open the commit history of the repository. You will see now that "mybranch" is ahead of "main" by the commit you just made.
 
@@ -182,6 +179,8 @@ You can think of committing as a way of saving your work progress in your reposi
 
 **Step 9:** Once you have answered the question above, open the Merge Conflicts window again. Click each feature one-at-a-time listed in the left then click "Use modified feature". This is going to force Kart to recognize the most recent edits we made in "mybranch" and overwrite the conflicts in the "main" branch (our current branch). Once you have accepted all the modified feature edits, the Merge Conflict window will automatically close.
 
+##### Q4. WHAT IS THE DIFFERENCE BETWEEN THE "MODIFIED FEATURE" AND "ANCESTOR FEATURE"? (1 POINTS) {-}
+
 ```{r 06-qgis-kart-merge-conflicts, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-qgis-kart-merge-conflicts.png")
 ```
@@ -192,6 +191,60 @@ You can think of committing as a way of saving your work progress in your reposi
     knitr::include_graphics("images/06-qgis-kart-merge-history.png")
 ```
 
-In this example, we simulated two different branches to explore these tools. We generally try to avoid merge conflicts rather than produce them intentionally! Branches are really helpful for managing collaborative work on different aspects of the same project. 
+In this example, we simulated two different branches to explore these tools. We generally try to avoid merge conflicts rather than produce them intentionally! Branches are really helpful for managing collaborative work on different aspects of the same project.
 
-We can allocate specific work to a specific branch, like a "digitizetrees" branch might be for digitizing trees only and a "identifytrees" branch might be for changing the attribute values for the tree species of the points that are made from the other branch. Then that leaves the "main" branch as the merge point for all the work. In this way, it is possible to collaboratively edit a large dataset with multiple people without causing merge conflicts between branches.
+For example, we can allocate specific work to a specific branch, like a "digitizetrees" branch might be for digitizing trees only and a "identifytrees" branch might be for changing the attribute values for the tree species of the points that are made from the other branch. Then that leaves the "main" branch as the merge point for all the work. In this way, it is possible to collaboratively edit a large dataset with multiple people without causing merge conflicts between branches.
+
+------------------------------------------------------------------------
+
+## Task 4: Digitize some buildings in ArcGIS Pro
+
+**Step 1:** Start a new ArcGIS Pro project. This time, we are going to show you how to add the UBC orthophoto as a Web Map Service (WMS) from the MGEM Geoserver. A WMS is a protocol for exchanging map tiles over the internet and is especially good for serving image data like the UBC orthophoto. Both ArcGIS and QGIS support the WMS protocol, though we will illustrate how to do this with ArcGIS Pro in this section.
+
+**Step 2:** Navigate to the MGEM Geoserver in your preferred web browser at the following URL: [https://206-12-122-94.cloud.computecanada.ca/geoserver/web/](https://206-12-122-94.cloud.computecanada.ca/geoserver/web/). From the home page, select "Layer Preview" on the left panel under "Data". Navigate through the pages until you find the UBC orthophoto series listed. Find the most recently published orthophoto, then click the "OpenLayers" link to the right of it to show a preview of the data in your browser. You should be able to zoom in and out with exceptional speed because these are encoded as COGs.
+
+**Step 3:** Return to the Geoserver homepage and on the right you will see a bunch of acronyms listed with different version numbers under "Service Capabilities". Find "WMS", right-click "1.3.0", and copy the link to your clip board.
+
+**Step 4:** Return to ArcGIS Pro, click the "Insert" tab, then click the "Connections" icon, and finally select "New WMS Server". In the dialogue window that appears, paste the link you just copied for the WMS into the "Server URL" field, leave everything else as default and click "OK".
+
+**Step 5:** There are a few different ways to access the WMS resources in ArcGIS Pro. You can open a Catalog pane or window, expand "Servers", and continue expanding all the elements until you see the individual layers. Alternatively, you can click the "Add Data" icon on the "Map" tab, expand "Servers", and do the same. Add the most recent UBC orthophoto to your map as a WMS. If the orthophoto that you selected is unresponsive, try another year.
+
+In the following steps, we are going to digitize a building on campus. To do so in ArcGIS Pro, we need to first create a new feature class that will hold the polygon we are going to digitize.
+
+**Step 6:** In a Catalog window pane, expand "Databases" and then right-click the geodatabase for your project. Select "New" and then "Feature Class". Name it "my_ubc_buildings" and make sure the type is set to "Polygon". Click "Next" to view fields. Add two fields: "Name" (data type is text) and "Vertices" (data type is double). Click "Next" to view the spatial reference. Probably the default is set to WGS 1984. Under "Projected Coordinate System" find NAD 1983 UTM Zone 10N. You can continue clicking "Next" to view more properties that you can set, but we will leave these as the defaults, so you can click "Finish" when you are done. You should now have an empty polygon feature class in you map.
+
+**Step 7:** Click the "Edit" tab and click the "Create" button to start creating new features. The "Create Features" pane will open. Click on "my_ubc_buildings" to highlight it and start the editing session. Now pick a building and zoom in so that you can clearly see its borders, then start left-clicking to add vertices along the building perimeter. Be sure to work either in a clockwise or counter-clockwise pattern otherwise you will criss-cross the boundary. Once you are happy, you can simply double left-click in the last position to finish the edit or press F2. Ta-da! You have now digitized your first building.
+
+**Step 8:** At the top ribbon on the "Edit" tab, click "Attributes" to open the attribute editor for the selected feature. Change the name to the name of the building and click "Apply".
+
+**Step 9:** Digitize four more buildings on campus and add the building name to the attribute table. Once you are done, be sure to click "Save" on the top ribbon under the "Edit" tab to save your work to the feature class in the geodatabase.
+
+Next, we are going to validate and compare your digitized buildings against the official building dataset that is produced by UBC Campus + Community Planning.
+
+**Step 10:** Add the official "ubcv_buildings" data to your map from the `ubcv` database on the PostgreSQL server. For information about connecting to the server, refer to Lab 1. Since these data are read-only from the PostgreSQL server, we need to export the feature class to our local geodatabase so that we can make some calculations. We also need to change the coordinate system from WGS 1984 to our preferred projected coordinate system of NAD 1983 UTM Zone 10N. To do this, we can use a single tool "Project". Save the output with a name of "ubcv_buildings_utm" to your geodatabase.
+
+**Step 11:** Add the local copy of "ubcv_buildings_utm" to your map and compare your digitization to the official record. Make some observations and answer the questions below.
+
+##### Q5. DESCRIBE WHY YOUR BOUNDARY DOES NOT ALIGN WITH THE OFFICIAL DATASET. GIVE THREE POSSIBLE SOURCES OF ERROR. (3 POINTS) {-}
+
+##### Q6. WHAT DO YOU OBSERVE ABOUT THE LOCATION OF THE OFFICIAL BUILDING DATASET COMPARED WITH THE APPARENT LOCATION OF THE BUILDINGS IN THE ORTHOPHOTO? (3 POINTS) {-}
+
+##### Q7. HOW COULD RELIEF DISPLACEMENT HAVE IMPACTED YOUR DIGITIZATION? (2 POINTS) {-}
+
+**Step 12:** Open the attribute table of the "ubcv_buildings_utm" layer and add a field called "Vertices" with double data type. Save the change then return to the attribute table, find the new field, right-click it, select "Calculate Geometry" and then under the "Property" drop-down, select "Number of vertices" and click "OK". Repeat this step for "my_ubc_buildings".
+
+**Step 13:** Inspect the attribute tables of "ubcv_buildings_utm" and "my_ubc_buildings" and compare the "Shape_Area", "Shape_Length", and "Vertices" fields then answer the questions below.
+
+##### Q8. WHICH BUILDING THAT YOU DIGITIZED HAD THE LARGEST DEVIATION OF SHAPE_AREA? GIVE THE VALUE DIFFERENCE IN SQUARE METERS AND DISCUSS WHY YOU THINK THIS BUILDING HAD THE WORST AREA ERROR. (2 POINTS) {-}
+
+##### Q9. WHICH BUILDING THAT YOU DIGITIZED HAD THE LARGEST DEVIATION OF SHAPE_LENGTH? GIVE THE VALUE DIFFERENCE IN METERS AND DISCUSS WHY YOU THINK THIS BUILDING HAD THE WORST PERIMETER ERROR. (2 POINTS) {-}
+
+Your last deliverable for the lab will be a mapped response to the following question: Did you digitize more or fewer vertices than the official UBC dataset? Discuss the implications of more or fewer vertices on positional accuracy, area accuracy, and perimeter accuracy. Your map should show a single building exemplar and should be annotated with supporting text and other elements (e.g., arrows, text boxes, etc.) to answer the question and illustrate your understanding of the relationship between digitization and accuracy measures.
+
+------------------------------------------------------------------------
+
+## Summary {.unnumbered}
+
+By now, you should appreciate that digitization is an imperfect process. There are many sources of errors that can accumulate, especially when you are working on a crowd-sourced or collaborative editing project. It takes time to develop and practice good digitization skills. You might want to take a moment to reflect on the question, "which data set is right?" Invariably, the answer is the one with "authority".
+
+Return to the **[Deliverables](#lab6-deliverables)** section to check off everything you need to submit for credit in the course management system.
