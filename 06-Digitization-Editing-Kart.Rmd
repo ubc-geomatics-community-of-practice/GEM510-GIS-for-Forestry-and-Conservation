@@ -95,9 +95,9 @@ UBC orthophotos are publicly available datasets that are also encoded as Cloud O
 
 **Step 9:** Zoom in to inspect the trees and the orthophoto.
 
-##### Q1. WHAT TIME OF YEAR DO YOU THINK THE ORTHOPHOTO WAS COLLECTED? HOW DO YOU KNOW? (1 POINT) {-}
+##### Q1. What time of year do you think the orthophoto was collected? How do you know?  (1 point) {-}
 
-##### Q2. DISCUSS THREE REASONS WHY THE CAMPUS TREES DO NOT PERFECTLY MATCH THE LOCATIONS IN THE ORTHOPHOTO. (3 POINTS) {-}
+##### Q2. Discuss three reasons why the campus trees do not perfectly match the locations in the orthpohot. (3 points) {-}
 
 ------------------------------------------------------------------------
 
@@ -175,11 +175,11 @@ You can think of committing as a way of saving your work progress in your reposi
     knitr::include_graphics("images/06-qgis-kart-merge-conflict.png")
 ```
 
-##### Q3. DESCRIBE WHY THE MERGE CONFLICT OCCURRED. (3 POINTS) {-}
+##### Q3. Describe why the merge conflict occurred. (3 points) {-}
 
 **Step 9:** Once you have answered the question above, open the Merge Conflicts window again. Click each feature one-at-a-time listed in the left then click "Use modified feature". This is going to force Kart to recognize the most recent edits we made in "mybranch" and overwrite the conflicts in the "main" branch (our current branch). Once you have accepted all the modified feature edits, the Merge Conflict window will automatically close.
 
-##### Q4. WHAT IS THE DIFFERENCE BETWEEN THE "MODIFIED FEATURE" AND "ANCESTOR FEATURE"? (1 POINTS) {-}
+##### Q4. What is the difference between the "modified feature" and "ancestor feature"? (1 point) {-}
 
 ```{r 06-qgis-kart-merge-conflicts, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-qgis-kart-merge-conflicts.png")
@@ -233,11 +233,11 @@ Next, we are going to validate and compare your digitized buildings against the 
 
 **Step 11:** Add the local copy of "ubcv_buildings_utm" to your map and compare your digitization to the official record. Make some observations and answer the questions below.
 
-##### Q5. DESCRIBE WHY YOUR BOUNDARY DOES NOT ALIGN WITH THE OFFICIAL DATASET. GIVE THREE POSSIBLE SOURCES OF ERROR. (3 POINTS) {-}
+##### Q5. Describe why your boundary does not align with the official dataset? Give three possible sources of error. (3 points) {-}
 
-##### Q6. WHAT DO YOU OBSERVE ABOUT THE LOCATION OF THE OFFICIAL BUILDING DATASET COMPARED WITH THE APPARENT LOCATION OF THE BUILDINGS IN THE ORTHOPHOTO? (3 POINTS) {-}
+##### Q6. What do you observe about the location of the official building dataset compared with the apparent location of the buildings in the orthophoto? (3 points) {-}
 
-##### Q7. HOW COULD RELIEF DISPLACEMENT HAVE IMPACTED YOUR DIGITIZATION? (2 POINTS) {-}
+##### Q7. How could relief displacement have impacted your digitization? (2 points) {-}
 
 **Step 12:** Open the attribute table of the "ubcv_buildings_utm" layer and add a field called "Vertices" with double data type. Save the change then return to the attribute table, find the new field, right-click it, select "Calculate Geometry" and then under the "Property" drop-down, select "Number of vertices" and click "OK". Repeat this step for "my_ubc_buildings".
 
@@ -247,9 +247,9 @@ Next, we are going to validate and compare your digitized buildings against the 
 
 **Step 13:** Inspect the attribute tables of "ubcv_buildings_utm" and "my_ubc_buildings" and compare the "Shape_Area", "Shape_Length", and "Vertices" fields then answer the questions below.
 
-##### Q8. WHICH BUILDING THAT YOU DIGITIZED HAD THE LARGEST DEVIATION OF SHAPE_AREA? GIVE THE VALUE DIFFERENCE IN SQUARE METERS AND DISCUSS WHY YOU THINK THIS BUILDING HAD THE WORST AREA ERROR. (2 POINTS) {-}
+##### Q8. Which building that you digitized had the largest devitation of Shape_Area compared with the official buildings dataset? Give the value difference in square meters and discuss why you think this building had the worst area error. (2 points) {-}
 
-##### Q9. WHICH BUILDING THAT YOU DIGITIZED HAD THE LARGEST DEVIATION OF SHAPE_LENGTH? GIVE THE VALUE DIFFERENCE IN METERS AND DISCUSS WHY YOU THINK THIS BUILDING HAD THE WORST PERIMETER ERROR. (2 POINTS) {-}
+##### Q9. Which building that you digitized had the largest devitation of Shape_Length compared with the official buildings dataset? Give the value difference in square meters and discuss why you think this building had the worst perimeter error. (2 points) {-}
 
 Your last deliverable for the lab will be a mapped response to the following question: Did you digitize more or fewer vertices than the official UBC dataset? Discuss the implications of more or fewer vertices on positional accuracy, area accuracy, and perimeter accuracy. Your map should show a single building exemplar and should be annotated with supporting text and other elements (e.g., arrows, text boxes, etc.) to answer the question and illustrate your understanding of the relationship between digitization and accuracy measures.
 
