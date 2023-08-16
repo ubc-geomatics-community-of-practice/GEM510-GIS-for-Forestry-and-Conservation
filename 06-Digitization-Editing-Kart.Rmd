@@ -95,9 +95,9 @@ UBC orthophotos are publicly available datasets that are also encoded as Cloud O
 
 **Step 9:** Zoom in to inspect the trees and the orthophoto.
 
-##### Q1. What time of year do you think the orthophoto was collected? How do you know?  (1 point) {-}
+##### Q1. What time of year do you think the orthophoto was collected? How do you know? (1 point) {-}
 
-##### Q2. Discuss three reasons why the campus trees do not perfectly match the locations in the orthpohot. (3 points) {-}
+##### Q2. Discuss three reasons why the campus trees do not perfectly match the locations in the orthophoto. (3 points) {-}
 
 ------------------------------------------------------------------------
 
