@@ -68,7 +68,7 @@ All data for this lab are accessible via the UBC PostgreSQL server and the publi
 
 Expand your repositories list and you should see your new repostiory. If you expand "Datasets", you will see nothing there. What we have done is basically told Kart to watch this directory for any changes to the files. If you navigate to the folder in your file system, you will see some new files `KART_README.txt`, `.git`, and `.kart` that Kart has added, which enables version control in this new repository. Now let us add some data and visualize it in QGIS.
 
-**Step 5:** Right-click the repository "C:\Kart\ubcv [main]" and then select "Import dataset from database...". We are going to connect to the ubcv database on the UBC PostgreSQL server.
+**Step 5:** Right-click the repository `C:\Kart\ubcv [main]` and then select "Import dataset from database...". We are going to connect to the ubcv database on the UBC PostgreSQL server.
 
 ```{r 06-import-data-kart-repository, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-import-data-kart-repository.png")
@@ -188,7 +188,7 @@ You can think of committing as a way of saving your work progress in your reposi
 
 **Step 10:** Open the commit history for the repository. You should now see the commit history between both branches, and we are now back to a single up-to-date branch ("main").
 
-```{r 06-qgis-kart-merge-conflicts, out.width= "75%", echo = FALSE}
+```{r 06-qgis-kart-merge-history, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-qgis-kart-merge-history.png")
 ```
 
