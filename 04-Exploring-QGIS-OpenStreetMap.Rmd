@@ -277,4 +277,6 @@ Click the ellipse button next to the blank field for **Voronoi polygons** and se
 
 ## Summary {.unnumbered}
 
+You learned how to handle the OpenStreetMap data model and perform some simple analysis from these data. Next, you might want to consider the implications for using Volunteered Geographic Information (VGI) generally and OpenStreetMap data specifically in future projects. What are the limitations of OpenStreetMap and where does this VGI perform well? Are there any similar, alternative data sources for your area of interest?
+
 Return to the **[Deliverables](#lab4-deliverables)** section to check off everything you need to submit for credit in the course management system.
