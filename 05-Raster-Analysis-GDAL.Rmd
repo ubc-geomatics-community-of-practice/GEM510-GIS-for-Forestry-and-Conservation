@@ -19,6 +19,8 @@ In this lab, you will explore many of the different raster operations using the 
 
 - Describe the raster data model
 
+- Convert between image coordinates and geographic coordinates
+
 - Convert vector data to raster and vice-versa
 
 - Distinguish bit depths in rasters and identify appropriate encoding of sampled values for different phenomena
@@ -63,7 +65,7 @@ We are going to rasterize this layer and do the basic raster processing outside 
 
 **Step 4:** Open the OSGeo4W shell and navigate to your QGIS project folder using the change directory `cd` command. To do this, first copy the path of your project folder, usually something like `C:\Users\paul\Documents\QGIS\GrizzlyBear`. Then in the console type `cd C:\Users\paul\Documents\QGIS\GrizzlyBear` to change to that directory. 
 
-The first GDAL utility we are going to use is `gdal_rasterize` ((link to documentation)[https://gdal.org/programs/gdal_rasterize.html]). This utility takes a vector input datasource and converts it to a raster in the output. The simplest usage is `gdal_rasterize <src_datasource> <dst_filename>`. All of the flags preceded by `-` are indicated as optional by the square brackets `[]`. If you do not use any of the flags when you run the utility, then the utility will use the default values/settings for those flags that are indicated in the documentation. The AOI raster we are going to create will specify a few conditions of all the other raster processing we will do:
+The first GDAL utility we are going to use is `gdal_rasterize` ([link to documentation](https://gdal.org/programs/gdal_rasterize.html)). This utility takes a vector input datasource and converts it to a raster in the output. The simplest usage is `gdal_rasterize <src_datasource> <dst_filename>`. All of the flags preceded by `-` are indicated as optional by the square brackets `[]`. If you do not use any of the flags when you run the utility, then the utility will use the default values/settings for those flags that are indicated in the documentation. The AOI raster we are going to create will specify a few conditions of all the other raster processing we will do:
 
 - raster extent (number of rows/columns and geographic coordinates)
 - pixel/cell resolution
@@ -89,12 +91,16 @@ The above calculations are probably not immediately intuitive, but the idea is t
 
 ## Task 2: Seamless mosaicking {.unnumbered}
 
-A common task in raster analysis is mosaicking multiple rasters together to perform analysis on a single file over a larger extent. We will practice doing this with some ASTER Digital Elevation Models (DEM) that are distributed as non-overlapping tiles in WGS 1984 (EPSG:4326). The source for these data can be found at (NASA's Earth Science Data Systems portal)[https://search.earthdata.nasa.gov], but we will be retrieving these data from the UBC PostgreSQL server instead.
+A common task in raster analysis is mosaicking multiple rasters together to perform analysis on a single file over a larger extent. We will practice doing this with some ASTER Digital Elevation Models (DEM) that are distributed as non-overlapping tiles in WGS 1984 (EPSG:4326). The source for these data can be found at [NASA's Earth Science Data Systems portal](https://search.earthdata.nasa.gov), but we will be retrieving these data from the UBC PostgreSQL server instead.
 
 **Step 1:** Open your QGIS project and from the "Data Source Manager" connect to the `bear` database of the UBC PostgreSQL server. You should see a listing of 15 rasters there, which have names prefixed with "astgtmv003". Select all 15 and then click "Add". It is very important that you add the rasters using this method rather than from the "Browser" pane, otherwise you might have unexpected errors.
 
 ```{r 05-qgis-data-source-manager, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/05-qgis-data-source-manager.png")
+```
+
+```{r 05-qgis-aster-dem-tiles, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/05-qgis-aster-dem-tiles.png")
 ```
 
 **Step 2:** Open the "Layer Properties" for "astgtmv003_n51w115" and inspect the extent values and the pixel size. 
@@ -112,19 +118,18 @@ Latitude(j) = 52.0001388888888982 + j × -0.000277778
 
 ##### Q2. Given the equations above, what is the exact latitude and longtiude of the pixel with image coordinates (1907,1918)? Show your work for full credit. (4 points) {-} 
 
-**Step 4:** Copy the coordinates from Q2 and paste them into the "Coordinate" field at the bottom of your QGIS screen (see image below) in the format `latitude, longitude` and press "Enter". Change the scale to `1:500` and hit "Enter". You should now be able to distinguish individual pixels. Click the coordinate reference system at the bottom right of the screen and change it from the default value of `EPSG:4326` (WGS 1984) to `EPSG:26911` (NAD 1983 UTM Zone 11N).
+**Step 3:** Copy the coordinates from Q2 and paste them into the "Coordinate" field at the bottom of your QGIS screen (see image below) in the format `latitude, longitude` and press "Enter". Change the scale to `1:500` and press "Enter". You should now be able to distinguish individual pixels. Click the coordinate reference system at the bottom right of the screen and change it from the default value of `EPSG:4326` (WGS 1984) to `EPSG:26911` (NAD 1983 UTM Zone 11N).
 
-```{r 05-qgis-project-srs, out.width= "75%", echo = FALSE}
+```{r 05-qgis-project-srs, out.width= "100%", echo = FALSE}
     knitr::include_graphics("images/05-qgis-project-srs.png")
 ```
 
 ##### Q3. Why do the pixels now appear to be elongated along the y-axis? (2 points) {-} 
 
-**Step 4:** Save your PostgreSQL credential to your QGIS environment variables by opening the Python console in QGIS, click the small "Show editor" button, and then paste the following into the editor and click the "Run" button:
+**Step 4:** Save your PostgreSQL credential to your QGIS environment variables by opening the Python console from your toolbar in QGIS, click the small "Show editor" button, and then paste the following into the editor and click the "Run" button:
 
 ```
 import os
-
 os.environ['PGUSER'] = 'student'
 os.environ['PGPASSWORD'] = 'studentpasswordhere'
 
@@ -148,30 +153,53 @@ The mosaic still needs to be reprojected and clipped to the same extent as our A
 
 **Step 7:** Open the OSGeo4W shell and navigate to your project folder where you saved "aster_dem_wgs84.tif". Type the following command into the console and then hit "Enter": `gdalwarp -s_srs EPSG:4326 -t_srs EPSG:26911 -te 401490 5753450 661670 5936290 -tr 10 10 -r cubic aster_dem_wgs84.tif aster_dem_utm.tif`.
 
-```{r 05-osgeo4w-gdalwarp, out.width= "75%", echo = FALSE}
-    knitr::include_graphics("images/05-osgeo4w-gdalwarp.png")
-```
+- `-s_srs` flag defines the input spatial reference system (coordinate system), which is WGS 1984 or `EPSG:4326`.
 
-`-s_srs` flag defines the input spatial reference system (coordinate system), which is WGS 1984 or `EPSG:4326`.
-`-t_srs` flag defines our target SRS, which is NAD 1983 UTM Zone 11N or `EPSG:26911`.
-`-te` flag defines our target extent `xmin ymin xmax ymax`, which is the calculation we did in Task 1 `401490 5753450 661670 5936290`.
-`-tr` flag defines the target resolution, again specified twice for both axes `10 10`.
-`-r` flag defines the re-sampling method. This is an important flag for `gdalwarp` because any time that you re-project a raster, you are resampling that raster. The term "resampling" comes from the fact that a raster is "sampled" to begin with. Each cell in a raster is a sample of some random variable over the extent of the raster, and the value of that sample is correct for the center of the cell. When we re-project a raster, the locations of the cells change, therefore we need to recalculate the samples or "resample" the raster. Our selected method of resampling in this case is `cubic`, which is a smoothing algorithm and well-suited for continuous data like elevation.
-`aster_dem_wgs84.tif` is the input raster and `aster_dem_utm.tif` is the output (resampled) raster. Inpsect the output in QGIS.
+- `-t_srs` flag defines our target SRS, which is NAD 1983 UTM Zone 11N or `EPSG:26911`.
+
+- `-te` flag defines our target extent `xmin ymin xmax ymax`, which is the calculation we did in Task 1 `401490 5753450 661670 5936290`.
+
+- `-tr` flag defines the target resolution, again specified twice for both axes `10 10`.
+
+- `-r` flag defines the re-sampling method. This is an important flag for `gdalwarp` because any time that you re-project a raster, you are resampling that raster. The term "resampling" comes from the fact that a raster is "sampled" to begin with. Each cell in a raster is a sample of some random variable over the extent of the raster, and the value of that sample is correct for the center of the cell. When we re-project a raster, the locations of the cells change, therefore we need to recalculate the samples or "resample" the raster. Our selected method of resampling in this case is `cubic`, which is a smoothing algorithm and well-suited for continuous data like elevation.
+
+- `aster_dem_wgs84.tif` is the input raster and `aster_dem_utm.tif` is the output (resampled) raster. Inspect the output in QGIS.
 
 Note that we did not use the `-ot` output data type flag, so `gdalwarp` used the `Int16` data type of our input raster. If you set `-ot Float32`, then you would see that the cubic resampling algorithm actually yields decimals instead of the integers that you see in the current output, but for our purposes that sub-meter level of precision is not needed.
 
+**Step 8:** Search for the GDAL "Raster Calculator" tool and add the "aster_dem_utm.tif" mosaic as "Input layer A" and the "yellowhead_bma_utm.tif" mask as "Input layer B". Change "Number of raster band for B" to "Band 1 (Gray)" then scroll down to the field that says "Calculation in gdalnumeric syntax [...]". Here we are simply going to type `A*B` because we want to create a mask of our DEM for only our AOI. Scroll down further and click the ellipse "..." next to the "Calculated" field to save the output as "aster_dem_utm_aoi.tif". Click "Run" and then inspect the output in your map.
+
 ##### Q Describe the relationship between resampling method and pixel size {-}
 
+------------------------------------------------------------------------
 
-gdal_rasterize - clip and rasterize some roads and reproject
+## Task 3: Calculate derivative rasters {.unnumbered}
+
+In this task, we will calculate a few derivatives from the ASTER DEM mosaic. 
+
+**Step 1:** Open your QGIS project and search for the 
+
+**Step 2:**
+
+**Step 3:**
+
+------------------------------------------------------------------------
+
+## Task 4: Weighted raster overlay {.unnumbered}
+
+**Step 1:**
+
+**Step 2:**
+
+**Step 3:**
+
+
 gdal_proximity.py - calculate distance to a road
 gdaldem slope
 gdaldem aspect
 gdal_viewshed - calculate several viewsheds and produce cumulative viewshed heat map
 gdal_calc.py - reclassify
 least cost path in QGIS
-
 
 ------------------------------------------------------------------------
 
