@@ -2,7 +2,7 @@
 yml_content <- yaml::read_yaml("chapterauthors.yml")
 author <- yml_content[["raster-analysis-gdal"]][["author"]]
 ```
-# Raster analysis with GDAL {#raster-analysis-gdal}
+# Raster and Least Cost Path Analysis {#raster-analysis-gdal}
 
 Written by
 ```{r results='asis', echo=FALSE}
@@ -71,18 +71,23 @@ The first GDAL utility we are going to use is `gdal_rasterize` ([link to documen
 - pixel/cell resolution
 - spatial reference system
 
-**Step 5:** In the OSGeo4W shell, enter the following command `gdal_rasterize -burn 1 -tr 10 10 -ot "Byte" -tap yellowhead_bma_utm.shp yellowhead_bma_utm.tif`. 
+**Step 5:** In the OSGeo4W shell, enter the following command `gdal_rasterize -burn 1 -tr 20 20 -ot Byte -a_nodata -tap yellowhead_bma_utm.shp yellowhead_bma_utm.tif`. 
 
-`-burn` flag indicates we want to assign a value of `1` to the output raster where the features intersect the new raster grid. 
-`-tr` flag indicates we want the output cell resolution to be 10 m (we know its meters because those are the units of the coordinate system) and this is specified twice `10 10`, once for the x-axis and again for the y-axis. 
-`-ot` flag indicates that we want the output data type of the raster to be `"Byte"`, which translates to a storage cost of 8 bits per pixel (bits per pixel × rows × columns = size of raster on disk).
-`-tap` flag (target aligned pixels) indicates that we want the new raster extent to be calculated using floor and ceiling functions:
+- `-burn` flag indicates we want to assign a value of `1` to the output raster where the features intersect the new raster grid. 
+
+- `-tr` flag indicates we want the output cell resolution to be 20 m (we know its meters because those are the units of the coordinate system) and this is specified twice `20 20`, once for the x-axis and again for the y-axis. 
+
+- `-ot` flag indicates that we want the output data type of the raster to be `"Byte"`, which translates to a storage cost of 8 bits per pixel (bits per pixel × rows × columns = size of raster on disk).
+
+- `-a_nodata` flag indicates that we want to specifically set the nodata value as `nodata` (default is zero). This will come in handy later because nodata limits the number of cell calculations we need to perform while zero is a valid processing value.
+
+- `-tap` flag (target aligned pixels) indicates that we want the new raster extent to be calculated using floor and ceiling functions:
 
 ```
-ymax (top) = y_resolution × ceiling(ymax / y_resolution) = 10 × ceiling(5,936,280.447609 / 10) = 10 × 593,629 = 5,936,290
-ymin (bottom) = y_resolution × floor(ymin / y_resolution) = 10 × floor(5,753,454.574941 / 10) = 10 × 575,345 = 5,753,450
-xmin (left) = x_resolution × floor(xmin / x_resolution) = 10 × floor(401,496.997149 / 10) = 10 × 40,149 = 401,490
-xmax (right) = x_resolution × ceiling(xmax / x_resolution) = 10 × ceiling(661,663.194125 / 10) = 10 × 66,167 = 661,670
+ymax (top) = y_resolution × ceiling(ymax / y_resolution) = 20 × ceiling(5,936,280.447609 / 20) = 20 × 296,815 = 5,936,300
+ymin (bottom) = y_resolution × floor(ymin / y_resolution) = 20 × floor(5,753,454.574941 / 20) = 20 × 287,672 = 5,753,440
+xmin (left) = x_resolution × floor(xmin / x_resolution) = 20 × floor(401,496.997149 / 20) = 20 × 20,074 = 401,480
+xmax (right) = x_resolution × ceiling(xmax / x_resolution) = 20 × ceiling(661,663.194125 / 20) = 20 × 33,084 = 661,680
 ```
 
 The above calculations are probably not immediately intuitive, but the idea is that we want to create a raster grid that is aligned to the ceiling and floor of our x- and y-resolution. The overall size of the raster is the same whether we do this alignment or not (same number of rows and columns), the only difference is that we are shifting the grid so that the extent coordinates are whole numbers (integers), which makes it easier for us to compute new grids. Bring "yellowhead_bma_utm.tif" into QGIS to inspect it. Check that the values, extent, cell size, and coordinate system are correct. You can also run the `gdalinfo` utility to check the metadata from the command line like `gdalinfo yellowhead_bma_utm.tif`.
@@ -151,13 +156,13 @@ This step will automatically authenticate you each time you need to transact wit
 
 The mosaic still needs to be reprojected and clipped to the same extent as our AOI, which is what we will do in the next step using the `gdalwarp` utility. The QGIS tool, "Warp", does not expose all the options that we need, so we will do this next step in the OSGeo4W shell.
 
-**Step 7:** Open the OSGeo4W shell and navigate to your project folder where you saved "aster_dem_wgs84.tif". Type the following command into the console and then hit "Enter": `gdalwarp -s_srs EPSG:4326 -t_srs EPSG:26911 -te 401490 5753450 661670 5936290 -tr 10 10 -r cubic aster_dem_wgs84.tif aster_dem_utm.tif`.
+**Step 7:** Open the OSGeo4W shell and navigate to your project folder where you saved "aster_dem_wgs84.tif". Type the following command into the console and then hit "Enter": `gdalwarp -s_srs EPSG:4326 -t_srs EPSG:26911 -te 401480 5753440 661680 5936300 -tr 20 20 -r cubic aster_dem_wgs84.tif aster_dem_utm.tif`.
 
 - `-s_srs` flag defines the input spatial reference system (coordinate system), which is WGS 1984 or `EPSG:4326`.
 
 - `-t_srs` flag defines our target SRS, which is NAD 1983 UTM Zone 11N or `EPSG:26911`.
 
-- `-te` flag defines our target extent `xmin ymin xmax ymax`, which is the calculation we did in Task 1 `401490 5753450 661670 5936290`.
+- `-te` flag defines our target extent `xmin ymin xmax ymax`, which is the calculation we did in Task 1 `401480 5753440 661680 5936300`.
 
 - `-tr` flag defines the target resolution, again specified twice for both axes `10 10`.
 
@@ -167,25 +172,48 @@ The mosaic still needs to be reprojected and clipped to the same extent as our A
 
 Note that we did not use the `-ot` output data type flag, so `gdalwarp` used the `Int16` data type of our input raster. If you set `-ot Float32`, then you would see that the cubic resampling algorithm actually yields decimals instead of the integers that you see in the current output, but for our purposes that sub-meter level of precision is not needed.
 
-**Step 8:** Search for the GDAL "Raster Calculator" tool and add the "aster_dem_utm.tif" mosaic as "Input layer A" and the "yellowhead_bma_utm.tif" mask as "Input layer B". Change "Number of raster band for B" to "Band 1 (Gray)" then scroll down to the field that says "Calculation in gdalnumeric syntax [...]". Here we are simply going to type `A*B` because we want to create a mask of our DEM for only our AOI. Scroll down further and click the ellipse "..." next to the "Calculated" field to save the output as "aster_dem_utm_aoi.tif". Click "Run" and then inspect the output in your map.
+**Step 8:** Search for the "Raster Calculator" tool. Double-click the "aster_dem_utm.tif" mosaic to add it to the expression, then click the multiply button "*", then double-click the "yellowhead_bma_utm.tif" raster to add it to the expression. Scroll down further and click the ellipse "..." next to the "Reference layer(s)" field, toggle on "yellowhead_bma_utm.tif", and then click "OK". Scroll down further and click the ellipse "..." next to the "Output" field to save the output as "aster_dem_utm_aoi.tif". Click "Run" and then inspect the output in your map.
 
-##### Q Describe the relationship between resampling method and pixel size {-}
+```{r 05-qgis-aster-dem-mask, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/05-qgis-aster-dem-mask.png")
+```
 
 ------------------------------------------------------------------------
 
 ## Task 3: Calculate derivative rasters {.unnumbered}
 
-In this task, we will calculate a few derivatives from the ASTER DEM mosaic. 
+In this task, we will calculate a few derivative rasters that are going to represent various costs for Grizzly Bears to move across the landscape. At the end of the task, we will produce a cost raster that will be one of the inputs to our least cost path model in the following task.
 
-**Step 1:** Open your QGIS project and search for the 
+**Step 1:** Open your QGIS project and search for the "Slope" tool. Add "aster_dem_utm_aoi.tif" as the "Elevation layer" and save the output to "aster_slope_utm_aoi.tif". Inspect the output in your map.
 
-**Step 2:**
+**Step 2:** Open the "Data source manager", connect to the `bear` database on the UBC PostgreSQL server, and add the "ca_forest_vlce2_2019" raster to your map. This layer is a clipping of a [national land cover dataset for Canada](https://opendata.nfis.org/mapserver/nfis-change_eng.html) for the year 2019. The values of the raster refer to specific land covers. Open the properties for the layer. As you can see, it has a different coordinate system, resolution, and extent than our AOI. Export this raster as a GeoTiff to your local project folder and keep the output name the same.
 
-**Step 3:**
+**Step 3:** Open the OSGeo4W shell and navigate to your project folder. Run the `gdalwarp` utility again, parameterize it the same as before in Task 2, but change the `-s_srs` flag to `EPSG:3978`, the `-r` flag to `near`, the input file to `ca_forest_vlce2_2019.tif`, and the output file to `land_cover_utm.tif`. Inspect the output in QGIS.
+
+##### Q4. Why did we choose 'near' as the resampling method? (1 point) {-}
+
+**Step 4:** Use the "Raster Calculator" tool to multiply "yellowhead_bma_utm.tif" by "land_cover_utm.tif" and write the output to "land_cover_utm_aoi.tif".
+
+We want to use the land cover layer as an input to our cost surface, but the values of the land cover raster are codes, which are nominal data. These values cannot directly be compared as-is. For example, the code for water is 20 and the code for herbs is 100. These numbers do not imply that herbs is 5 times more costly than water, they are simply numerical placeholders for the concept of land cover. We need to define and then assign proper values for each land cover that represents the cost or resistance for Grizzly Bears to traverse a cell of that land cover. We can do this by reclassifying the land cover raster. Below is a table indicating the land cover class codes and some proposed cost values scaled between 0 (no cost) and 1 (highest cost):
+
+```{r 05-land-cover-table, echo=FALSE}
+codes <- c(20,31,32,33,40,50,80,81,100,210,220,230)
+names <- c("Water","Snow/Ice","Rock/Rubble","Exposed Barren Land","Bryoids","Shrubs","Wetland","Treed Wetland","Herbs","Coniferous","Broadleaf","Mixedwood")
+costs <- c("?","1","0.8","?","0.1","0.2","?","0.2","?","0","0.3","0.2")
+R <- data.frame(codes=codes,names=names,costs=costs)
+names(R) <- c("Code","Land Cover", "Proposed Cost")
+knitr::kable(
+  R, booktabs = TRUE, row.names = FALSE
+)
+```
+
+**Step 5:** Open the "Reclassify by Table" tool. Select "land_cover_utm_aoi.tif" as the "Raster layer" and then click the ellipse "..." next to "Reclassification table". Populate the table with all the land cover codes. You will need to use some judgement and determine what would be reasonable values for the four missing codes in the table above. There is no right or wrong answer for these, but you will need to justify your choices. When you have filled in the table (see image below) click "OK", and then name the output "land_cover_utm_aoi_cost.tif".
 
 ------------------------------------------------------------------------
 
-## Task 4: Weighted raster overlay {.unnumbered}
+## Task 4: Least cost path analysis in ArcGIS Pro {.unnumbered}
+
+For this last task, we are going to perform the least cost path analysis in ArcGIS Pro. QGIS has a least cost path plugin, but it is not as robust as the ArcGIS Pro tools.
 
 **Step 1:**
 
