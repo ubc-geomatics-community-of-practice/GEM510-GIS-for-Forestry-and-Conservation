@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Lab 5 Raster and Least Cost Path Analysis | GEM 510: GIS for Forestry and Conservation</title>
+  <meta name="description" content="Open Educational Resources for GEM 510 course at the University of British Columbia" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Lab 5 Raster and Least Cost Path Analysis | GEM 510: GIS for Forestry and Conservation" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Open Educational Resources for GEM 510 course at the University of British Columbia" />
+  <meta name="github-repo" content="github.com/ubc-geomatics-community-of-practice/GEM510-GIS-for-Forestry-and-Conservation/book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lab 5 Raster and Least Cost Path Analysis | GEM 510: GIS for Forestry and Conservation" />
+  
+  <meta name="twitter:description" content="Open Educational Resources for GEM 510 course at the University of British Columbia" />
+  
+
+<meta name="author" content="Paul D. Pickell" />
+
+
+<meta name="date" content="2023-08-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="qgis-openstreetmap.html"/>
+<link rel="next" href="digitization-editing-kart.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Open Geomatics Community of Practice</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-these-resources"><i class="fa fa-check"></i>How to use these resources</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-get-involved"><i class="fa fa-check"></i>How to get involved</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html"><i class="fa fa-check"></i><b>1</b> Introduction to PostgreSQL and PostGIS</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#lab-overview"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#lab1-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#data"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-1-set-up-pgadmin-and-connect-to-the-ubc-postgresql-server"><i class="fa fa-check"></i>Task 1: Set up pgAdmin and Connect to the UBC PostgreSQL server</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-2-explore-with-qgis"><i class="fa fa-check"></i>Task 2: Explore with QGIS</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-3-explore-with-arcgis-pro"><i class="fa fa-check"></i>Task 3: Explore with ArcGIS Pro</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-4-explore-with-psql-shell"><i class="fa fa-check"></i>Task 4: Explore with psql Shell</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html"><i class="fa fa-check"></i><b>2</b> Analyze a Relational Database</a>
+<ul>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#lab-overview-1"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#learning-objectives-1"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#lab2-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#data-1"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-1-host-your-own-postgresql-server"><i class="fa fa-check"></i>Task 1: Host your own PostgreSQL Server</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-2-create-a-postgis-database"><i class="fa fa-check"></i>Task 2: Create a PostGIS Database</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-3-import-spatial-data-using-gdal"><i class="fa fa-check"></i>Task 3: Import Spatial Data Using GDAL</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-4-analyze-a-postgis-database-using-sql"><i class="fa fa-check"></i>Task 4: Analyze a PostGIS Database using SQL</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#summary-1"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html"><i class="fa fa-check"></i><b>3</b> Suitability and Overlay Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#lab-overview-2"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#learning-objectives-2"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#lab3-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#data-2"><i class="fa fa-check"></i>Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#data-organization"><i class="fa fa-check"></i>Data Organization</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#files-to-create"><i class="fa fa-check"></i>Files to Create</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-1-export-relevant-data-from-biologically-important-areas-shapefile"><i class="fa fa-check"></i>Task 1: Export Relevant Data from Biologically Important Areas Shapefile</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-2-identify-the-bia-of-the-humpback-whale-that-is-not-within-the-established-marine-sanctuary"><i class="fa fa-check"></i>Task 2: Identify the BIA of the Humpback Whale that is not within the established Marine Sanctuary</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-3-calculate-the-density-of-cetacean-sightings-using-the-bia-for-humpback-whales"><i class="fa fa-check"></i>Task 3: Calculate the Density of Cetacean Sightings using the BIA for Humpback Whales</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-4-extract-the-boats-from-ocean-uses-and-identity-the-vessels-within-the-bia-polygons"><i class="fa fa-check"></i>Task 4: Extract the Boats from Ocean Uses and Identity the Vessels within the BIA Polygons</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-5-calculate-suitability-and-identify-most-suitable-locations-for-the-marine-sanctuary"><i class="fa fa-check"></i>Task 5: Calculate Suitability and Identify Most Suitable Locations for the Marine Sanctuary</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#summary-2"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html"><i class="fa fa-check"></i><b>4</b> Exploring QGIS and OpenStreetMap</a>
+<ul>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#lab-overview-3"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#learning-objectives-3"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#lab4-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#data-3"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-1-downloading-openstreetmap-data-to-qgis"><i class="fa fa-check"></i>Task 1: Downloading OpenStreetMap data to QGIS</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-2-inspecting-and-processing-openstreetmap-data"><i class="fa fa-check"></i>Task 2: Inspecting and processing OpenStreetMap data</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-3-simple-spatial-analysis-with-qgis"><i class="fa fa-check"></i>Task 3: Simple spatial analysis with QGIS</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#summary-3"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html"><i class="fa fa-check"></i><b>5</b> Raster and Least Cost Path Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#lab-overview-4"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#learning-objectives-4"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#lab5-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#data-4"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#task-1-define-a-raster-area-of-interest"><i class="fa fa-check"></i>Task 1: Define a raster area of interest</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#task-2-seamless-mosaicking"><i class="fa fa-check"></i>Task 2: Seamless mosaicking</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#task-3-calculating-movement-costs"><i class="fa fa-check"></i>Task 3: Calculating movement costs</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#task-4-least-cost-path-analysis-in-arcgis-pro"><i class="fa fa-check"></i>Task 4: Least cost path analysis in ArcGIS Pro</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#summary-4"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html"><i class="fa fa-check"></i><b>6</b> Digitization and Editing with Kart</a>
+<ul>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#lab-overview-5"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#learning-objectives-5"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#lab6-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#data-5"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-1-install-kart-and-create-your-first-repository"><i class="fa fa-check"></i>Task 1: Install Kart and create your first repository</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-2-edit-a-layer-in-qgis-with-version-control"><i class="fa fa-check"></i>Task 2: Edit a layer in QGIS with version control</a></li>
+<li class="chapter" data-level="6.1" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-3-working-on-and-merging-different-branches"><i class="fa fa-check"></i><b>6.1</b> Task 3: Working on and merging different branches</a></li>
+<li class="chapter" data-level="6.2" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-4-digitize-some-buildings-in-arcgis-pro"><i class="fa fa-check"></i><b>6.2</b> Task 4: Digitize some buildings in ArcGIS Pro</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#summary-5"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEM 510: GIS for Forestry and Conservation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="raster-least-cost-path-analysis" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Lab 5</span> Raster and Least Cost Path Analysis<a href="raster-least-cost-path-analysis.html#raster-least-cost-path-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Written by
+Paul Pickell</p>
+<div id="lab-overview-4" class="section level2 unnumbered hasAnchor">
+<h2>Lab Overview<a href="raster-least-cost-path-analysis.html#lab-overview-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this lab, you will explore many of the different raster operations using the Geospatial Data Abstraction Library (GDAL). We will practice using these utilities directly from the command line and in QGIS. You will create a variety of different rasters from different sources and practice deriving new rasters through calculations. These efforts will culminate in a least cost path analysis in ArcGIS Pro. We will examine a critical conservation problem in western Alberta, Canada: Grizzly Bear (<strong>Ursus arctos horribilis</strong>) habitat and movement. Grizzly Bears are among the largest land predators in North America and have had much of their historical range reduced by human activity. The largest and most well-studied population now resides in the Rocky Mountain foothills of western Alberta.</p>
+<hr />
+</div>
+<div id="learning-objectives-4" class="section level2 unnumbered hasAnchor">
+<h2>Learning Objectives<a href="raster-least-cost-path-analysis.html#learning-objectives-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Describe the raster data model</li>
+<li>Convert between image coordinates and geographic coordinates</li>
+<li>Convert vector data to raster</li>
+<li>Distinguish data types in rasters and identify appropriate encoding of sampled values for different phenomena</li>
+<li>Mosaic rasters together</li>
+<li>Evaluate expressions on rasters using arithmetic and relational operators</li>
+<li>Combine rasters and calculate weighted overlays</li>
+<li>Calculate a least cost path of a landscape indicator species</li>
+</ul>
+<hr />
+</div>
+<div id="lab5-deliverables" class="section level2 unnumbered hasAnchor">
+<h2>Deliverables<a href="raster-least-cost-path-analysis.html#lab5-deliverables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><input type="checkbox" unchecked> Answers to the questions posed throughout the lab (20 points)</input></p>
+<p><input type="checkbox" unchecked> Create a map of your least cost path that supports your interpretations in Q8 (10 points)</input></p>
+<hr />
+</div>
+<div id="data-4" class="section level2 unnumbered hasAnchor">
+<h2>Data<a href="raster-least-cost-path-analysis.html#data-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>All data for this lab are accessible via the UBC PostgreSQL server. Instructions for connecting to the server are given in prior labs.</p>
+<hr />
+</div>
+<div id="task-1-define-a-raster-area-of-interest" class="section level2 unnumbered hasAnchor">
+<h2>Task 1: Define a raster area of interest<a href="raster-least-cost-path-analysis.html#task-1-define-a-raster-area-of-interest" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our first task is to define an Area of Interest (AOI) that will represent the extent of all of our raster processing.</p>
+<p><strong>Step 1:</strong> Open QGIS and create a new project named “GrizzlyBear”.</p>
+<p><strong>Step 2:</strong> Connect to the <code>bear</code> database on the UBC PostgreSQL server and load the “grizzlybearmanagementareas” layer into your map. These polygons represent the Grizzly Bear population units or Bear Management Areas (BMA) in the Rocky Mountain foothills of Alberta (<a href="https://open.alberta.ca/licence">Alberta Open Government License</a>). For this lab, we will be focusing on the Yellowhead BMA for our AOI.</p>
+<p><strong>Step 3:</strong> Write an SQL query to select the Yellowhead BMA and then export it to your local QGIS project folder as a shapefile named “yellowhead_bma.shp”, and change the “CRS” to NAD83 / UTM zone 11N (EPSG:26911).</p>
+<p>We are going to rasterize this layer and do the basic raster processing outside of QGIS/ArcGIS Pro for a couple of reasons. First, setting the options and raster processing environments in QGIS/ArcGIS Pro is overly complicated and prone to error and unexpected behaviour. Second, you will learn how to use some valuable raster processing utilities of GDAL that can be easily batched and run in chain sequence (i.e., you can batch process large research datasets from a command line).</p>
+<p><strong>Step 4:</strong> Open the OSGeo4W shell and navigate to your QGIS project folder using the change directory <code>cd</code> command. To do this, first copy the path of your project folder, usually something like <code>C:\Users\paul\Documents\QGIS\GrizzlyBear</code>. Then in the console type <code>cd C:\Users\paul\Documents\QGIS\GrizzlyBear</code> to change to that directory.</p>
+<p>The first GDAL utility we are going to use is <code>gdal_rasterize</code> (<a href="https://gdal.org/programs/gdal_rasterize.html">link to documentation</a>). This utility takes a vector input datasource and converts it to a raster in the output. The simplest usage is <code>gdal_rasterize &lt;src_datasource&gt; &lt;dst_filename&gt;</code>. All of the flags preceded by <code>-</code> are indicated as optional by the square brackets <code>[]</code>. If you do not use any of the flags when you run the utility, then the utility will use the default values/settings for those flags that are indicated in the documentation. The AOI raster we are going to create will specify a few conditions of all the other raster processing we will do:</p>
+<ul>
+<li>raster extent (number of rows/columns and geographic coordinates)</li>
+<li>pixel/cell resolution</li>
+<li>spatial reference system</li>
+</ul>
+<p><strong>Step 5:</strong> In the OSGeo4W shell, enter the following command <code>gdal_rasterize -burn 1 -tr 20 20 -ot Byte -a_nodata -tap yellowhead_bma_utm.shp yellowhead_bma_utm.tif</code>.</p>
+<ul>
+<li><p><code>-burn</code> flag indicates we want to assign a value of <code>1</code> to the output raster where the features intersect the new raster grid.</p></li>
+<li><p><code>-tr</code> flag indicates we want the output cell resolution to be 20 m (we know its meters because those are the units of the coordinate system) and this is specified twice <code>20 20</code>, once for the x-axis and again for the y-axis.</p></li>
+<li><p><code>-ot</code> flag indicates that we want the output data type of the raster to be <code>"Byte"</code>, which translates to a storage cost of 8 bits per pixel (bits per pixel × rows × columns = size of raster on disk).</p></li>
+<li><p><code>-a_nodata</code> flag indicates that we want to specifically set the nodata value as <code>nodata</code> (default is zero). This will come in handy later because nodata limits the number of cell calculations we need to perform while zero is a valid processing value.</p></li>
+<li><p><code>-tap</code> flag (target aligned pixels) indicates that we want the new raster extent to be calculated using floor and ceiling functions:</p></li>
+</ul>
+<pre><code>ymax (top) = y_resolution × ceiling(ymax / y_resolution) = 20 × ceiling(5,936,280.447609 / 20) = 20 × 296,815 = 5,936,300
+ymin (bottom) = y_resolution × floor(ymin / y_resolution) = 20 × floor(5,753,454.574941 / 20) = 20 × 287,672 = 5,753,440
+xmin (left) = x_resolution × floor(xmin / x_resolution) = 20 × floor(401,496.997149 / 20) = 20 × 20,074 = 401,480
+xmax (right) = x_resolution × ceiling(xmax / x_resolution) = 20 × ceiling(661,663.194125 / 20) = 20 × 33,084 = 661,680</code></pre>
+<p>The above calculations are probably not immediately intuitive, but the idea is that we want to create a raster grid that is aligned to the ceiling and floor of our x- and y-resolution. The overall size of the raster is the same whether we do this alignment or not (same number of rows and columns), the only difference is that we are shifting the grid so that the extent coordinates are whole numbers (integers), which makes it easier for us to compute new grids. Bring “yellowhead_bma_utm.tif” into QGIS to inspect it. Check that the values, extent, cell size, and coordinate system are correct. You can also run the <code>gdalinfo</code> utility to check the metadata from the command line like <code>gdalinfo yellowhead_bma_utm.tif</code>.</p>
+<hr />
+</div>
+<div id="task-2-seamless-mosaicking" class="section level2 unnumbered hasAnchor">
+<h2>Task 2: Seamless mosaicking<a href="raster-least-cost-path-analysis.html#task-2-seamless-mosaicking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A common task in raster analysis is mosaicking multiple rasters together to perform analysis on a single file over a larger extent. We will practice doing this with some ASTER Digital Elevation Models (DEM) that are distributed as non-overlapping tiles in WGS 1984 (EPSG:4326). The source for these data can be found at <a href="https://search.earthdata.nasa.gov">NASA’s Earth Science Data Systems portal</a>, but we will be retrieving these data from the UBC PostgreSQL server instead.</p>
+<p><strong>Step 1:</strong> Open your QGIS project and from the “Data Source Manager” connect to the <code>bear</code> database of the UBC PostgreSQL server. You should see a listing of 15 rasters there, which have names prefixed with “astgtmv003”. Select all 15 and then click “Add”. It is very important that you add the rasters using this method rather than from the “Browser” pane, otherwise you might have unexpected errors.</p>
+<p><img src="images/05-qgis-data-source-manager.png" width="75%" /></p>
+<p><img src="images/05-qgis-aster-dem-tiles.png" width="75%" /></p>
+<p><strong>Step 2:</strong> Open the “Layer Properties” for “astgtmv003_n51w115” and inspect the extent values and the pixel size.</p>
+<div id="q1.-what-units-are-the-extent-and-pixel-size-in-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q1. What units are the extent and pixel size in? (1 point)<a href="raster-least-cost-path-analysis.html#q1.-what-units-are-the-extent-and-pixel-size-in-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>If you are wondering why the y pixel size is negative, it is to facilitate the conversion between image coordinates and geographic/projected coordinates. Image coordinates are the unique combination of rows <code>i</code> and columns <code>j</code> representing each pixel in the image. By convention, the origin <code>(0,0)</code> for image coordinates is the upper left corner of the image. Image coordinates are always positive and increase as you move down the image to the lower right corner at <code>(n,m)</code>, where <code>n</code> is the number of columns in the image (think x-axis) and <code>m</code> is the number of rows in the image (think y-axis). Most geographic and projected coordinate systems decrease along the y-axis (as you move south), which is the inverse of image coordinates that are increasing. Thus, the y pixel size is usually stored as a negative number in order to convert image coordinates into geographic/projected coordinates.</p>
+<p>For example, to convert pixel <code>(i,j)</code> from image coordinates to geographic coordinates where the image origin <code>(0,0)</code> corresponds to geographic coordinates <code>(-115.0001388888889977,52.0001388888888982)</code> as is the case for “astgtmv003_n51w115” and the x pixel size is <code>0.000277778</code> and the y pixel size is <code>-0.000277778</code>:</p>
+<pre><code>Longitude(i) = -115.0001388888889977 + i × 0.000277778
+Latitude(j) = 52.0001388888888982 + j × -0.000277778</code></pre>
+</div>
+<div id="q2.-given-the-equations-above-what-is-the-exact-latitude-and-longtiude-of-the-pixel-with-image-coordinates-19071918-show-your-work-for-full-credit.-2-points" class="section level5 unnumbered hasAnchor">
+<h5>Q2. Given the equations above, what is the exact latitude and longtiude of the pixel with image coordinates (1907,1918)? Show your work for full credit. (2 points)<a href="raster-least-cost-path-analysis.html#q2.-given-the-equations-above-what-is-the-exact-latitude-and-longtiude-of-the-pixel-with-image-coordinates-19071918-show-your-work-for-full-credit.-2-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><strong>Step 3:</strong> Copy the coordinates from Q2 and paste them into the “Coordinate” field at the bottom of your QGIS screen (see image below) in the format <code>latitude, longitude</code> and press “Enter”. Change the scale to <code>1:500</code> and press “Enter”. You should now be able to distinguish individual pixels. Click the coordinate reference system at the bottom right of the screen and change it from the default value of <code>EPSG:4326</code> (WGS 1984) to <code>EPSG:26911</code> (NAD 1983 UTM Zone 11N).</p>
+<p><img src="images/05-qgis-project-srs.png" width="100%" /></p>
+</div>
+<div id="q3.-why-do-the-pixels-now-appear-to-be-elongated-along-the-y-axis-2-points" class="section level5 unnumbered hasAnchor">
+<h5>Q3. Why do the pixels now appear to be elongated along the y-axis? (2 points)<a href="raster-least-cost-path-analysis.html#q3.-why-do-the-pixels-now-appear-to-be-elongated-along-the-y-axis-2-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><strong>Step 4:</strong> Save your PostgreSQL credential to your QGIS environment variables by opening the Python console from your toolbar in QGIS, click the small “Show editor” button, and then paste the following into the editor and click the “Run” button:</p>
+<pre><code>import os
+os.environ[&#39;PGUSER&#39;] = &#39;student&#39;
+os.environ[&#39;PGPASSWORD&#39;] = &#39;studentpasswordhere&#39;
+</code></pre>
+<p><img src="images/05-qgis-python-environment-variables.png" width="75%" /></p>
+<p>This step will automatically authenticate you each time you need to transact with the PostgreSQL server through the GDAL utilities. Your credential is only saved for the duration of your QGIS session, so once you close QGIS and re-open your project, you will need to come back to this step to save your environment variables. Close the python console and editor when you are done.</p>
+<p><strong>Step 5:</strong> From the QGIS processing toolbox, search for the “Build virtual raster” tool. This tool takes a set of rasters as input and essentially creates a catalog of those data for later processing. Click the ellipse “…” next to the “Input Layers” field and then click “Select All” to toggle on all the ASTER DEMs currently in your project. Click “Run”. The tool does not actually create a new raster file, but what you will see is that you can now manipulate this catalog of rasters as if it were a single file, which is very handy for mosaicking. Notice when you run these GDAL tools, the log shows you the exact GDAL command that you can run in the command line, like we did in Task 1.</p>
+<p><strong>Step 6:</strong> The GDAL utility that will actually make the mosaic is <code>gdal_translate</code>, which is really just a utility for converting between different raster formats. We are going to use it to read in the virtual raster and write out a GeoTiff. Search for the tool in the processing toolbox, “Translate”, make sure you are using the tool under “Raster Conversion”. Make sure the virtual raster is selected for “Input layer” and then click the ellipse “…” next to the “Converted” field, “Save to file…”, and then name the output “aster_dem_wgs84.tif”. Click “Run” and then inspect the output in QGIS. Notice that we did not download any of the raster data to our local machine until this very last step.</p>
+<p><img src="images/05-qgis-translate.png" width="75%" /></p>
+<p>The mosaic still needs to be reprojected and clipped to the same extent as our AOI, which is what we will do in the next step using the <code>gdalwarp</code> utility. The QGIS tool, “Warp”, does not expose all the options that we need, so we will do this next step in the OSGeo4W shell.</p>
+<p><strong>Step 7:</strong> Open the OSGeo4W shell and navigate to your project folder where you saved “aster_dem_wgs84.tif”. Type the following command into the console and then hit “Enter”: <code>gdalwarp -s_srs EPSG:4326 -t_srs EPSG:26911 -te 401480 5753440 661680 5936300 -tr 20 20 -r cubic aster_dem_wgs84.tif aster_dem_utm.tif</code>.</p>
+<ul>
+<li><p><code>-s_srs</code> flag defines the input spatial reference system (coordinate system), which is WGS 1984 or <code>EPSG:4326</code>.</p></li>
+<li><p><code>-t_srs</code> flag defines our target SRS, which is NAD 1983 UTM Zone 11N or <code>EPSG:26911</code>.</p></li>
+<li><p><code>-te</code> flag defines our target extent <code>xmin ymin xmax ymax</code>, which is the calculation we did in Task 1 <code>401480 5753440 661680 5936300</code>.</p></li>
+<li><p><code>-tr</code> flag defines the target resolution, again specified twice for both axes <code>10 10</code>.</p></li>
+<li><p><code>-r</code> flag defines the re-sampling method. This is an important flag for <code>gdalwarp</code> because any time that you re-project a raster, you are resampling that raster. The term “resampling” comes from the fact that a raster is “sampled” to begin with. Each cell in a raster is a sample of some random variable over the extent of the raster, and the value of that sample is correct for the center of the cell. When we re-project a raster, the locations of the cells change, therefore we need to recalculate the samples or “resample” the raster. Our selected method of resampling in this case is <code>cubic</code>, which is a smoothing algorithm and well-suited for continuous data like elevation.</p></li>
+<li><p><code>aster_dem_wgs84.tif</code> is the input raster and <code>aster_dem_utm.tif</code> is the output (resampled) raster. Inspect the output in QGIS.</p></li>
+</ul>
+<p>Note that we did not use the <code>-ot</code> output data type flag, so <code>gdalwarp</code> used the <code>Int16</code> data type of our input raster. If you set <code>-ot Float32</code>, then you would see that the cubic resampling algorithm actually yields decimals instead of the integers that you see in the current output, but for our purposes that sub-meter level of precision is not needed.</p>
+<p><strong>Step 8:</strong> Search for the “Raster Calculator” tool. Double-click the “aster_dem_utm.tif” mosaic to add it to the expression, then click the multiply button “*“, then double-click the”yellowhead_bma_utm.tif” raster to add it to the expression. Scroll down further and click the ellipse “…” next to the “Reference layer(s)” field, toggle on “yellowhead_bma_utm.tif”, and then click “OK”. Scroll down further and click the ellipse “…” next to the “Output” field to save the output as “aster_dem_utm_aoi.tif”. Click “Run” and then inspect the output in your map.</p>
+<p><img src="images/05-qgis-aster-dem-mask.png" width="75%" /></p>
+<hr />
+</div>
+</div>
+<div id="task-3-calculating-movement-costs" class="section level2 unnumbered hasAnchor">
+<h2>Task 3: Calculating movement costs<a href="raster-least-cost-path-analysis.html#task-3-calculating-movement-costs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this task, we will calculate a few derivative rasters that are going to represent various costs for Grizzly Bears to move across the landscape. At the end of the task, we will produce a cost raster that will be one of the inputs to our least cost path model in the following task.</p>
+<p><strong>Step 1:</strong> Open your QGIS project and search for the “Slope” tool. Add “aster_dem_utm_aoi.tif” as the “Elevation layer” and save the output to “aster_slope_utm_aoi.tif”. Inspect the output in your map.</p>
+<p><strong>Step 2:</strong> We are going to adjust the slope values to a range of 0 and 1. This is easily done by dividing all values by 90, which is the theoretical maximum slope in degrees. Open the “Raster Calculator” tool and type the expression <code>"aster_slope_utm_aoi@1" / 90</code>. Change the “Reference layer” to “yellowhead_bma_utm.tif”, click “OK”, and name the output “aster_slope_utm_aoi_cost.tif” then click “Run”. Inspect the output in your map, you should now have values between 0 and 1.</p>
+<p><strong>Step 3:</strong> Open the “Data source manager”, connect to the <code>bear</code> database on the UBC PostgreSQL server, and add the “ca_forest_vlce2_2019” raster to your map. This layer is a clipping of a <a href="https://opendata.nfis.org/mapserver/nfis-change_eng.html">national land cover dataset for Canada</a> for the year 2019. The values of the raster refer to specific land covers. Open the properties for the layer. As you can see, it has a different coordinate system, resolution, and extent than our AOI. Export this raster as a GeoTiff to your local project folder and keep the output name the same.</p>
+<p><strong>Step 4:</strong> Open the OSGeo4W shell and navigate to your project folder. Run the <code>gdalwarp</code> utility again, parameterize it the same as before in Task 2, but change the <code>-s_srs</code> flag to <code>EPSG:3978</code>, the <code>-r</code> flag to <code>near</code>, the input file to <code>ca_forest_vlce2_2019.tif</code>, and the output file to <code>land_cover_utm.tif</code>. Inspect the output in QGIS.</p>
+<div id="q4.-why-did-we-choose-near-as-the-resampling-method-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q4. Why did we choose ‘near’ as the resampling method? (1 point)<a href="raster-least-cost-path-analysis.html#q4.-why-did-we-choose-near-as-the-resampling-method-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><strong>Step 5:</strong> Use the “Raster Calculator” tool to multiply “yellowhead_bma_utm.tif” by “land_cover_utm.tif” and write the output to “land_cover_utm_aoi.tif”.</p>
+<p>We want to use the land cover layer as an input to our cost surface, but the values of the land cover raster are codes, which are nominal data. These values cannot directly be compared as-is. For example, the code for water is 20 and the code for herbs is 100. These numbers do not imply that herbs is 5 times more costly than water, they are simply numerical placeholders for the concept of land cover. We need to define and then assign proper values for each land cover that represents the cost or resistance for Grizzly Bears to traverse a cell of that land cover. We can do this by reclassifying the land cover raster. Below is a table indicating the land cover class codes and some proposed cost values scaled between 0 (no cost) and 1 (highest cost):</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Code</th>
+<th align="left">Land Cover</th>
+<th align="left">Proposed Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">20</td>
+<td align="left">Water</td>
+<td align="left">?</td>
+</tr>
+<tr class="even">
+<td align="right">31</td>
+<td align="left">Snow/Ice</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="right">32</td>
+<td align="left">Rock/Rubble</td>
+<td align="left">0.8</td>
+</tr>
+<tr class="even">
+<td align="right">33</td>
+<td align="left">Exposed Barren Land</td>
+<td align="left">?</td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="left">Bryoids</td>
+<td align="left">0.1</td>
+</tr>
+<tr class="even">
+<td align="right">50</td>
+<td align="left">Shrubs</td>
+<td align="left">0.2</td>
+</tr>
+<tr class="odd">
+<td align="right">80</td>
+<td align="left">Wetland</td>
+<td align="left">?</td>
+</tr>
+<tr class="even">
+<td align="right">81</td>
+<td align="left">Treed Wetland</td>
+<td align="left">0.2</td>
+</tr>
+<tr class="odd">
+<td align="right">100</td>
+<td align="left">Herbs</td>
+<td align="left">?</td>
+</tr>
+<tr class="even">
+<td align="right">210</td>
+<td align="left">Coniferous</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="right">220</td>
+<td align="left">Broadleaf</td>
+<td align="left">0.3</td>
+</tr>
+<tr class="even">
+<td align="right">230</td>
+<td align="left">Mixedwood</td>
+<td align="left">0.2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Step 6:</strong> Open the “Reclassify by Table” tool. Select “land_cover_utm_aoi.tif” as the “Raster layer” and then click the ellipse “…” next to “Reclassification table”. Populate the table with all the land cover codes. You will need to use some judgement and determine what would be reasonable values for the four missing codes in the table above. There is no right or wrong answer for these, but you will need to justify your choices. When you have filled in the table (see image below), change “Range boundaries” to “min &lt;= value &lt;= max”, click “OK”, and then name the output “land_cover_utm_aoi_cost.tif”. Inspect the output in your map, you should have values ranging from 0 to 1.</p>
+<p><img src="images/05-qgis-reclassify-by-table.png" width="75%" /></p>
+</div>
+<div id="q5.-what-was-your-rationale-for-cost-choices-for-classes-20-33-80-and-100-4-points" class="section level5 unnumbered hasAnchor">
+<h5>Q5. What was your rationale for cost choices for classes 20, 33, 80, and 100? (4 points)<a href="raster-least-cost-path-analysis.html#q5.-what-was-your-rationale-for-cost-choices-for-classes-20-33-80-and-100-4-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The last layer we are going to add is distance to roads as a simple proxy for human-related mortality.</p>
+<p><strong>Step 7:</strong> Open “yellowhead_roads” in QGIS from the UBC PostgreSQL database, if you have not already. Open the “Reproject Layer” tool and change the projection for “yellowhead_roads” to EPSG:26911 and name the output “yellowhead_roads_utm.shp”.</p>
+<p><strong>Step 8:</strong> In the OSGeo4W shell, enter the following command <code>gdal_rasterize -burn 1 -tr 20 20 -ot Byte -a_nodata nodata -te 401480 5753440 661680 5936300 yellowhead_roads_utm.shp yellowhead_roads_utm.tif</code>. You should recognize all these flags by now. Inspect the output in QGIS.</p>
+<p><strong>Step 9:</strong> Search for the “Proximity (Raster Distance)” tool. The input layer will be “yellowhead_roads_utm.shp”. Name the output as “yellowhead_roads_distance_utm.tif” then click “Run” then inspect the output in the map.</p>
+<p><strong>Step 10:</strong> Open the “Raster Calculator” tool and add the expression <code>(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2</code>. Let us break this one down:</p>
+<ul>
+<li><p><code>1 / "yellowhead_roads_distance_utm@1"</code> would give us the inverse distances, however, cells that are roads have a distance of zero, and <span class="math inline">\(1÷0=undefined=nodata\)</span>. Therefore, we need to add a fraction to the denominator.</p></li>
+<li><p><code>1 / ("yellowhead_roads_distance_utm@1" + 0.5)</code> avoids nodata values in the situation above, but now roads have a value of <span class="math inline">\(1÷0.5=2\)</span>. We ultimately want these values to be between 0 and 1, with 1 representing roads.</p></li>
+<li><p><code>(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2</code> dividing everything by 2 causes the 0.5 fraction to be removed from all cells, and road cells to be assigned a value of <span class="math inline">\(2÷2=1\)</span>.</p></li>
+</ul>
+<p>This way, the cost of traversing a roadway is 1 and decreases as you move away from the road. Change the “Reference layer” to “yellowhead_bma_utm.tif” and save the output as “yellowhead_roads_distance_utm_cost.tif”. Inspect the output in your map and zoom in close to a road.</p>
+<p><img src="images/05-qgis-roads-cost.png" width="50%" /></p>
+<p>Now that we have three different cost layers, slope, land cover, and distance to roads, we simply need to decide how to combine them into a single cost raster. This is made easy by the fact that all layers are scaled between 0 and 1. The simplest approach would be to add them all together, but this assumes equal-weighting given to each cost factor. It is also common to weight layers differently and this can be achieved by multiplying a set of weights to the layers that add up to 1. For example, to weight slope 10%, land cover 30%, and road distance 60%, we would use the formula <span class="math inline">\(totalcost=slope×0.1+landcover×0.3+road×0.6\)</span>. Note that <span class="math inline">\(totalcost=slope×0.33+landcover×0.33+road×0.33\)</span> is functionally the same as <span class="math inline">\(totalcost=slope+landcover+road\)</span>. Differences in the percentage weightings are not absolute difference, but relative. For example, 30% weight to land cover implies that land cover is weighted 3 times more than slope at 10%: <span class="math inline">\(0.3÷0.1=3=300\%\)</span>.</p>
+<p><strong>Step 11:</strong> Pick weightings for your three layers (the weights must sum to 1), then open the “Raster Calculator” tool and apply the formula above. Set the “Reference layer” to “yellowhead_bma_utm.tif” and save the output as “yellowhead_cost_raster.tif”.</p>
+</div>
+<div id="q6.-what-was-your-rationale-for-selecting-your-weights-2-points" class="section level5 unnumbered hasAnchor">
+<h5>Q6. What was your rationale for selecting your weights? (2 points)<a href="raster-least-cost-path-analysis.html#q6.-what-was-your-rationale-for-selecting-your-weights-2-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="q7.-what-additional-or-alternative-layers-could-you-have-used-for-costs-in-this-analysis-give-at-least-two-examples-and-explain-why-they-are-pertinent.-4-points" class="section level5 unnumbered hasAnchor">
+<h5>Q7. What additional or alternative layers could you have used for costs in this analysis? Give at least two examples and explain why they are pertinent. (4 points)<a href="raster-least-cost-path-analysis.html#q7.-what-additional-or-alternative-layers-could-you-have-used-for-costs-in-this-analysis-give-at-least-two-examples-and-explain-why-they-are-pertinent.-4-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>In these last steps, we are going to create the point layers that will be used to trace the least cost path in the following task.</p>
+<p><strong>Step 12:</strong> Add the “grizzly_bear_core_access_management_area” to your map from the UBC PostgreSQL server. These represent the core habitat of Grizzly Bear across all regions. Select the Yellowhead unit and then search for the “Centroids” tool under “Vector Geometry”, ensure “Input Layer” is set to “grizzly_bear_core_access_management_area”, “Selected features only” is toggled on, and save the output as “yellowhead_bma_centroid.shp”. Reproject this layer to EPSG:26911 and name the output “source.shp”.</p>
+<p><strong>Step 13:</strong> Now let us randomly choose a point in the secondary habitat area. Add the “grizzly_bear_secondary_access_management_area” and select the Yellowhead unit. Search for the “Random points inside polygons” tool, ensure “Input layer is set to”grizzly_bear_secondary_access_management_area”, “Selected features only” is toggled on, and save the output as “yellowhead_bma_target.shp”. Reproject this layer to EPSG:26911 and name the output “target.shp”. You can repeat this as many times as you want until you get a satisfactory location.</p>
+<hr />
+</div>
+</div>
+<div id="task-4-least-cost-path-analysis-in-arcgis-pro" class="section level2 unnumbered hasAnchor">
+<h2>Task 4: Least cost path analysis in ArcGIS Pro<a href="raster-least-cost-path-analysis.html#task-4-least-cost-path-analysis-in-arcgis-pro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For this last task, we are going to perform the least cost path analysis in ArcGIS Pro. QGIS has a least cost path plugin, but it is not as robust as the ArcGIS Pro tools.</p>
+<p><strong>Step 1:</strong> Open a new ArcGIS Pro project and add the following layers to your map:</p>
+<ul>
+<li>Total cost raster: “yellowhead_cost_raster.tif”</li>
+<li>Aster DEM: “aster_dem_utm.tif”</li>
+<li>Slope raster: “aster_slope_utm_aoi.tif”</li>
+<li>Land cover raster: “land_cover_utm_aoi.tif”</li>
+<li>Road polylines: “yellowhead_roads_utm.shp”</li>
+<li>Yellowhead source: “source.shp”</li>
+<li>Yellowhead target: “target.shp”</li>
+</ul>
+<p><strong>Step 2:</strong> Open the “Distance Accumulation” tool and parameterize it according to the image below. You can save the two output rasters (“distance_accumulation_raster” and “backlink”) in your project geodatabase or in your QGIS project folder as geotiffs, just be mindful that you cannot save a geotiff inside your geodatabase. This tool will take your source point and calculate the accumulative cost to travel to all other cells using a combination of the cost raster and the real geographic distance, both horizontal and vertical, which is why we supply the ASTER DEM.</p>
+<p><img src="images/05-arcgispro-distance-accumulation.png" width="50%" /></p>
+<p>The “distance_accumulation_raster” shows us the accumulated cost-distance to reach any given cell in the AOI from the source point.</p>
+<p><img src="images/05-arcgispro-distance-accumulation-raster.png" width="75%" /></p>
+<p>The “backlink” raster shows us the direction of the least costly path back to the source for any given cell. In other words, this raster is encoding the lowest directional movement cost for the 8-neighbours of each cell. Since the costs are accumulative relative to the source cell, this means that we can trace a path from any given pixel in the “backlink” raster back to the source cell. The image below shows a close-up for the source cell and illustrates how these values are encoded.</p>
+<p><img src="images/05-arcgispro-backlink-raster.png" width="75%" /></p>
+<p><strong>Step 3:</strong> Now we can trace the least cost path between our source and target locations. Open the “Optimal Path as Line” tool and parameterize like the image below then click “Run”.</p>
+<p><img src="images/05-arcgispro-optimal-path-as-line.png" width="50%" /></p>
+<p><strong>Step 4:</strong> Inspect the output. You should be able to trace the line along the “backlink” raster. Toggle on the roads. How many roads did you path cross? Toggle on the land cover. Were there any land covers that were avoided? Toggle on the slope. Did the path avoid any steep slopes or otherwise maneuver around the terrain?</p>
+<div id="q8.-interpret-the-impact-that-your-choice-of-weightings-had-on-the-final-least-cost-path-that-you-observed.-4-points" class="section level5 unnumbered hasAnchor">
+<h5>Q8. Interpret the impact that your choice of weightings had on the final least cost path that you observed. (4 points)<a href="raster-least-cost-path-analysis.html#q8.-interpret-the-impact-that-your-choice-of-weightings-had-on-the-final-least-cost-path-that-you-observed.-4-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><strong>Step 5:</strong> Create a map of your least cost path that supports your interpretations in Q8. Export it as a pdf and upload to the course management system.</p>
+<hr />
+</div>
+</div>
+<div id="summary-4" class="section level2 unnumbered hasAnchor">
+<h2>Summary<a href="raster-least-cost-path-analysis.html#summary-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Raster analysis is comprised of manipulating base data, deriving new rasters, and weighting and combining rasters together in order to answer a spatial question. In this lab, you learned how to effectively set up a raster analysis through careful planning and choice of factors like raster extent, coordinate system, cell size, alignment, data type, and resampling algorithms. Rasters can lead to powerful spatial analyses like least cost path analysis due to the explicit encoding of information in the spatial neighborhood.</p>
+<p>Return to the <strong><a href="raster-least-cost-path-analysis.html#lab5-deliverables">Deliverables</a></strong> section to check off everything you need to submit for credit in the course management system.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="qgis-openstreetmap.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="digitization-editing-kart.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["open-geomatics-community-of-practice.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
