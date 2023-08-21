@@ -6,7 +6,7 @@ suitability-overlay-analysis:
   author: Annie Mejaes
 qgis-openstreetmap:
   author: Paul Pickell
-raster-analysis-gdal:
+raster-least-cost-path-analysis:
   author: Paul Pickell
 digitization-editing-kart:
   author: Paul Pickell

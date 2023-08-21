@@ -1,8 +1,8 @@
 ```{r echo=FALSE}
 yml_content <- yaml::read_yaml("chapterauthors.yml")
-author <- yml_content[["raster-analysis-gdal"]][["author"]]
+author <- yml_content[["raster-least-cost-path-analysis"]][["author"]]
 ```
-# Raster and Least Cost Path Analysis {#raster-analysis-gdal}
+# Raster and Least Cost Path Analysis {#raster-least-cost-path-analysis}
 
 Written by
 ```{r results='asis', echo=FALSE}
@@ -11,37 +11,28 @@ cat(author)
 
 ## Lab Overview {.unnumbered}
 
-In this lab, you will explore many of the different raster operations using the Geospatial Data Abstraction Library (GDAL). GDAL is implemented in most popular GIS software, but we will practice using these utilities directly from the command line. You will create
+In this lab, you will explore many of the different raster operations using the Geospatial Data Abstraction Library (GDAL). We will practice using these utilities directly from the command line and in QGIS. You will create a variety of different rasters from different sources and practice deriving new rasters through calculations. These efforts will culminate in a least cost path analysis in ArcGIS Pro. We will examine a critical conservation problem in western Alberta, Canada: Grizzly Bear (__Ursus arctos horribilis__) habitat and movement. Grizzly Bears are among the largest land predators in North America and have had much of their historical range reduced by human activity. The largest and most well-studied population now resides in the Rocky Mountain foothills of western Alberta.
 
 ------------------------------------------------------------------------
 
 ## Learning Objectives {.unnumbered}
 
 - Describe the raster data model
-
 - Convert between image coordinates and geographic coordinates
-
-- Convert vector data to raster and vice-versa
-
-- Distinguish bit depths in rasters and identify appropriate encoding of sampled values for different phenomena
-
-- Evaluate expressions on rasters using arithmetic, relational, and boolean operators
-
-- Calculate cumulative viewsheds
-
+- Convert vector data to raster
+- Distinguish data types in rasters and identify appropriate encoding of sampled values for different phenomena
+- Mosaic rasters together
+- Evaluate expressions on rasters using arithmetic and relational operators
 - Combine rasters and calculate weighted overlays
-
-- Calculate least cost paths and corridors of a landscape indicator species
+- Calculate a least cost path of a landscape indicator species
 
 ------------------------------------------------------------------------
 
 ## Deliverables {#lab5-deliverables .unnumbered}
 
--   Lorem ipsum
+<input type="checkbox" unchecked> Answers to the questions posed throughout the lab (20 points)</input>
 
--   Lorem ipsum
-
--   Lorem ipsum
+<input type="checkbox" unchecked> Create a map of your least cost path that supports your interpretations in Q8 (10 points)</input>
 
 ------------------------------------------------------------------------
 
@@ -110,7 +101,7 @@ A common task in raster analysis is mosaicking multiple rasters together to perf
 
 **Step 2:** Open the "Layer Properties" for "astgtmv003_n51w115" and inspect the extent values and the pixel size. 
 
-##### Q1. What units are the extent and pixel size in? (1 point) {-}
+##### Q1. What units are the extent and pixel size in? (1 point) {.unnumbered}
 
 If you are wondering why the y pixel size is negative, it is to facilitate the conversion between image coordinates and geographic/projected coordinates. Image coordinates are the unique combination of rows `i` and columns `j` representing each pixel in the image. By convention, the origin `(0,0)` for image coordinates is the upper left corner of the image. Image coordinates are always positive and increase as you move down the image to the lower right corner at `(n,m)`, where `n` is the number of columns in the image (think x-axis) and `m` is the number of rows in the image (think y-axis). Most geographic and projected coordinate systems decrease along the y-axis (as you move south), which is the inverse of image coordinates that are increasing. Thus, the y pixel size is usually stored as a negative number in order to convert image coordinates into geographic/projected coordinates.
 
@@ -121,7 +112,7 @@ Longitude(i) = -115.0001388888889977 + i × 0.000277778
 Latitude(j) = 52.0001388888888982 + j × -0.000277778
 ```
 
-##### Q2. Given the equations above, what is the exact latitude and longtiude of the pixel with image coordinates (1907,1918)? Show your work for full credit. (4 points) {-} 
+##### Q2. Given the equations above, what is the exact latitude and longtiude of the pixel with image coordinates (1907,1918)? Show your work for full credit. (2 points) {.unnumbered} 
 
 **Step 3:** Copy the coordinates from Q2 and paste them into the "Coordinate" field at the bottom of your QGIS screen (see image below) in the format `latitude, longitude` and press "Enter". Change the scale to `1:500` and press "Enter". You should now be able to distinguish individual pixels. Click the coordinate reference system at the bottom right of the screen and change it from the default value of `EPSG:4326` (WGS 1984) to `EPSG:26911` (NAD 1983 UTM Zone 11N).
 
@@ -129,7 +120,7 @@ Latitude(j) = 52.0001388888888982 + j × -0.000277778
     knitr::include_graphics("images/05-qgis-project-srs.png")
 ```
 
-##### Q3. Why do the pixels now appear to be elongated along the y-axis? (2 points) {-} 
+##### Q3. Why do the pixels now appear to be elongated along the y-axis? (2 points) {.unnumbered} 
 
 **Step 4:** Save your PostgreSQL credential to your QGIS environment variables by opening the Python console from your toolbar in QGIS, click the small "Show editor" button, and then paste the following into the editor and click the "Run" button:
 
@@ -180,19 +171,21 @@ Note that we did not use the `-ot` output data type flag, so `gdalwarp` used the
 
 ------------------------------------------------------------------------
 
-## Task 3: Calculate derivative rasters {.unnumbered}
+## Task 3: Calculating movement costs {.unnumbered}
 
 In this task, we will calculate a few derivative rasters that are going to represent various costs for Grizzly Bears to move across the landscape. At the end of the task, we will produce a cost raster that will be one of the inputs to our least cost path model in the following task.
 
 **Step 1:** Open your QGIS project and search for the "Slope" tool. Add "aster_dem_utm_aoi.tif" as the "Elevation layer" and save the output to "aster_slope_utm_aoi.tif". Inspect the output in your map.
 
-**Step 2:** Open the "Data source manager", connect to the `bear` database on the UBC PostgreSQL server, and add the "ca_forest_vlce2_2019" raster to your map. This layer is a clipping of a [national land cover dataset for Canada](https://opendata.nfis.org/mapserver/nfis-change_eng.html) for the year 2019. The values of the raster refer to specific land covers. Open the properties for the layer. As you can see, it has a different coordinate system, resolution, and extent than our AOI. Export this raster as a GeoTiff to your local project folder and keep the output name the same.
+**Step 2:** We are going to adjust the slope values to a range of 0 and 1. This is easily done by dividing all values by 90, which is the theoretical maximum slope in degrees. Open the "Raster Calculator" tool and type the expression `"aster_slope_utm_aoi@1" / 90`. Change the "Reference layer" to "yellowhead_bma_utm.tif", click "OK", and name the output "aster_slope_utm_aoi_cost.tif" then click "Run". Inspect the output in your map, you should now have values between 0 and 1.
 
-**Step 3:** Open the OSGeo4W shell and navigate to your project folder. Run the `gdalwarp` utility again, parameterize it the same as before in Task 2, but change the `-s_srs` flag to `EPSG:3978`, the `-r` flag to `near`, the input file to `ca_forest_vlce2_2019.tif`, and the output file to `land_cover_utm.tif`. Inspect the output in QGIS.
+**Step 3:** Open the "Data source manager", connect to the `bear` database on the UBC PostgreSQL server, and add the "ca_forest_vlce2_2019" raster to your map. This layer is a clipping of a [national land cover dataset for Canada](https://opendata.nfis.org/mapserver/nfis-change_eng.html) for the year 2019. The values of the raster refer to specific land covers. Open the properties for the layer. As you can see, it has a different coordinate system, resolution, and extent than our AOI. Export this raster as a GeoTiff to your local project folder and keep the output name the same.
 
-##### Q4. Why did we choose 'near' as the resampling method? (1 point) {-}
+**Step 4:** Open the OSGeo4W shell and navigate to your project folder. Run the `gdalwarp` utility again, parameterize it the same as before in Task 2, but change the `-s_srs` flag to `EPSG:3978`, the `-r` flag to `near`, the input file to `ca_forest_vlce2_2019.tif`, and the output file to `land_cover_utm.tif`. Inspect the output in QGIS.
 
-**Step 4:** Use the "Raster Calculator" tool to multiply "yellowhead_bma_utm.tif" by "land_cover_utm.tif" and write the output to "land_cover_utm_aoi.tif".
+##### Q4. Why did we choose 'near' as the resampling method? (1 point) {.unnumbered}
+
+**Step 5:** Use the "Raster Calculator" tool to multiply "yellowhead_bma_utm.tif" by "land_cover_utm.tif" and write the output to "land_cover_utm_aoi.tif".
 
 We want to use the land cover layer as an input to our cost surface, but the values of the land cover raster are codes, which are nominal data. These values cannot directly be compared as-is. For example, the code for water is 20 and the code for herbs is 100. These numbers do not imply that herbs is 5 times more costly than water, they are simply numerical placeholders for the concept of land cover. We need to define and then assign proper values for each land cover that represents the cost or resistance for Grizzly Bears to traverse a cell of that land cover. We can do this by reclassifying the land cover raster. Below is a table indicating the land cover class codes and some proposed cost values scaled between 0 (no cost) and 1 (highest cost):
 
@@ -207,7 +200,49 @@ knitr::kable(
 )
 ```
 
-**Step 5:** Open the "Reclassify by Table" tool. Select "land_cover_utm_aoi.tif" as the "Raster layer" and then click the ellipse "..." next to "Reclassification table". Populate the table with all the land cover codes. You will need to use some judgement and determine what would be reasonable values for the four missing codes in the table above. There is no right or wrong answer for these, but you will need to justify your choices. When you have filled in the table (see image below) click "OK", and then name the output "land_cover_utm_aoi_cost.tif".
+**Step 6:** Open the "Reclassify by Table" tool. Select "land_cover_utm_aoi.tif" as the "Raster layer" and then click the ellipse "..." next to "Reclassification table". Populate the table with all the land cover codes. You will need to use some judgement and determine what would be reasonable values for the four missing codes in the table above. There is no right or wrong answer for these, but you will need to justify your choices. When you have filled in the table (see image below), change "Range boundaries" to "min <= value <= max", click "OK", and then name the output "land_cover_utm_aoi_cost.tif". Inspect the output in your map, you should have values ranging from 0 to 1. 
+
+```{r 05-qgis-reclassify-by-table, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/05-qgis-reclassify-by-table.png")
+```
+
+##### Q5. What was your rationale for cost choices for classes 20, 33, 80, and 100? (4 points) {.unnumbered}
+
+The last layer we are going to add is distance to roads as a simple proxy for human-related mortality.
+
+**Step 7:** Open "yellowhead_roads" in QGIS from the UBC PostgreSQL database, if you have not already. Open the "Reproject Layer" tool and change the projection for "yellowhead_roads" to EPSG:26911 and name the output "yellowhead_roads_utm.shp".
+
+**Step 8:** In the OSGeo4W shell, enter the following command `gdal_rasterize -burn 1 -tr 20 20 -ot Byte -a_nodata nodata -te 401480 5753440 661680 5936300 yellowhead_roads_utm.shp yellowhead_roads_utm.tif`. You should recognize all these flags by now. Inspect the output in QGIS.
+
+**Step 9:** Search for the "Proximity (Raster Distance)" tool. The input layer will be "yellowhead_roads_utm.shp". Name the output as "yellowhead_roads_distance_utm.tif" then click "Run" then inspect the output in the map.
+
+**Step 10:** Open the "Raster Calculator" tool and add the expression `(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2`. Let us break this one down:
+
+- `1 / "yellowhead_roads_distance_utm@1"` would give us the inverse distances, however, cells that are roads have a distance of zero, and $1÷0=undefined=nodata$. Therefore, we need to add a fraction to the denominator.
+
+- `1 / ("yellowhead_roads_distance_utm@1" + 0.5)` avoids nodata values in the situation above, but now roads have a value of $1÷0.5=2$. We ultimately want these values to be between 0 and 1, with 1 representing roads.
+
+- `(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2` dividing everything by 2 causes the 0.5 fraction to be removed from all cells, and road cells to be assigned a value of $2÷2=1$.
+
+This way, the cost of traversing a roadway is 1 and decreases as you move away from the road. Change the "Reference layer" to "yellowhead_bma_utm.tif" and save the output as "yellowhead_roads_distance_utm_cost.tif". Inspect the output in your map and zoom in close to a road.
+
+```{r 05-qgis-roads-cost, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/05-qgis-roads-cost.png")
+```
+
+Now that we have three different cost layers, slope, land cover, and distance to roads, we simply need to decide how to combine them into a single cost raster. This is made easy by the fact that all layers are scaled between 0 and 1. The simplest approach would be to add them all together, but this assumes equal-weighting given to each cost factor. It is also common to weight layers differently and this can be achieved by multiplying a set of weights to the layers that add up to 1. For example, to weight slope 10%, land cover 30%, and road distance 60%, we would use the formula $totalcost=slope×0.1+landcover×0.3+road×0.6$. Note that $totalcost=slope×0.33+landcover×0.33+road×0.33$ is functionally the same as $totalcost=slope+landcover+road$. Differences in the percentage weightings are not absolute difference, but relative. For example, 30% weight to land cover implies that land cover is weighted 3 times more than slope at 10%: $0.3÷0.1=3=300\%$.
+
+**Step 11:** Pick weightings for your three layers (the weights must sum to 1), then open the "Raster Calculator" tool and apply the formula above. Set the "Reference layer" to "yellowhead_bma_utm.tif" and save the output as "yellowhead_cost_raster.tif". 
+
+##### Q6. What was your rationale for selecting your weights? (2 points) {.unnumbered}
+
+##### Q7. What additional or alternative layers could you have used for costs in this analysis? Give at least two examples and explain why they are pertinent. (4 points) {.unnumbered}
+
+In these last steps, we are going to create the point layers that will be used to trace the least cost path in the following task.
+
+**Step 12:** Add the "grizzly_bear_core_access_management_area" to your map from the UBC PostgreSQL server. These represent the core habitat of Grizzly Bear across all regions. Select the Yellowhead unit and then search for the "Centroids" tool under "Vector Geometry", ensure "Input Layer" is set to "grizzly_bear_core_access_management_area", "Selected features only" is toggled on, and save the output as "yellowhead_bma_centroid.shp". Reproject this layer to EPSG:26911 and name the output "source.shp".
+
+**Step 13:** Now let us randomly choose a point in the secondary habitat area. Add the "grizzly_bear_secondary_access_management_area" and select the Yellowhead unit. Search for the "Random points inside polygons" tool, ensure "Input layer is set to "grizzly_bear_secondary_access_management_area", "Selected features only" is toggled on, and save the output as "yellowhead_bma_target.shp". Reproject this layer to EPSG:26911 and name the output "target.shp". You can repeat this as many times as you want until you get a satisfactory location.
 
 ------------------------------------------------------------------------
 
@@ -215,22 +250,50 @@ knitr::kable(
 
 For this last task, we are going to perform the least cost path analysis in ArcGIS Pro. QGIS has a least cost path plugin, but it is not as robust as the ArcGIS Pro tools.
 
-**Step 1:**
+**Step 1:** Open a new ArcGIS Pro project and add the following layers to your map:
 
-**Step 2:**
+- Total cost raster: "yellowhead_cost_raster.tif"
+- Aster DEM: "aster_dem_utm.tif"
+- Slope raster: "aster_slope_utm_aoi.tif" 
+- Land cover raster: "land_cover_utm_aoi.tif"
+- Road polylines: "yellowhead_roads_utm.shp"
+- Yellowhead source: "source.shp"
+- Yellowhead target: "target.shp"
 
-**Step 3:**
+**Step 2:** Open the "Distance Accumulation" tool and parameterize it according to the image below. You can save the two output rasters ("distance_accumulation_raster" and "backlink") in your project geodatabase or in your QGIS project folder as geotiffs, just be mindful that you cannot save a geotiff inside your geodatabase. This tool will take your source point and calculate the accumulative cost to travel to all other cells using a combination of the cost raster and the real geographic distance, both horizontal and vertical, which is why we supply the ASTER DEM.
 
+```{r 05-arcgispro-distance-accumulation, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/05-arcgispro-distance-accumulation.png")
+```
 
-gdal_proximity.py - calculate distance to a road
-gdaldem slope
-gdaldem aspect
-gdal_viewshed - calculate several viewsheds and produce cumulative viewshed heat map
-gdal_calc.py - reclassify
-least cost path in QGIS
+The "distance_accumulation_raster" shows us the accumulated cost-distance to reach any given cell in the AOI from the source point.
+
+```{r 05-arcgispro-distance-accumulation-raster, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/05-arcgispro-distance-accumulation-raster.png")
+```
+
+The "backlink" raster shows us the direction of the least costly path back to the source for any given cell. In other words, this raster is encoding the lowest directional movement cost for the 8-neighbours of each cell. Since the costs are accumulative relative to the source cell, this means that we can trace a path from any given pixel in the "backlink" raster back to the source cell. The image below shows a close-up for the source cell and illustrates how these values are encoded.
+
+```{r 05-arcgispro-backlink-raster, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/05-arcgispro-backlink-raster.png")
+```
+
+**Step 3:** Now we can trace the least cost path between our source and target locations. Open the "Optimal Path as Line" tool and parameterize like the image below then click "Run".
+
+```{r 05-arcgispro-optimal-path-as-line, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/05-arcgispro-optimal-path-as-line.png")
+```
+
+**Step 4:** Inspect the output. You should be able to trace the line along the "backlink" raster. Toggle on the roads. How many roads did you path cross? Toggle on the land cover. Were there any land covers that were avoided? Toggle on the slope. Did the path avoid any steep slopes or otherwise maneuver around the terrain?
+
+##### Q8. Interpret the impact that your choice of weightings had on the final least cost path that you observed. (4 points) {.unnumbered}
+
+**Step 5:** Create a map of your least cost path that supports your interpretations in Q8. Export it as a pdf and upload to the course management system.
 
 ------------------------------------------------------------------------
 
 ## Summary {.unnumbered}
+
+Raster analysis is comprised of manipulating base data, deriving new rasters, and weighting and combining rasters together in order to answer a spatial question. In this lab, you learned how to effectively set up a raster analysis through careful planning and choice of factors like raster extent, coordinate system, cell size, alignment, data type, and resampling algorithms. Rasters can lead to powerful spatial analyses like least cost path analysis due to the explicit encoding of information in the spatial neighborhood.
 
 Return to the **[Deliverables](#lab5-deliverables)** section to check off everything you need to submit for credit in the course management system.
