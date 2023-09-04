@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Lab 7 Geocoding | GEM 510: GIS for Forestry and Conservation</title>
+  <meta name="description" content="Open Educational Resources for GEM 510 course at the University of British Columbia" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Lab 7 Geocoding | GEM 510: GIS for Forestry and Conservation" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Open Educational Resources for GEM 510 course at the University of British Columbia" />
+  <meta name="github-repo" content="github.com/ubc-geomatics-community-of-practice/GEM510-GIS-for-Forestry-and-Conservation/book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lab 7 Geocoding | GEM 510: GIS for Forestry and Conservation" />
+  
+  <meta name="twitter:description" content="Open Educational Resources for GEM 510 course at the University of British Columbia" />
+  
+
+<meta name="author" content="Paul D. Pickell" />
+
+
+<meta name="date" content="2023-09-04" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="digitization-editing-kart.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Open Geomatics Community of Practice</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-use-these-resources"><i class="fa fa-check"></i>How to use these resources</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-get-involved"><i class="fa fa-check"></i>How to get involved</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html"><i class="fa fa-check"></i><b>1</b> Introduction to PostgreSQL and PostGIS</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#lab-overview"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#lab1-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#data"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-1-set-up-pgadmin-and-connect-to-the-ubc-postgresql-server"><i class="fa fa-check"></i>Task 1: Set up pgAdmin and Connect to the UBC PostgreSQL server</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-2-explore-with-qgis"><i class="fa fa-check"></i>Task 2: Explore with QGIS</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-3-explore-with-arcgis-pro"><i class="fa fa-check"></i>Task 3: Explore with ArcGIS Pro</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#task-4-explore-with-psql-shell"><i class="fa fa-check"></i>Task 4: Explore with psql Shell</a></li>
+<li class="chapter" data-level="" data-path="introduction-postgresql-postgis.html"><a href="introduction-postgresql-postgis.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html"><i class="fa fa-check"></i><b>2</b> Analyze a Relational Database</a>
+<ul>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#lab-overview-1"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#learning-objectives-1"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#lab2-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#data-1"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-1-host-your-own-postgresql-server"><i class="fa fa-check"></i>Task 1: Host your own PostgreSQL Server</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-2-create-a-postgis-database"><i class="fa fa-check"></i>Task 2: Create a PostGIS Database</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-3-import-spatial-data-using-gdal"><i class="fa fa-check"></i>Task 3: Import Spatial Data Using GDAL</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#task-4-analyze-a-postgis-database-using-sql"><i class="fa fa-check"></i>Task 4: Analyze a PostGIS Database using SQL</a></li>
+<li class="chapter" data-level="" data-path="analyze-relational-database.html"><a href="analyze-relational-database.html#summary-1"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html"><i class="fa fa-check"></i><b>3</b> Suitability and Overlay Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#lab-overview-2"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#learning-objectives-2"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#lab3-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#data-2"><i class="fa fa-check"></i>Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#data-organization"><i class="fa fa-check"></i>Data Organization</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#files-to-create"><i class="fa fa-check"></i>Files to Create</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-1-export-relevant-data-from-biologically-important-areas-shapefile"><i class="fa fa-check"></i>Task 1: Export Relevant Data from Biologically Important Areas Shapefile</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-2-identify-the-bia-of-the-humpback-whale-that-is-not-within-the-established-marine-sanctuary"><i class="fa fa-check"></i>Task 2: Identify the BIA of the Humpback Whale that is not within the established Marine Sanctuary</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-3-calculate-the-density-of-cetacean-sightings-using-the-bia-for-humpback-whales"><i class="fa fa-check"></i>Task 3: Calculate the Density of Cetacean Sightings using the BIA for Humpback Whales</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-4-extract-the-boats-from-ocean-uses-and-identity-the-vessels-within-the-bia-polygons"><i class="fa fa-check"></i>Task 4: Extract the Boats from Ocean Uses and Identity the Vessels within the BIA Polygons</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-5-calculate-suitability-and-identify-most-suitable-locations-for-the-marine-sanctuary"><i class="fa fa-check"></i>Task 5: Calculate Suitability and Identify Most Suitable Locations for the Marine Sanctuary</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#summary-2"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html"><i class="fa fa-check"></i><b>4</b> Exploring QGIS and OpenStreetMap</a>
+<ul>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#lab-overview-3"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#learning-objectives-3"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#lab4-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#data-3"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-1-downloading-openstreetmap-data-to-qgis"><i class="fa fa-check"></i>Task 1: Downloading OpenStreetMap data to QGIS</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-2-inspecting-and-processing-openstreetmap-data"><i class="fa fa-check"></i>Task 2: Inspecting and processing OpenStreetMap data</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#task-3-simple-spatial-analysis-with-qgis"><i class="fa fa-check"></i>Task 3: Simple spatial analysis with QGIS</a></li>
+<li class="chapter" data-level="" data-path="qgis-openstreetmap.html"><a href="qgis-openstreetmap.html#summary-3"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html"><i class="fa fa-check"></i><b>5</b> Raster and Least Cost Path Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#lab-overview-4"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#learning-objectives-4"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#lab5-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#data-4"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#task-1-define-a-raster-area-of-interest"><i class="fa fa-check"></i>Task 1: Define a raster area of interest</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#task-2-seamless-mosaicking"><i class="fa fa-check"></i>Task 2: Seamless mosaicking</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#task-3-calculating-movement-costs"><i class="fa fa-check"></i>Task 3: Calculating movement costs</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#task-4-least-cost-path-analysis-in-arcgis-pro"><i class="fa fa-check"></i>Task 4: Least cost path analysis in ArcGIS Pro</a></li>
+<li class="chapter" data-level="" data-path="raster-least-cost-path-analysis.html"><a href="raster-least-cost-path-analysis.html#summary-4"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html"><i class="fa fa-check"></i><b>6</b> Digitization and Editing with Kart</a>
+<ul>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#lab-overview-5"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#learning-objectives-5"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#lab6-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#data-5"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-1-install-kart-and-create-your-first-repository"><i class="fa fa-check"></i>Task 1: Install Kart and create your first repository</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-2-edit-a-layer-in-qgis-with-version-control"><i class="fa fa-check"></i>Task 2: Edit a layer in QGIS with version control</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-3-working-on-and-merging-different-branches"><i class="fa fa-check"></i>Task 3: Working on and merging different branches</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-4-digitize-some-buildings-in-arcgis-pro"><i class="fa fa-check"></i>Task 4: Digitize some buildings in ArcGIS Pro</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#summary-5"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="geocoding.html"><a href="geocoding.html"><i class="fa fa-check"></i><b>7</b> Geocoding</a>
+<ul>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#lab-overview-6"><i class="fa fa-check"></i>Lab Overview</a></li>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#learning-objectives-6"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#lab7-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#data-6"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#task-1-download-and-prepare-data"><i class="fa fa-check"></i>Task 1: Download and Prepare Data</a></li>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#task-2-prepare-data"><i class="fa fa-check"></i>Task 2: Prepare Data</a></li>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#task-3-geocoding-a-table-of-addresses"><i class="fa fa-check"></i>Task 3: Geocoding a Table of Addresses</a></li>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#task-4-create-a-shapefile-from-csv-data"><i class="fa fa-check"></i>Task 4: Create a Shapefile from CSV data</a></li>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#summary-6"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEM 510: GIS for Forestry and Conservation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="geocoding" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Lab 7</span> Geocoding<a href="geocoding.html#geocoding" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Written by
+Amy Blood</p>
+<div id="lab-overview-6" class="section level2 unnumbered hasAnchor">
+<h2>Lab Overview<a href="geocoding.html#lab-overview-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Working with and manipulating your own geospatial data is essential for many geomatics tasks. Often in urban forestry, you will come across datasets with addresses or coordinates. In this lab, you will learn how to import a CSV into ArcGIS Pro, and how to create an address locator and geocode addresses. You will work from data within Vancouver to create several new geospatial datasets and practice geocoding addresses.</p>
+<hr />
+</div>
+<div id="learning-objectives-6" class="section level2 unnumbered hasAnchor">
+<h2>Learning Objectives<a href="geocoding.html#learning-objectives-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Query and extract geospatial data from an online portal</li>
+<li>Build a custom address locator using geospatial data</li>
+<li>Geocode addresses and assess quality</li>
+</ul>
+<hr />
+</div>
+<div id="lab7-deliverables" class="section level2 unnumbered hasAnchor">
+<h2>Deliverables<a href="geocoding.html#lab7-deliverables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><input type="checkbox" unchecked> Answers to the questions posed throughout the lab (20 points)</input></p>
+<p><input type="checkbox" unchecked> Final map (10 points)</input></p>
+<ul>
+<li>The map should show the neighbourhood for which you downloaded street
+tree data for</li>
+<li>Parks symbolized by tree density</li>
+<li>Coordinate-created points and address-created points (symbolized differently from each
+other)</li>
+<li>Roads symbolized</li>
+</ul>
+<hr />
+</div>
+<div id="data-6" class="section level2 unnumbered hasAnchor">
+<h2>Data<a href="geocoding.html#data-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will be downloading some of your data from the <a href="https://opendata.vancouver.ca/pages/home/">City of Vancouver Open Data Portal</a>.</p>
+<p><img src="images/07-cov-data-portal.png" width="75%" /></p>
+<p>The data package on Canvas contains Greater Vancouver Regional District (GVRD) Roads shapefile and parktrees.csv. The CSV file was received from the City of Vancouver Board of Parks and Recreation and represents trees in parks of Vancouver.</p>
+<hr />
+</div>
+<div id="task-1-download-and-prepare-data" class="section level2 unnumbered hasAnchor">
+<h2>Task 1: Download and Prepare Data<a href="geocoding.html#task-1-download-and-prepare-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Step 1:</strong> The first dataset you will download is “street trees” data. Search for it with the search bar, then click the link for the dataset. You are going to want to export the data as a shapefile; click on the Export tab and look over the geographic file formats. You will notice that the download button for Shapefile is greyed out because there are too many records in the dataset. Keep the webpage open so you have
+access to the Metadata.</p>
+<div id="q1.-what-is-the-maximum-number-of-records-you-can-export-from-the-city-of-vancouver-open-data-portal-as-a-shapefile-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q1. What is the maximum number of records you can export from the City of Vancouver open data portal as a shapefile? (1 point)<a href="geocoding.html#q1.-what-is-the-maximum-number-of-records-you-can-export-from-the-city-of-vancouver-open-data-portal-as-a-shapefile-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><strong>Step 2:</strong> Instead of working with the entirety of the dataset, you will focus on one neighbourhood. To the left, there are filtering options. Scroll down to NEIGHBOURHOOD_NAME and choose the neighborhood with the highest number of trees. Now you should have the option to download street tree data.</p>
+<p><strong>Step 3:</strong> The second dataset you will download is public parks. There should be a point and a polygon dataset. Make sure you download the polygon dataset.</p>
+<hr />
+</div>
+</div>
+<div id="task-2-prepare-data" class="section level2 unnumbered hasAnchor">
+<h2>Task 2: Prepare Data<a href="geocoding.html#task-2-prepare-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this task, you will export a filtered table from a shapefile, and then you will add a field so the table can be used in the next task.</p>
+<p><strong>Step 1:</strong> Open up the metadata for the street trees file. It should be under the “Information” tab on the data website. Look through the metadata and make yourself familiar with what each column means. For example, one column designates when a tree was planted.</p>
+<div id="q2.-what-is-the-name-of-the-column-that-designates-when-a-tree-was-planted-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q2. What is the name of the column that designates when a tree was planted? (1 point)<a href="geocoding.html#q2.-what-is-the-name-of-the-column-that-designates-when-a-tree-was-planted-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Sometimes, “lots” in cities are exceptionally large or are adjacent to more than one street. Because these lots only have one “true” address, urban foresters may make up addresses to designate more specific areas. Find the name of the column that designates whether or not the address for a tree was made up to associate the tree with a nearby lot. You are going to export just the data for trees that are assigned “Yes” in this column.</p>
+<p><strong>Step 2:</strong> Right-click street-trees and select “Export Features.”</p>
+<ul>
+<li>Input Rows: street-trees</li>
+<li>Output Location: Where you want the table to be saved</li>
+<li>Output Name: AssignedTrees</li>
+<li>Expression: + New expression Where <code>Assigned</code> is equal to Y.</li>
+</ul>
+<p><strong>Step 3:</strong> Open the attribute table for <strong>AssignedTrees</strong> and add a new text field to the data. On the top of the attribute table, there is a button that says “Add”. The table will switch to field view. Name the field “Address” and select “Text” as the data type. Click “Save” in the top bar. Close “Field View” and return to the attribute table. Your new field should appear as the very last column in the dataset. Right-click the field and select “Calculate Field.”</p>
+<p>The address locator you create in Task 3 requires addresses to be written in a specific way—street numbers and names must be in the same column. You will need to specify to ArcGIS that you are combining two strings (another designation for text data). Within the Fields menu under “Expression,” double-click civic_numb. You will notice that the field below the equal sign is now populated with !civic_numb!.</p>
+<p>To combine the two columns together, type the following code into the box: <code>str(!civic_numb!)+" "+str(!std_street!)</code></p>
+<p><img src="images/07-calculate-field.png" width="50%" /></p>
+<p>Click “Apply”. The Address field should now have street numbers and street names.</p>
+<hr />
+</div>
+</div>
+<div id="task-3-geocoding-a-table-of-addresses" class="section level2 unnumbered hasAnchor">
+<h2>Task 3: Geocoding a Table of Addresses<a href="geocoding.html#task-3-geocoding-a-table-of-addresses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Many localities label their trees by address rather than by coordinates. In the street-trees file, all of the trees have addresses and coordinates. However, the trees with a value of “Y” for “Assigned” have addresses that were effectively made up for ease of finding the trees again. In this section of the lab, you will use the <strong>GVRD_roads</strong> file to create an address locator for Vancouver. Then you will geocode the addresses from <strong>AssignedTrees</strong> to examine the differences between collecting data with addresses versus coordinates. An address locator allows you to look up addresses either manually or by uploading a table of addresses. This is helpful when you are searching for specific trees!</p>
+<p><strong>Step 1:</strong> Create an address locator, which is located in Analysis &gt; Tools &gt; Toolboxes &gt; Geocoding Tools &gt; Create Locator. You can also use the search bar to search for the tool by name.</p>
+<p>For the tool’s parameters:</p>
+<ul>
+<li><strong>Country or Region:</strong> Canada</li>
+<li><strong>Primary Table(s):</strong> GVRD_roads</li>
+<li><strong>Role:</strong> Street Address</li>
+<li><strong>Field Map:</strong>
+<ul>
+<li><strong>Feature ID:</strong> OBJECTID</li>
+<li><strong>Left House Number From:</strong> FROM_LEFT_HOUSE_NUMBER</li>
+<li><strong>Left House Number To:</strong> TO_LEFT_HOUSE_NUMBER</li>
+<li><strong>Right House Number From:</strong> FROM_RIGHT_HOUSE_NUMBER</li>
+<li><strong>Right House Number To:</strong> TO_RIGHT_HOUSE_NUMBER</li>
+<li><strong>Street Name:</strong> STRUCTURED_NAME_1</li>
+<li><strong>Left City/Municipality:</strong> LEFT_LOC_1</li>
+<li><strong>Right City/Municipality:</strong> RIGHT_LOC_1</li>
+</ul></li>
+<li>All other fields leave as <NONE></li>
+<li>Language Code: English</li>
+</ul>
+<p>Save the file as <strong>GVRDaddresses</strong>.</p>
+<p><strong>Step 2:</strong> Select Locate underneath the Map tab, and then click on Address Inspector. Use your newly created address locator to click around Vancouver. You may need to double-click on your map in order to
+force the pop-up to stay visible and docked as a tab (see right pane below).</p>
+<p><img src="images/07-address-inspector.png" width="75%" /></p>
+<p>Choose GVRDaddresses in the dropdown.</p>
+<p>You can also use the Locate tool to Search an address using the ArcGIS World Geocoding Service. Type in the address of Queen Elizabeth Park (4600 Cambie St, Vancouver) and notice the map highlights near the park! The ArcGIS World Geocoding Service will consume credits through your ArcGIS account, so it is not the most cost-effective way to geocode many addresses.</p>
+<p><img src="images/07-locate.png" width="50%" /></p>
+<p><strong>Step 3:</strong> Geocode a table of addresses using GVRDaddresses. The table of addresses you will be geocoding is the AssignedTrees dataset. To access the geocoding tool, you can search for Geocode Addresses.</p>
+<p>Below are the tool’s parameters:</p>
+<ul>
+<li>Input Table: AssignedTrees</li>
+<li>Input Address Locator: GVRDaddresses</li>
+<li>Input Address Fields: Single Field</li>
+<li>Field Name: Full Address</li>
+<li>Alias Name: Address</li>
+</ul>
+<p>Save the file as <strong>geocoded</strong>.</p>
+<p><strong>Step 4:</strong> Look at the attribute table. The score column shows from 0-100 based on how close the address in the address locator was able to match the input table. The mailbox icon with the arrows in the geocoding toolbar allows you to investigate the matches more in-depth. With a messier dataset, this becomes invaluable.</p>
+<div id="q3.-are-all-of-the-addresses-a-100-match-why-or-why-not-2-points" class="section level5 unnumbered hasAnchor">
+<h5>Q3. Are all of the addresses a 100% match? why or why not? (2 points)<a href="geocoding.html#q3.-are-all-of-the-addresses-a-100-match-why-or-why-not-2-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><strong>Step 5:</strong> Toggle the <strong>AssignedTrees</strong> and <strong>geocoded</strong> datasets on and off to look for similarities and differences.</p>
+</div>
+<div id="q4.-how-do-they-visually-compare-to-each-other-use-specific-examples-in-your-explanation-and-make-inferences-about-why-you-are-seeing-differencessimilarities.-4-points" class="section level5 unnumbered hasAnchor">
+<h5>Q4. How do they visually compare to each other? Use specific examples in your explanation and make inferences about why you are seeing differences/similarities. (4 points)<a href="geocoding.html#q4.-how-do-they-visually-compare-to-each-other-use-specific-examples-in-your-explanation-and-make-inferences-about-why-you-are-seeing-differencessimilarities.-4-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<hr />
+</div>
+</div>
+<div id="task-4-create-a-shapefile-from-csv-data" class="section level2 unnumbered hasAnchor">
+<h2>Task 4: Create a Shapefile from CSV data<a href="geocoding.html#task-4-create-a-shapefile-from-csv-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Oftentimes, you will encounter geospatial data in CSV format. Although each value in the dataset has a location, the dataset has not been provided as shapefiles. In this portion of the lab, you will practice converting CSVs into shapefiles. Then, you will work with the shapefiles you have created.</p>
+<p><strong>Step 1:</strong> Open the <strong>parktrees.csv</strong> file in Excel. There should be 6 columns and several rows. Each row represents a tree in a Vancouver Park.</p>
+<div id="q5.-how-many-trees-are-represented-in-this-file-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q5. How many trees are represented in this file? (1 point)<a href="geocoding.html#q5.-how-many-trees-are-represented-in-this-file-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="q6.-look-at-the-columns-with-the-coordinates.-which-units-are-the-coordinates-likely-in-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q6. Look at the columns with the coordinates. Which units are the coordinates likely in? (1 point)<a href="geocoding.html#q6.-look-at-the-columns-with-the-coordinates.-which-units-are-the-coordinates-likely-in-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><strong>Step 2:</strong> Exit Excel and bring up ArcGIS Pro, where you will be adding the data to your map. Look at the data in the Catalog.</p>
+</div>
+<div id="q7.-does-arcgis-pro-consider-these-data-to-be-spatial-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q7. Does ArcGIS Pro consider these data to be spatial? (1 point)<a href="geocoding.html#q7.-does-arcgis-pro-consider-these-data-to-be-spatial-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><strong>Step 3:</strong> Go to Map &gt; Add Data &gt; XY Point Data, and select <strong>parktrees.csv</strong>. Choose the appropriate column names for the X and Y fields. Leave the Z field blank. This is very important, if you choose the wrong columns the points will be nowhere near Vancouver!</p>
+</div>
+<div id="q8.-what-does-the-z-field-represent-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q8. What does the z field represent? (1 point)<a href="geocoding.html#q8.-what-does-the-z-field-represent-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="q9.-which-column-did-you-choose-for-x-which-column-for-y-2-points" class="section level5 unnumbered hasAnchor">
+<h5>Q9. Which column did you choose for x, which column for y? (2 points)<a href="geocoding.html#q9.-which-column-did-you-choose-for-x-which-column-for-y-2-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Specify the coordinate system by clicking on the Globe icon to the right-hand side of Coordinate System and locating NAD 1983 UTM Zone 10N under Projected Coordinate System &gt; UTM &gt; NAD 1983. You have now created an “Event Layer.” Export the Events layer as a shapefile (right-click the layer &gt; Data &gt; Export Features). Save it in your output folder as <strong>parktrees</strong>. Add <strong>parktrees</strong> to your display.</p>
+<p>Event layers are temporary layers, and without Object-ID fields they are not editable or selectable.</p>
+<p><strong>Step 4:</strong> View <strong>parktrees</strong> in ArcGIS Pro. The trees should all be in Vancouver. If they are not, something was input incorrectly and you will have to repeat Step 2. Once the tree points are properly mapped, change the symbology. Right-click <strong>parktrees</strong> in the Contents Pane and choose “Symbology.” A Symbology pop-up should appear. Click the symbol—and choose “Circle 3” from Gallery. Click the Properties Tab. Make the symbol smaller and change its colour.</p>
+<p>Add <strong>parks_polygon_representation</strong> and a satellite basemap to your map (Map &gt; Basemap &gt; Imagery). In the Contents Pane, drag the basemap to the bottom so that it does not cover anything. Symbolize <strong>parks_polygon_representation</strong> so that you can clearly the basemap for each park. You can do this in the Contents Pane by right-clicking the coloured rectangle beneath <strong>parks_polygon_representation</strong> and choosing “Color Properties…” at the bottom. Adjust the colours and transparency as you see fit.</p>
+</div>
+<div id="q10.-what-sort-of-discrepancies-do-you-see-between-the-number-of-trees-in-the-satellite-image-versus-the-number-of-trees-shown-in-the-dataset-do-any-specific-parks-stand-out-why-might-this-be-the-case-4-points" class="section level5 unnumbered hasAnchor">
+<h5>Q10. What sort of discrepancies do you see between the number of trees in the satellite image versus the number of trees shown in the dataset? Do any specific parks stand out? Why might this be the case? (4 points)<a href="geocoding.html#q10.-what-sort-of-discrepancies-do-you-see-between-the-number-of-trees-in-the-satellite-image-versus-the-number-of-trees-shown-in-the-dataset-do-any-specific-parks-stand-out-why-might-this-be-the-case-4-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Now that all of the park trees are input, we will investigate tree density per park to get an idea about which parks in Vancouver have the highest tree density and which have the lowest. To answer this question, you will need to know the area of each park and the number of trees within them. Park area and name are in the <strong>parks_polygon_representation</strong> layer, but not in the <strong>parktrees</strong> shapefile. This information can be added to <strong>parktrees</strong> through a spatial join.</p>
+<p><strong>Step 5:</strong> Right-click <strong>parktrees</strong>, mouse down to Joins and Relates &gt; Spatial Join:
+- Target Features: parktrees
+- Join Features: parks_polygon_representation
+- Output Feature Class: parks_numtrees
+- Join Operation: Join one to one
+- Match Option: Intersect</p>
+<p>Expand the Fields option and remove all of the output fields except for area_ha, park_id, park_name, and park_url. Click “OK”.</p>
+<p>You should now have a park file with the number of trees (represented by JOIN_COUNT), along with the other park information.Add a new field called “treedensity”. Be sure to select the correct data type–the data in this field will be continuous values and include decimals. Tree density is the ratio of trees to park area. We will do this calculation only for parks greater than or equal to one acre in size.</p>
+<p><strong>Step 6:</strong> Using “Select By Attributes,” select all of the parks with an area greater than or equal to 1 ha. Then, use calculate field to get the tree density for each selected park.</p>
+</div>
+<div id="q11.-how-many-parks-in-vancouver-are-greater-than-1-ha-in-size-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q11. How many parks in vancouver are greater than 1 ha in size? (1 point)<a href="geocoding.html#q11.-how-many-parks-in-vancouver-are-greater-than-1-ha-in-size-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="q12.-from-the-selected-data-which-park-has-the-highest-tree-density-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q12. From the selected data, which park has the highest tree density? (1 point)<a href="geocoding.html#q12.-from-the-selected-data-which-park-has-the-highest-tree-density-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><strong>Step 7:</strong> Change the symbology of <strong>parks_numtrees</strong> from single symbol to unclassed colors displaying the tree density field.</p>
+<hr />
+</div>
+</div>
+<div id="summary-6" class="section level2 unnumbered hasAnchor">
+<h2>Summary<a href="geocoding.html#summary-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Spatial is special, but not all data are explicitly spatial. Some data may contain attributes or information that is encoded in a way that GIS software may not immediately recognize as spatial. As well, a lot of information can be associated with addresses, which are not related to any coordinate system. Geocoding is a powerful method that can unlock information associated with addresses for use in other spatial analyses.</p>
+<p>Return to the <strong><a href="geocoding.html#lab7-deliverables">Deliverables</a></strong> section to check off everything you need to submit for credit in the course management system.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="digitization-editing-kart.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["open-geomatics-community-of-practice.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
