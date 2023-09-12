@@ -81,7 +81,7 @@ Although the connection was automatic this time, each time you start pgAdmin, yo
     knitr::include_graphics("images/01-pgadmin-connect.png")
 ```
 
-**Step 6:** From the Browser pane on the left, expand the ubcv connection, then expand "Schemas", then expand "public", then expand "Tables" to view all the tables in the ubcv database. 
+**Step 6:** From the Browser or Object Explorer pane on the left, expand "Servers", "PostgreSQL 15", "Databases", "ubcv", "Schemas", then expand "public", then expand "Tables" to view all the tables in the ubcv database. 
 
 **Step 7:** Right-click on a table and then select "View/Edit Data" > "All Rows". pgAdmin will create an SQL query and then show the result. This is one way to view the attribute table from pgAdmin.
 
