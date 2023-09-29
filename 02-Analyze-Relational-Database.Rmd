@@ -82,6 +82,26 @@ If everything is successful, then you should see `postgres=#`, which indicates y
     knitr::include_graphics("images/02-psql-create-mypostgisdb.png")
 ```
 
+If the above step fails, then you may need to first install PostGIS. Ordinarily, PostGIS is installed at the same time as PostgreSQL, they come packaged together. To install PostGIS, follow these steps:
+
+**Step 3a:** Search "Stack Builder" from your Windows search bar and run the application.
+
+```{r 02-stack-builder-search, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/02-stack-builder-search.png")
+```
+
+**Step 3b:** If prompted, enter your admin credential or ask your instructor to provide this credential for you.
+
+**Step 3c:** Select "PostgreSQL 15 (x64) on port 5432" from the drop down menu (or whatever version of PostgreSQL is installed on your machine). Click "Next".
+
+```{r 02-stack-builder-1, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/02-stack-builder-1.png")
+```
+
+**Step 3d:** Expand "Categories", then expand "Spatial Extensions", and toggle on the PostGIS software version to install. Click "Next". The Application Stack Builder will prompt for where you want to download PostGIS, just click "Next" to accept the default location. Then you will be prompted to install it after it downloads. Make sure that "Skip Installation" is toggled off, and continue to click "Next" to accept the defaults, and "Agree" to the end user license agreement.
+
+**Step 3e:** After PostGIS installs successfully, close any psql shell you have open, re-open a new psql shell, and then begin again at Step 2 above.
+
 **Step 4:** Listing the tables `\dt` will reveal the database has a table called "spatial_ref_sys". List the fields of this table with `\d spatial_ref_sys`.
 
 In addition to the field names, you will see there is an index called "spatial_ref_sys_pkey", which is the dedicated field for the primary key for this table, and a constraint check to ensure that srid's are valid only between $1$ and $998999$. You can test this constraint by trying to insert a new srid value of $0$: `INSERT INTO spatial_ref_sys (srid) VALUES (0);`. The returned message,
@@ -99,7 +119,7 @@ This table contains EPSG codes, which are used to easily relate spheroids, datum
 
 **Step 6:** Write an SQL query to return the proj4text of the WGS 1984 datum from the spatial_ref_sys table.
 
-Now we will create some new data, just to show you how to use some useful SQL keywords. We will start with aspatial data first, then move on to spatial data. You can create a new table in your database with the syntax
+Now we will create some new data, just to show you how to use some useful SQL keywords. We will start with aspatial data first, then move on to spatial data. You can create a new table in your database with the following syntax (note that you cannot simply copy-paste below, you need to supply actual data type variable names):
 
 ```
 CREATE TABLE table-name (
@@ -135,6 +155,8 @@ this_field_is_varchar_50 varchar(50)
 ```{r 02-psql-mynewtable, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/02-psql-mynewtable.png")
 ```
+
+Watch out for unescaped parentheses when running multiline SQL statements! If you see `mypostgisdb=#`, then you are able to submit a new psql command or start an SQL statement. If you see `mypostgisdb=-`, then you have already started an SQL statement on a line above in the terminal. If you see `mypostgisdb=(`, then you have added an open parenthesis '(' somewhere in your statement on a line above. When running a SQL statement over multiple lines, you need to ensure that you enclose all parentheses and end the statement with a semicolon `;` in order to return the psql command line back to `mypostgisdb=#`. If you find yourself stuck an unable to exit `mypostgisdb=(`, try to close any open parentheses by typing `)` and pressing "Enter". If you find yourself unable to exit `mypostgisdb=-`, try ending the SQL statement by typing `;` and pressing "Enter". If both of those fail, you can try exiting the command with `CTRL + C`, which may also end psql and require you to reconnect to the database.
 
 You can experiment with creating as many new tables as you want. If you need to delete a table, use the `DROP` keyword like this `DROP TABLE my_new_table;`.
 
@@ -204,7 +226,7 @@ INSERT INTO my_new_table (this_field_is_date) VALUES (TO_DATE('31-12-1963', 'DD-
 
 Once you are satisfied with the state of your table, you will dump your entire PostGIS database to an output SQL file and this will be one of your deliverables for this lab. PostgreSQL features a utility program called `pg_dump` that will take any database and output an SQL statement in a file that can be used to re-create the database. In other words, `pg_dump` is a backup method. This is also really handy if you want to create a local backup of a remote server! If you want more practice, try using it on the UBC PostgreSQL server.
 
-**Step 9:** Open a Windows command prompt (search "command"). Take note of your current working directory, which is probably something like `C:\Users\[your username]`. This is where your database SQL file will be saved to. To dump your database, use the following command: `pg_dump -d mypostgisdb -U postgres -h localhost > mypostgisdb.sql`. You will be prompted to enter your password and then the new file `mypostgisdb.sql` will be saved in your working directory. 
+**Step 9:** Open a Windows command prompt (search "command"). Take note of your current working directory, which is probably something like `C:\Users\[your username]`. This is where your database SQL file will be saved to. If your command prompt shows your working directory as `C:\Program Files\QGIS x.xx.x` or similar, then you will first need to change to a directory where you have permission to write to. Usually, this is somewhere in your user folder, which you can navigate to in the terminal with the change directory `cd` command: `cd C:\Users\[your username]\Documents`. To dump your database, use the following command: `pg_dump -d mypostgisdb -U postgres -h localhost > mypostgisdb.sql`. You will be prompted to enter your password and then the new file `mypostgisdb.sql` will be saved in your working directory. 
 
 **Step 10:** Check to make sure that you can load the database back into PostgreSQL. In psql, create a new empty database named mypostgisdb_backup. Then, enter the following command from the Windows command prompt: `psql -U postgres -h localhost mypostgisdb_backup < mypostgisdb.sql`. You can now query the postgisdb_backup database to check that it is a copy of your other mypostgisdb database.
 
