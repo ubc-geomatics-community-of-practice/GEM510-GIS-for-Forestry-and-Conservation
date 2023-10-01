@@ -188,7 +188,7 @@ Now, we will determine where is the most suitable location to expand the marine 
 
 _HINT: Always add a decimal point to the Fmax so that the result is a floating point decimal number._
 
-First, determine $Fmax$ for Area (use Shape Area field for $Fmax$), Sightings (use Join Count), and Vessels (calculate manually based on the number of columns). Then, Right-click on the field in the attribute table and view statistics (write down the number that appears beside ‘maximum’). Finally, right-click on the field and select ‘Calculate Field’ and enter the expression using the correct field name and the maximum value for the field. 
+First, determine $Fmax$ for Area (use Shape Area field for $Fmax$), Sightings (use Join Count), and Vessels (calculate manually based on the number of columns). Then, Right-click on the field in the attribute table and view statistics (write down the number that appears beside ‘maximum’). Finally, right-click on the field and select ‘Calculate Field’ and enter the expression using the correct field name and the maximum value for the field.
 
 ```{r 03-calculate-field, out.width= "50%", echo = FALSE}
     knitr::include_graphics("images/03-calculate-field.png")
@@ -199,9 +199,9 @@ _HINT: For Vessels, you will need to include more than one column for $F$._
 **Step 3:** Finally, use a weighted suitability calculation by creating a new field, Suitability, and writing the following expression:
  [Area] * 0.4 + [Sightings] * 0.2 + [Vessels] * 0.4.
 
-##### Q7. What is the maximum value for Area to four decimal places? (1 point)
-##### Q8. What is the maximum value for Sightings to four decimal places? (1 point)
-##### Q9. What is the maximum value for Vessels to four decimal places? (1 point)
+##### Q7. What is the maximum value for Area to four decimal places? (1 point) {.unnumbered}
+##### Q8. What is the maximum value for Sightings to four decimal places? (1 point) {.unnumbered}
+##### Q9. What is the maximum value for Vessels to four decimal places? (1 point) {.unnumbered}
 
 To provide a buffer zone protecting the humpback whales within the newly formed sanctuary, we will select the five BIA areas with the highest suitability score and create a five kilometer buffer.
 
