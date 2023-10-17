@@ -89,7 +89,7 @@ A biologically important area (BIA) identifies where cetaceans concentrate for s
 
 **Step 4:** Right-click on the layer again, select ‘Data’, and then select ‘Export Features’. Write a SQL query to extract the BIA for the humpback whales from the other species and save the output to your local geodatabase in your ArcGIS Pro project. Ensure the file is added to your map in ArcGIS Pro and then explore the new layer and attribute table. 
 
-##### Q1. What was the SQL expression that you used to export only the humpback whale BIA? (2 points) {.unnumbered}
+##### Q1. What was the SQL expression that you used to export only the humpback whale BIA? (3 points) {.unnumbered}
 
 ##### Q2. Apart from Hawaii, does the humpback whale have any other locations with a BIA for reproduction? (1 point) {.unnumbered}
 
@@ -153,7 +153,7 @@ We need to introduce a new tool, ‘Multipart to Singlepart’ to fix this probl
 
 The **Ocean_Uses** layer contains a wide range of human activities that occur at the coast or in the ocean. We would like to extract ‘Motorized Boating’, ‘Wildlife Viewing at Sea’, ‘Commercial Pelagic Fishing’, ‘Cruise Ships’, and ‘Shipping’. These human activities pose the most threat to humpback whales, and, so, we would like to expand the sanctuary to protect humpback whales where their current risk of collision with a vessel is the highest. 
 
-**Step 1:** Export features where Motorized Boating or any of the other human activities mentioned above is equal to ‘Dominant Use’. Be sure to set the output location to your local ArcGIS Pro project geodatabase and name the output feature class **Boat_Uses**.
+**Step 1:** Export features where Motorized Boating or any of the other human activities mentioned above is equal to ‘Dominant Use’ (value of 2). Be sure to set the output location to your local ArcGIS Pro project geodatabase and name the output feature class **Boat_Uses**.
 
 ```{r 03-feature-class-to-feature-class, out.width= "50%", echo = FALSE}
     knitr::include_graphics("images/03-feature-class-to-feature-class.png")
@@ -162,8 +162,6 @@ The **Ocean_Uses** layer contains a wide range of human activities that occur at
 Now, we would like to bring the data on vessel usage and the BIA polygons together using the Overlay Layers tool. This is important to be able to see the spatial overlap between where humpback whales reproduce and rear their young and where vessels are labeled as a Dominant Use, indicating that there is a higher chance of boat strikes in these locations.
 
 **Step 2:** Open the tool ‘Overlay Layers’. The input layer should be **BIA_Sightings_Multipart** and the overlay layer is **Boat_Uses**. For ‘Overlay Type’, select Identity. Name the output **BIA_Sightings_Boat**.
-
-##### Q6. Open the attribute table for the output. What does the 0, 1, and 2 represent in the swimming column? (1 point) {.unnumbered}
 
 ------------------------------------------------------------------------
 
@@ -199,9 +197,9 @@ _HINT: For Vessels, you will need to include more than one column for $F$._
 **Step 3:** Finally, use a weighted suitability calculation by creating a new field, Suitability, and writing the following expression:
  [Area] * 0.4 + [Sightings] * 0.2 + [Vessels] * 0.4.
 
-##### Q7. What is the maximum value for Area to four decimal places? (1 point) {.unnumbered}
-##### Q8. What is the maximum value for Sightings to four decimal places? (1 point) {.unnumbered}
-##### Q9. What is the maximum value for Vessels to four decimal places? (1 point) {.unnumbered}
+##### Q6. What is the maximum value for Area to four decimal places? (1 point) {.unnumbered}
+##### Q7. What is the maximum value for Sightings to four decimal places? (1 point) {.unnumbered}
+##### Q8. What is the maximum value for Vessels to four decimal places? (1 point) {.unnumbered}
 
 To provide a buffer zone protecting the humpback whales within the newly formed sanctuary, we will select the five BIA areas with the highest suitability score and create a five kilometer buffer.
 
