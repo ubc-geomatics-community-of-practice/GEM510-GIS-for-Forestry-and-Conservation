@@ -36,6 +36,15 @@ In this lab you will learn some basic functionality of handling data with the QG
 
 <input type="checkbox" unchecked> Your final symbolized map (15 points)</input>
 
+- The map should show the Voronoi polygons symbolized with a quantile classification that is 50% opaque
+- The OpenStreetMap nodes need to be symbolized and distinguishable underneath the Voronoi polygons
+- You need to use the OpenStreetMap basemap
+- You can add additional layers, but be sure to avoid making the map too cluttered
+-	All features on the map should appear in the legend 
+-	Map should be 11”x17” either as a landscape or portrait layout 
+-	You should export the map as a PDF document
+-	Your map should have a title, north arrow, scale bar, legend, your name, and date
+
 ------------------------------------------------------------------------
 
 ## Data {.unnumbered}
