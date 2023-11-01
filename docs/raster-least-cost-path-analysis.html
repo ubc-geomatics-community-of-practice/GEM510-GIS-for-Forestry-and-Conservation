@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2023-10-17" />
+<meta name="date" content="2023-11-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -388,7 +388,7 @@ os.environ[&#39;PGPASSWORD&#39;] = &#39;studentpasswordhere&#39;
 <p>The last layer we are going to add is distance to roads as a simple proxy for human-related mortality.</p>
 <p><strong>Step 7:</strong> Open “yellowhead_roads” in QGIS from the UBC PostgreSQL database, if you have not already. Open the “Reproject Layer” tool and change the projection for “yellowhead_roads” to EPSG:26911 and name the output “yellowhead_roads_utm.shp”.</p>
 <p><strong>Step 8:</strong> In the OSGeo4W shell, enter the following command <code>gdal_rasterize -burn 1 -tr 20 20 -ot Byte -a_nodata nodata -te 401480 5753440 661680 5936300 yellowhead_roads_utm.shp yellowhead_roads_utm.tif</code>. You should recognize all these flags by now. Inspect the output in QGIS.</p>
-<p><strong>Step 9:</strong> Search for the “Proximity (Raster Distance)” tool. The input layer will be “yellowhead_roads_utm.shp”. Name the output as “yellowhead_roads_distance_utm.tif” then click “Run” then inspect the output in the map.</p>
+<p><strong>Step 9:</strong> Search for the “Proximity (Raster Distance)” tool. The input layer will be “yellowhead_roads_utm.tif”. Name the output as “yellowhead_roads_distance_utm.tif”. Ensure that your QGIS map project CRS is set to <code>EPSG:26911</code> in the bottom right hand corner, then click “Run” and inspect the output in the map.</p>
 <p><strong>Step 10:</strong> Open the “Raster Calculator” tool and add the expression <code>(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2</code>. Let us break this one down:</p>
 <ul>
 <li><p><code>1 / "yellowhead_roads_distance_utm@1"</code> would give us the inverse distances, however, cells that are roads have a distance of zero, and <span class="math inline">\(1÷0=undefined=nodata\)</span>. Therefore, we need to add a fraction to the denominator.</p></li>
