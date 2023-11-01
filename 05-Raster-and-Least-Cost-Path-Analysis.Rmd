@@ -214,7 +214,7 @@ The last layer we are going to add is distance to roads as a simple proxy for hu
 
 **Step 8:** In the OSGeo4W shell, enter the following command `gdal_rasterize -burn 1 -tr 20 20 -ot Byte -a_nodata nodata -te 401480 5753440 661680 5936300 yellowhead_roads_utm.shp yellowhead_roads_utm.tif`. You should recognize all these flags by now. Inspect the output in QGIS.
 
-**Step 9:** Search for the "Proximity (Raster Distance)" tool. The input layer will be "yellowhead_roads_utm.shp". Name the output as "yellowhead_roads_distance_utm.tif" then click "Run" then inspect the output in the map.
+**Step 9:** Search for the "Proximity (Raster Distance)" tool. The input layer will be "yellowhead_roads_utm.tif". Name the output as "yellowhead_roads_distance_utm.tif". Ensure that your QGIS map project CRS is set to `EPSG:26911` in the bottom right hand corner, then click "Run" and inspect the output in the map.
 
 **Step 10:** Open the "Raster Calculator" tool and add the expression `(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2`. Let us break this one down:
 
