@@ -41,23 +41,29 @@ All data for this lab are accessible via the UBC PostgreSQL server, the public M
 
 ------------------------------------------------------------------------
 
-## Task 1: Install Kart and create your first repository {.unnumbered}
+## Task 1: Configure Git, install Kart, and create your first repository {.unnumbered}
 
-**Step 1:** Open QGIS and install the Kart plugin using the Plugin Manager from the top toolbar. If you have not already installed the latest version of Kart on your computer, then you will be prompted to download and install the latest version.
+At the core of version control with Git, each change made to a file is tracked with a message by a user, so we need to configure Git with a user name and e-mail address to sign our commit messages with. For the purpose of this lab, you can choose any username or e-mail address. You are not actually creating any account information and the user name and e-mail address you enter (real or fake) will only be stored on your local machine for this lab. We are not using GitHub for this lab, so you can just copy and paste the code in the steps below. However, if you will eventually start working with a hosted service like GitHub, then you will want to configure your local Git software with the user name and e-mail address associated with your GitHub account.
+
+**Step 1:** Search for and open "Git Bash" in Windows.
+
+**Step 2:** Enter the following command `git config --global user.name "student"` and press enter. Next, enter the following command `git config --global email "you@example.com"`. Git is now configured and you can close the Git Bash.
+
+**Step 3:** Open QGIS and install the Kart plugin using the Plugin Manager from the top toolbar. If you have not already installed the latest version of Kart on your computer, then you will be prompted to download and install the latest version.
 
 ```{r 06-kart-qgis-plugin, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-kart-qgis-plugin.png")
 ```
 
-**Step 2:** Create a directory on your computer where you can store your first Kart repository, which we will call `ubcv`. For example, `C:\Kart\ubcv`.
+**Step 4:** Create a directory on your computer where you can store your first Kart repository, which we will call `ubcv`. For example, `C:\Kart\ubcv`.
 
-**Step 3:** From the QGIS navigation bar at the top, select "Plugins" > "Kart" > "Repositories...". This opens the Kart repositories pane.
+**Step 5:** From the QGIS navigation bar at the top, select "Plugins" > "Kart" > "Repositories...". This opens the Kart repositories pane.
 
 ```{r 06-kart-repository-options, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-kart-repository-options.png")
 ```
 
-**Step 4:** From the Kart repositories pane, right-click "Repositories" and select "Create new repository...". Add the path to the directory you created in Step 2, ensure "Storage Type" is set to Geopackage and click "OK" to initiate the Kart repository.
+**Step 6:** From the Kart repositories pane, right-click "Repositories" and select "Create new repository...". Add the path to the directory you created in Step 2, ensure "Storage Type" is set to Geopackage and click "OK" to initiate the Kart repository.
 
 ```{r 06-new-kart-repository, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-new-kart-repository.png")
@@ -65,13 +71,13 @@ All data for this lab are accessible via the UBC PostgreSQL server, the public M
 
 Expand your repositories list and you should see your new repostiory. If you expand "Datasets", you will see nothing there. What we have done is basically told Kart to watch this directory for any changes to the files. If you navigate to the folder in your file system, you will see some new files `KART_README.txt`, `.git`, and `.kart` that Kart has added, which enables version control in this new repository. Now let us add some data and visualize it in QGIS.
 
-**Step 5:** Right-click the repository `C:\Kart\ubcv [main]` and then select "Import dataset from database...". We are going to connect to the ubcv database on the UBC PostgreSQL server.
+**Step 7:** Right-click the repository `C:\Kart\ubcv [main]` and then select "Import dataset from database...". We are going to connect to the ubcv database on the UBC PostgreSQL server.
 
 ```{r 06-import-data-kart-repository, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-import-data-kart-repository.png")
 ```
 
-**Step 6:** Add the parameters to connect to the UBC PostgreSQL server. Be sure to switch to the "Basic" tab for credentials and add the student credential that was provided to the class. Once you have added the credential, click the "Load Tables" button to so a soft connection to the database. If the connection was successful, then select "ubcv_campus_trees" from the drop-down menu and then click "OK" to add the table to your Kart repository.
+**Step 8:** Add the parameters to connect to the UBC PostgreSQL server. Be sure to switch to the "Basic" tab for credentials and add the student credential that was provided to the class. Once you have added the credential, click the "Load Tables" button to so a soft connection to the database. If the connection was successful, then select "ubcv_campus_trees" from the drop-down menu and then click "OK" to add the table to your Kart repository.
 
 ```{r 06-import-postgres-database-kart, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-import-postgres-database-kart.png")
@@ -79,7 +85,7 @@ Expand your repositories list and you should see your new repostiory. If you exp
 
 We will be comparing this point dataset to a recent orthophoto of UBC Vancouver campus and then making some edits.
 
-**Step 7:** Add the most recent UBC orthophoto to your QGIS project. Navigate to the [MGEM Orthophoto Data Store](https://206-12-122-94.cloud.computecanada.ca/UBC_ORTHOPHOTOS/) and then right-click the most recently dated "UBC_ORTHOPHOTO_YEAR_COG.tif" file listed there and then select "Copy Link". Return to your QGIS project, open the Data Source Manager, select "Raster" from the left navigation bar, change "Source Type" to "Protocol: HTTP(S), cloud, etc.", and then paste the link that you copied into the "URI" field and press "Add".
+**Step 9:** Add the most recent UBC orthophoto to your QGIS project. Navigate to the [MGEM Orthophoto Data Store](https://206-12-122-94.cloud.computecanada.ca/UBC_ORTHOPHOTOS/) and then right-click the most recently dated "UBC_ORTHOPHOTO_YEAR_COG.tif" file listed there and then select "Copy Link". Return to your QGIS project, open the Data Source Manager, select "Raster" from the left navigation bar, change "Source Type" to "Protocol: HTTP(S), cloud, etc.", and then paste the link that you copied into the "URI" field and press "Add".
 
 ```{r 06-add-ubc-orthophoto, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-add-ubc-orthophoto.png")
@@ -87,13 +93,13 @@ We will be comparing this point dataset to a recent orthophoto of UBC Vancouver 
 
 UBC orthophotos are publicly available datasets that are also encoded as Cloud Optimized Geotiffs (COG), which enables fast retrieval and zoom levels for cloud-hosted raster datasets. If you find that the file hosted on the server is not very responsive, you can also download the geotiff to your computer and add it as a regular file. Note that these orthophotos are large files (~7 GB) and ensure you have enough disk space in the location you want to save it.
 
-**Step 8:** Drag and drop the "ubcv_campus_trees" dataset into your map from the Kart repository pane. Your QGIS project should look something like what is shown below.
+**Step 10:** Drag and drop the "ubcv_campus_trees" dataset into your map from the Kart repository pane. Your QGIS project should look something like what is shown below.
 
 ```{r 06-ubcv-campus-trees-orthophoto-qgis, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-ubcv-campus-trees-orthophoto-qgis.png")
 ```
 
-**Step 9:** Zoom in to inspect the trees and the orthophoto.
+**Step 11:** Zoom in to inspect the trees and the orthophoto.
 
 ##### Q1. What time of year do you think the orthophoto was collected? How do you know? (1 point) {.unnumbered}
 
