@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2023-11-01" />
+<meta name="date" content="2023-11-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -150,7 +150,7 @@
 <li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#learning-objectives-5"><i class="fa fa-check"></i>Learning Objectives</a></li>
 <li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#lab6-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
 <li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#data-5"><i class="fa fa-check"></i>Data</a></li>
-<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-1-install-kart-and-create-your-first-repository"><i class="fa fa-check"></i>Task 1: Install Kart and create your first repository</a></li>
+<li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-1-configure-git-install-kart-and-create-your-first-repository"><i class="fa fa-check"></i>Task 1: Configure Git, install Kart, and create your first repository</a></li>
 <li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-2-edit-a-layer-in-qgis-with-version-control"><i class="fa fa-check"></i>Task 2: Edit a layer in QGIS with version control</a></li>
 <li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-3-working-on-and-merging-different-branches"><i class="fa fa-check"></i>Task 3: Working on and merging different branches</a></li>
 <li class="chapter" data-level="" data-path="digitization-editing-kart.html"><a href="digitization-editing-kart.html#task-4-digitize-some-buildings-in-arcgis-pro"><i class="fa fa-check"></i>Task 4: Digitize some buildings in ArcGIS Pro</a></li>
@@ -220,27 +220,30 @@ Paul Pickell</p>
 <p>All data for this lab are accessible via the UBC PostgreSQL server, the public MGEM Data Store, and the public MGEM Geoserver. Instructions for connecting to the server and data store are given in the tasks below and prior labs.</p>
 <hr />
 </div>
-<div id="task-1-install-kart-and-create-your-first-repository" class="section level2 unnumbered hasAnchor">
-<h2>Task 1: Install Kart and create your first repository<a href="digitization-editing-kart.html#task-1-install-kart-and-create-your-first-repository" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Step 1:</strong> Open QGIS and install the Kart plugin using the Plugin Manager from the top toolbar. If you have not already installed the latest version of Kart on your computer, then you will be prompted to download and install the latest version.</p>
+<div id="task-1-configure-git-install-kart-and-create-your-first-repository" class="section level2 unnumbered hasAnchor">
+<h2>Task 1: Configure Git, install Kart, and create your first repository<a href="digitization-editing-kart.html#task-1-configure-git-install-kart-and-create-your-first-repository" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>At the core of version control with Git, each change made to a file is tracked with a message by a user, so we need to configure Git with a user name and e-mail address to sign our commit messages with. For the purpose of this lab, you can choose any username or e-mail address. You are not actually creating any account information and the user name and e-mail address you enter (real or fake) will only be stored on your local machine for this lab. We are not using GitHub for this lab, so you can just copy and paste the code in the steps below. However, if you will eventually start working with a hosted service like GitHub, then you will want to configure your local Git software with the user name and e-mail address associated with your GitHub account.</p>
+<p><strong>Step 1:</strong> Search for and open “Git Bash” in Windows.</p>
+<p><strong>Step 2:</strong> Enter the following command <code>git config --global user.name "student"</code> and press enter. Next, enter the following command <code>git config --global email "you@example.com"</code>. Git is now configured and you can close the Git Bash.</p>
+<p><strong>Step 3:</strong> Open QGIS and install the Kart plugin using the Plugin Manager from the top toolbar. If you have not already installed the latest version of Kart on your computer, then you will be prompted to download and install the latest version.</p>
 <p><img src="images/06-kart-qgis-plugin.png" width="75%" /></p>
-<p><strong>Step 2:</strong> Create a directory on your computer where you can store your first Kart repository, which we will call <code>ubcv</code>. For example, <code>C:\Kart\ubcv</code>.</p>
-<p><strong>Step 3:</strong> From the QGIS navigation bar at the top, select “Plugins” &gt; “Kart” &gt; “Repositories…”. This opens the Kart repositories pane.</p>
+<p><strong>Step 4:</strong> Create a directory on your computer where you can store your first Kart repository, which we will call <code>ubcv</code>. For example, <code>C:\Kart\ubcv</code>.</p>
+<p><strong>Step 5:</strong> From the QGIS navigation bar at the top, select “Plugins” &gt; “Kart” &gt; “Repositories…”. This opens the Kart repositories pane.</p>
 <p><img src="images/06-kart-repository-options.png" width="75%" /></p>
-<p><strong>Step 4:</strong> From the Kart repositories pane, right-click “Repositories” and select “Create new repository…”. Add the path to the directory you created in Step 2, ensure “Storage Type” is set to Geopackage and click “OK” to initiate the Kart repository.</p>
+<p><strong>Step 6:</strong> From the Kart repositories pane, right-click “Repositories” and select “Create new repository…”. Add the path to the directory you created in Step 2, ensure “Storage Type” is set to Geopackage and click “OK” to initiate the Kart repository.</p>
 <p><img src="images/06-new-kart-repository.png" width="75%" /></p>
 <p>Expand your repositories list and you should see your new repostiory. If you expand “Datasets”, you will see nothing there. What we have done is basically told Kart to watch this directory for any changes to the files. If you navigate to the folder in your file system, you will see some new files <code>KART_README.txt</code>, <code>.git</code>, and <code>.kart</code> that Kart has added, which enables version control in this new repository. Now let us add some data and visualize it in QGIS.</p>
-<p><strong>Step 5:</strong> Right-click the repository <code>C:\Kart\ubcv [main]</code> and then select “Import dataset from database…”. We are going to connect to the ubcv database on the UBC PostgreSQL server.</p>
+<p><strong>Step 7:</strong> Right-click the repository <code>C:\Kart\ubcv [main]</code> and then select “Import dataset from database…”. We are going to connect to the ubcv database on the UBC PostgreSQL server.</p>
 <p><img src="images/06-import-data-kart-repository.png" width="75%" /></p>
-<p><strong>Step 6:</strong> Add the parameters to connect to the UBC PostgreSQL server. Be sure to switch to the “Basic” tab for credentials and add the student credential that was provided to the class. Once you have added the credential, click the “Load Tables” button to so a soft connection to the database. If the connection was successful, then select “ubcv_campus_trees” from the drop-down menu and then click “OK” to add the table to your Kart repository.</p>
+<p><strong>Step 8:</strong> Add the parameters to connect to the UBC PostgreSQL server. Be sure to switch to the “Basic” tab for credentials and add the student credential that was provided to the class. Once you have added the credential, click the “Load Tables” button to so a soft connection to the database. If the connection was successful, then select “ubcv_campus_trees” from the drop-down menu and then click “OK” to add the table to your Kart repository.</p>
 <p><img src="images/06-import-postgres-database-kart.png" width="75%" /></p>
 <p>We will be comparing this point dataset to a recent orthophoto of UBC Vancouver campus and then making some edits.</p>
-<p><strong>Step 7:</strong> Add the most recent UBC orthophoto to your QGIS project. Navigate to the <a href="https://206-12-122-94.cloud.computecanada.ca/UBC_ORTHOPHOTOS/">MGEM Orthophoto Data Store</a> and then right-click the most recently dated “UBC_ORTHOPHOTO_YEAR_COG.tif” file listed there and then select “Copy Link”. Return to your QGIS project, open the Data Source Manager, select “Raster” from the left navigation bar, change “Source Type” to “Protocol: HTTP(S), cloud, etc.”, and then paste the link that you copied into the “URI” field and press “Add”.</p>
+<p><strong>Step 9:</strong> Add the most recent UBC orthophoto to your QGIS project. Navigate to the <a href="https://206-12-122-94.cloud.computecanada.ca/UBC_ORTHOPHOTOS/">MGEM Orthophoto Data Store</a> and then right-click the most recently dated “UBC_ORTHOPHOTO_YEAR_COG.tif” file listed there and then select “Copy Link”. Return to your QGIS project, open the Data Source Manager, select “Raster” from the left navigation bar, change “Source Type” to “Protocol: HTTP(S), cloud, etc.”, and then paste the link that you copied into the “URI” field and press “Add”.</p>
 <p><img src="images/06-add-ubc-orthophoto.png" width="75%" /></p>
 <p>UBC orthophotos are publicly available datasets that are also encoded as Cloud Optimized Geotiffs (COG), which enables fast retrieval and zoom levels for cloud-hosted raster datasets. If you find that the file hosted on the server is not very responsive, you can also download the geotiff to your computer and add it as a regular file. Note that these orthophotos are large files (~7 GB) and ensure you have enough disk space in the location you want to save it.</p>
-<p><strong>Step 8:</strong> Drag and drop the “ubcv_campus_trees” dataset into your map from the Kart repository pane. Your QGIS project should look something like what is shown below.</p>
+<p><strong>Step 10:</strong> Drag and drop the “ubcv_campus_trees” dataset into your map from the Kart repository pane. Your QGIS project should look something like what is shown below.</p>
 <p><img src="images/06-ubcv-campus-trees-orthophoto-qgis.png" width="75%" /></p>
-<p><strong>Step 9:</strong> Zoom in to inspect the trees and the orthophoto.</p>
+<p><strong>Step 11:</strong> Zoom in to inspect the trees and the orthophoto.</p>
 <div id="q1.-what-time-of-year-do-you-think-the-orthophoto-was-collected-how-do-you-know-1-point" class="section level5 unnumbered hasAnchor">
 <h5>Q1. What time of year do you think the orthophoto was collected? How do you know? (1 point)<a href="digitization-editing-kart.html#q1.-what-time-of-year-do-you-think-the-orthophoto-was-collected-how-do-you-know-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 </div>
