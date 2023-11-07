@@ -47,7 +47,7 @@ At the core of version control with Git, each change made to a file is tracked w
 
 **Step 1:** Search for and open "Git Bash" in Windows.
 
-**Step 2:** Enter the following command `git config --global user.name "student"` and press enter. Next, enter the following command `git config --global email "you@example.com"`. Git is now configured and you can close the Git Bash.
+**Step 2:** Enter the following command `git config --global user.name "student"` and press enter. Next, enter the following command `git config --global user.email "you@example.com"`. Git is now configured and you can close the Git Bash.
 
 **Step 3:** Open QGIS and install the Kart plugin using the Plugin Manager from the top toolbar. If you have not already installed the latest version of Kart on your computer, then you will be prompted to download and install the latest version.
 
