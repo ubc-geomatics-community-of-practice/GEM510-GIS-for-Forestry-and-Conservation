@@ -84,16 +84,16 @@ Sometimes, lots in cities are exceptionally large or are adjacent to more than o
 
 **Step 2:** Right-click street-trees and select "Export Features."
 
-- Input Rows: street-trees 
-- Output Location: Where you want the table to be saved 
-- Output Name: AssignedTrees 
-- Expression: + New expression Where `Assigned` is equal to Y.
+- **Input Rows:** street-trees 
+- **Output Location:** Where you want the table to be saved 
+- **Output Name:** AssignedTrees 
+- **Expression:** + New expression Where `Assigned` is equal to Y.
 
 **Step 3:** Open the attribute table for "AssignedTrees" and add a new text field to the data. On the top of the attribute table, there is a button that says "Add". The table will switch to field view. Name the field "Address" and select "Text" as the data type. Click "Save" in the top bar. Close "Field View" and return to the attribute table. Your new field should appear as the very last column in the dataset. Right-click the field and select "Calculate Field."
 
-The address locator you create in Task 3 requires addresses to be written in a specific way---street numbers and names must be in the same column. You will need to specify to ArcGIS that you are combining two strings (another designation for text data). Within the Fields menu under "Expression," double-click civic_numb. You will notice that the field below the equal sign is now populated with !civic_numb!.
+The address locator you create in Task 3 requires addresses to be written in a specific way---street numbers and names must be in the same column. You will need to specify to ArcGIS that you are combining two strings (another designation for text data). Within the Fields menu under "Expression," double-click "civic_numb". You will notice that the field below the equal sign is now populated with !civic_numb!.
 
-To combine the two columns together, type the following code into the box: `str(!civic_numb!)+" "+str(!std_street!)`
+To combine (i.e., concatenate) the two columns together, type the following code into the box: `str(!civic_numb!)+" "+str(!std_street!)`
 
 ```{r 07-calculate-field, out.width= "50%", echo = FALSE}
     knitr::include_graphics("images/07-calculate-field.png")
@@ -126,7 +126,7 @@ For the tool's parameters:
     -   **Left City/Municipality:** LEFT_LOC_1
     -   **Right City/Municipality:** RIGHT_LOC_1
 -   All other fields leave as <NONE>
--   Language Code: English
+-   **Language Code:** English
 
 Save the file as "GVRDaddresses".
 
