@@ -117,14 +117,14 @@ For the tool's parameters:
 -   **Primary Table(s):** gvrd_roads
 -   **Role:** Street Address
 -   **Field Map:**
-    -   **Feature ID:** OBJECTID
-    -   **Left House Number From:** FROM_LEFT_HOUSE_NUMBER
-    -   **Left House Number To:** TO_LEFT_HOUSE_NUMBER
-    -   **Right House Number From:** FROM_RIGHT_HOUSE_NUMBER
-    -   **Right House Number To:** TO_RIGHT_HOUSE_NUMBER
-    -   **Street Name:** STRUCTURED_NAME_1
-    -   **Left City/Municipality:** LEFT_LOC_1
-    -   **Right City/Municipality:** RIGHT_LOC_1
+    -   **Feature ID:** ogc_fid
+    -   **Left House Number From:** from_left_house_number
+    -   **Left House Number To:** to_left_house_number
+    -   **Right House Number From:** from_right_house_number
+    -   **Right House Number To:** to_right_house_number
+    -   **Street Name:** structured_name_a
+    -   **Left City/Municipality:** left_loc_1
+    -   **Right City/Municipality:** right_loc_1
 -   All other fields leave as <NONE>
 -   **Language Code:** English
 
