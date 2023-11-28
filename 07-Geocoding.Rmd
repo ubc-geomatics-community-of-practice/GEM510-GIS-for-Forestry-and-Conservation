@@ -151,14 +151,13 @@ Below are the tool's parameters:
 - **Input Table:** AssignedTrees 
 - **Input Address Locator:** GVRDaddresses 
 - **Input Address Fields:** Single Field 
-- **Field Name:** Full Address 
 - **Alias Name:** Address
 
 Save the file as "geocoded".
 
 **Step 4:** Look at the attribute table. The score column shows from 0-100 based on how close the address in the address locator was able to match the input table. The mailbox icon with the arrows in the geocoding toolbar allows you to investigate the matches more in-depth. With a messy dataset, this becomes invaluable.
 
-##### Q3. Are all of the addresses a 100% match? why or why not? (2 points) {.unnumbered}
+##### Q3. Are all of the addresses a 100% match? Why or why not? (2 points) {.unnumbered}
 
 **Step 5:** Toggle the "AssignedTrees" and "geocoded" datasets on and off to look for similarities and differences.
 
