@@ -146,6 +146,8 @@ You can also use the "Locate" tool to search an address using the ArcGIS World G
 
 **Step 3:** Geocode a table of addresses using "GVRDaddresses". The table of addresses you will be geocoding is the "AssignedTrees" dataset. To access the geocoding tool, you can search for "Geocode Addresses".
 
+If you downloaded "GVRDaddresses" as a shapefile instead of a table, then you will need to convert it to a table for this step. Right-click the layer in ArcGIS Pro and export it to a table.
+
 Below are the tool's parameters: 
 
 - **Input Table:** AssignedTrees 
