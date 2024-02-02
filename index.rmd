@@ -22,7 +22,7 @@ These materials are primarily lab assignments that students enrolled in GEM 510 
 
 Each "chapter" is a standalone lab assignment designed to be completed over one or two weeks.
 
-Students enrolled in GEM 510 will submit all deliverables through the course management system at UBC for credit and should consult the schedule and deadlines posted there. The casual user can still complete the tutorials step-by-step, but the data that are not alreadyh publicly available are not hosted on this website and therefore you will not have access to them. 
+Students enrolled in GEM 510 will submit all deliverables through the course management system at UBC for credit and should consult the schedule and deadlines posted there. The casual user can still complete the tutorials step-by-step, but the data that are not already publicly available are not hosted on this website and therefore you will not have access to them. 
 
 Unless otherwise noted, all materials are Open Educational Resources (OER) and licensed under a Creative Commons license (CC-BY-SA-4.0). Feel free to share and adapt, just be sure to share with the same license and give credit to the author.
 
