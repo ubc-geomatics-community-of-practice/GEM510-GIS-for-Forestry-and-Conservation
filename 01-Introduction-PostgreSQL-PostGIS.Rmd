@@ -53,7 +53,7 @@ All data for this lab are accessible via the UBC PostgreSQL server. Instructions
 
 ## Task 1: Set up pgAdmin and Connect to the UBC PostgreSQL server {.unnumbered}
 
-**Step 1:** Ensure that you are authenticated through UBC myVPN. If you are at UBC, use your dedicated ethernet port or connect via the ubcprivate wireless network. If you are away from campus, you will need to first connect to the UBC myVPN service using Cisco AnyConnect Secure Mobility Client. Only authenticated users with a Campus Wide Login (CWL) and connected to the UBC myVPN may access the UBC PostgreSQL server.
+**Step 1:** Ensure that you are authenticated through UBC myVPN. If you are at UBC, use your dedicated ethernet port or connect via the ubcsecure wireless network. If you are away from campus, you will need to first connect to the UBC myVPN service using Cisco AnyConnect Secure Mobility Client. Only authenticated users with a Campus Wide Login (CWL) and connected to the UBC myVPN may access the UBC PostgreSQL server.
 
 **Step 2:** Start pgAdmin 4. This software is a management tool for PostgreSQL databases, hence "pg". 
 
