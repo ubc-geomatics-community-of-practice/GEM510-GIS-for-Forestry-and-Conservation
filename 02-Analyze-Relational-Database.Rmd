@@ -78,7 +78,7 @@ If everything is successful, then you should see `postgres=#`, which indicates y
 
 **Step 3:** Currently this is just a plain-vanilla PostgreSQL relational database that cannot handle spatial data. In order to convert this to a PostGIS database, we need to enable the PostGIS extension using the following SQL: `CREATE EXTENSION postgis;`.
 
-```{r 02-psql-create-mypostgisdb, out.width= "75%", echo = FALSE}
+```{r 02-psql-create-mypostgisdb, out.width= "90%", echo = FALSE}
     knitr::include_graphics("images/02-psql-create-mypostgisdb.png")
 ```
 
@@ -92,7 +92,7 @@ If the above step fails, then you may need to first install PostGIS. Ordinarily,
 
 **Step 3b:** If prompted, enter your admin credential or ask your instructor to provide this credential for you.
 
-**Step 3c:** Select "PostgreSQL 15 (x64) on port 5432" from the drop down menu (or whatever version of PostgreSQL is installed on your machine). Click "Next".
+**Step 3c:** Select "PostgreSQL 16 (x64) on port 5432" from the drop down menu (or whatever version of PostgreSQL is installed on your machine). Click "Next".
 
 ```{r 02-stack-builder-1, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/02-stack-builder-1.png")
@@ -152,7 +152,7 @@ this_field_is_varchar_50 varchar(50)
 );
 ```
 
-```{r 02-psql-mynewtable, out.width= "75%", echo = FALSE}
+```{r 02-psql-mynewtable, out.width= "90%", echo = FALSE}
     knitr::include_graphics("images/02-psql-mynewtable.png")
 ```
 
@@ -190,7 +190,7 @@ Now that the table and fields are defined, we will insert some data into the tab
 INSERT INTO my_new_table VALUES (32767, false, 'hello world!');
 ```
 
-```{r 02-psql-insert, out.width= "75%", echo = FALSE}
+```{r 02-psql-insert, out.width= "90%", echo = FALSE}
     knitr::include_graphics("images/02-psql-insert.png")
 ```
 
@@ -200,7 +200,7 @@ If you want to insert a value for specific fields, then specify the field name(s
 INSERT INTO my_new_table (this_field_is_int2, this_field_is_varchar_50) VALUES (-32768,'hi again!');
 ```
 
-```{r 02-psql-insert-2, out.width= "75%", echo = FALSE}
+```{r 02-psql-insert-2, out.width= "90%", echo = FALSE}
     knitr::include_graphics("images/02-psql-insert-2.png")
 ```
 
@@ -212,7 +212,7 @@ SET this_field_is_bool = true, this_field_is_varchar_50 = 'whoops!'
 WHERE this_field_is_bool IS NULL;
 ```
 
-```{r 02-psql-update, out.width= "75%", echo = FALSE}
+```{r 02-psql-update, out.width= "90%", echo = FALSE}
     knitr::include_graphics("images/02-psql-update.PNG")
 ```
 
@@ -272,7 +272,7 @@ ogrinfo PG:"host=localhost user=postgres dbname=mypostgisdb password=YOUR_LOCALH
 
 The screenshot below is a small snippet of what is returned in the OSGeo4W terminal window. As you can see, we have access to the feature count, spatial extent, Spatial Reference System (SRS), and even all the field names and data types if you scroll farther down. The `-so` flag gives us this "summary output".
 
-```{r 02-ogrinfo-fsc, out.width= "75%", echo = FALSE}
+```{r 02-ogrinfo-fsc, out.width= "90%", echo = FALSE}
     knitr::include_graphics("images/02-ogrinfo-fsc.png")
 ```
 
@@ -320,7 +320,7 @@ SELECT taxa, COUNT(*) AS frequency FROM ubcv_fsc_trees GROUP BY taxa ORDER BY CO
 
 This will return the "taxa" column and create a new column called "frequency" that contains values of the `COUNT()` function. The `GROUP BY` statement is needed when we use an aggregation method like `COUNT()`. Finally, the relation is ordered by the aggregation result in descending `DESC` order.
 
-```{r 02-psql-final-analysis, out.width= "75%", echo = FALSE}
+```{r 02-psql-final-analysis, out.width= "90%", echo = FALSE}
     knitr::include_graphics("images/02-psql-final-analysis.png")
 ```
 

@@ -241,12 +241,12 @@ Paul Pickell</p>
 <p><strong>Step 1:</strong> Create a new database called “mypostgisdb” with the following SQL command <code>CREATE DATABASE mypostgisdb;</code>. It is important to always escape SQL statements with a semi-colon otherwise psql will interpret your input as spanning multiple lines! If you forget the semi-colon, you can always just type it in the console and hit “Enter” on your keyboard and psql will interpret this as a two-line statement.</p>
 <p><strong>Step 2:</strong> Connect to your new database by using the psql command <code>\c mypostgisdb</code>. Note that this is NOT an SQL statement, so there is no need to escape the command with a semi-colon. Your console should now say <code>mypostgisdb=#</code>, which indicates you are now connected.</p>
 <p><strong>Step 3:</strong> Currently this is just a plain-vanilla PostgreSQL relational database that cannot handle spatial data. In order to convert this to a PostGIS database, we need to enable the PostGIS extension using the following SQL: <code>CREATE EXTENSION postgis;</code>.</p>
-<p><img src="images/02-psql-create-mypostgisdb.png" width="75%" /></p>
+<p><img src="images/02-psql-create-mypostgisdb.png" width="90%" /></p>
 <p>If the above step fails, then you may need to first install PostGIS. Ordinarily, PostGIS is installed at the same time as PostgreSQL, they come packaged together. To install PostGIS, follow these steps:</p>
 <p><strong>Step 3a:</strong> Search “Stack Builder” from your Windows search bar and run the application.</p>
 <p><img src="images/02-stack-builder-search.png" width="75%" /></p>
 <p><strong>Step 3b:</strong> If prompted, enter your admin credential or ask your instructor to provide this credential for you.</p>
-<p><strong>Step 3c:</strong> Select “PostgreSQL 15 (x64) on port 5432” from the drop down menu (or whatever version of PostgreSQL is installed on your machine). Click “Next”.</p>
+<p><strong>Step 3c:</strong> Select “PostgreSQL 16 (x64) on port 5432” from the drop down menu (or whatever version of PostgreSQL is installed on your machine). Click “Next”.</p>
 <p><img src="images/02-stack-builder-1.png" width="75%" /></p>
 <p><strong>Step 3d:</strong> Expand “Categories”, then expand “Spatial Extensions”, and toggle on the PostGIS software version to install. Click “Next”. The Application Stack Builder will prompt for where you want to download PostGIS, just click “Next” to accept the default location. Then you will be prompted to install it after it downloads. Make sure that “Skip Installation” is toggled off, and continue to click “Next” to accept the defaults, and “Agree” to the end user license agreement.</p>
 <p><strong>Step 3e:</strong> After PostGIS installs successfully, close any psql shell you have open, re-open a new psql shell, and then begin again at Step 2 above.</p>
@@ -267,7 +267,7 @@ colunm-name-3 datatype,
 );</code></pre>
 <p>Data types are very important and the shorthand notation for these in PostgreSQL are <a href="https://www.postgresql.org/docs/current/datatype.html">listed on this web page</a> and some commonly used data types are reproduced below with examples.</p>
 <table>
-<caption><span id="tab:unnamed-chunk-5">Table 2.1: </span>Some PostgreSQL data types with example value ranges.</caption>
+<caption><span id="tab:unnamed-chunk-3">Table 2.1: </span>Some PostgreSQL data types with example value ranges.</caption>
 <colgroup>
 <col width="7%" />
 <col width="56%" />
@@ -339,7 +339,7 @@ this_field_is_int2 int2,
 this_field_is_bool bool,
 this_field_is_varchar_50 varchar(50)
 );</code></pre>
-<p><img src="images/02-psql-mynewtable.png" width="75%" /></p>
+<p><img src="images/02-psql-mynewtable.png" width="90%" /></p>
 <p>Watch out for unescaped parentheses when running multiline SQL statements! If you see <code>mypostgisdb=#</code>, then you are able to submit a new psql command or start an SQL statement. If you see <code>mypostgisdb=-</code>, then you have already started an SQL statement on a line above in the terminal. If you see <code>mypostgisdb=(</code>, then you have added an open parenthesis ‘(’ somewhere in your statement on a line above. When running a SQL statement over multiple lines, you need to ensure that you enclose all parentheses and end the statement with a semicolon <code>;</code> in order to return the psql command line back to <code>mypostgisdb=#</code>. If you find yourself stuck an unable to exit <code>mypostgisdb=(</code>, try to close any open parentheses by typing <code>)</code> and pressing “Enter”. If you find yourself unable to exit <code>mypostgisdb=-</code>, try ending the SQL statement by typing <code>;</code> and pressing “Enter”. If both of those fail, you can try exiting the command with <code>CTRL + C</code>, which may also end psql and require you to reconnect to the database.</p>
 <p>You can experiment with creating as many new tables as you want. If you need to delete a table, use the <code>DROP</code> keyword like this <code>DROP TABLE my_new_table;</code>.</p>
 <p>It is good practice to assign a field (multiple fields) as a primary key when you create a table. This is done by simply adding <code>PRIMARY KEY</code> after the field definition when you make the table. For example:</p>
@@ -359,15 +359,15 @@ PRIMARY KEY(this_field_is_int2, this_field_is_bool)
 <p><strong>Step 7:</strong> Create a new table of assignments that are due next week. Include course code, assignment name, the percent weighting of the assignment on your final grade in that course, and the due date. Use the appropriate data types for each field and define a primary key.</p>
 <p>Now that the table and fields are defined, we will insert some data into the table. Inserting data uses the <code>INSERT</code> keyword followed by <code>VALUES</code> and then a comma-separated list of the values you want to insert in parentheses. For example:</p>
 <pre><code>INSERT INTO my_new_table VALUES (32767, false, &#39;hello world!&#39;);</code></pre>
-<p><img src="images/02-psql-insert.png" width="75%" /></p>
+<p><img src="images/02-psql-insert.png" width="90%" /></p>
 <p>If you want to insert a value for specific fields, then specify the field name(s) after the table name:</p>
 <pre><code>INSERT INTO my_new_table (this_field_is_int2, this_field_is_varchar_50) VALUES (-32768,&#39;hi again!&#39;);</code></pre>
-<p><img src="images/02-psql-insert-2.png" width="75%" /></p>
+<p><img src="images/02-psql-insert-2.png" width="90%" /></p>
 <p>If you make a mistake or need to update a field later, then you use <code>UPDATE</code> and <code>SET</code> to identify the set of fields that should be updated. You can also test for NULL (empty values) using <code>IS NULL</code> or <code>IS NOT NULL</code>:</p>
 <pre><code>UPDATE my_new_table
 SET this_field_is_bool = true, this_field_is_varchar_50 = &#39;whoops!&#39;
 WHERE this_field_is_bool IS NULL;</code></pre>
-<p><img src="images/02-psql-update.PNG" width="75%" /></p>
+<p><img src="images/02-psql-update.PNG" width="90%" /></p>
 <p>Dates require special handling because if you just try to insert them as strings or otherwise, they are treated as literals. For dates, we need to use the special <code>TO_DATE</code> function:</p>
 <pre><code>INSERT INTO my_new_table (this_field_is_date) VALUES (TO_DATE(&#39;31-12-1963&#39;, &#39;DD-MM-YYYY&#39;));</code></pre>
 <p><strong>Step 8:</strong> Now fill in your table of assignments by inserting and/or updating the values as needed.</p>
@@ -395,7 +395,7 @@ WHERE this_field_is_bool IS NULL;</code></pre>
 <p><strong>Step 6:</strong> Check that the FSC polygon was successfully added to your PostGIS database with the following command:</p>
 <pre><code>ogrinfo PG:&quot;host=localhost user=postgres dbname=mypostgisdb password=YOUR_LOCALHOST_PASSWORD&quot; &quot;ubcv_FSC&quot; -so</code></pre>
 <p>The screenshot below is a small snippet of what is returned in the OSGeo4W terminal window. As you can see, we have access to the feature count, spatial extent, Spatial Reference System (SRS), and even all the field names and data types if you scroll farther down. The <code>-so</code> flag gives us this “summary output”.</p>
-<p><img src="images/02-ogrinfo-fsc.png" width="75%" /></p>
+<p><img src="images/02-ogrinfo-fsc.png" width="90%" /></p>
 <p><strong>Step 7:</strong> Repeat this process to import the ubcv_campus_trees.shp you created in Step 3 to your localhost PostGIS database.</p>
 <hr />
 </div>
@@ -416,7 +416,7 @@ WHERE this_field_is_bool IS NULL;</code></pre>
 <p><strong>Step 5:</strong> Now we will do a simple SQL query to determine the species that are planted around the Forest Sciences Building:</p>
 <pre><code>SELECT taxa, COUNT(*) AS frequency FROM ubcv_fsc_trees GROUP BY taxa ORDER BY COUNT(*) DESC;</code></pre>
 <p>This will return the “taxa” column and create a new column called “frequency” that contains values of the <code>COUNT()</code> function. The <code>GROUP BY</code> statement is needed when we use an aggregation method like <code>COUNT()</code>. Finally, the relation is ordered by the aggregation result in descending <code>DESC</code> order.</p>
-<p><img src="images/02-psql-final-analysis.png" width="75%" /></p>
+<p><img src="images/02-psql-final-analysis.png" width="90%" /></p>
 <p><strong>Step 6:</strong> Modify the statement above to sort the taxa alphabetically.</p>
 <p>These last few steps are just to illustrate that you can run the same SQL statements above directly in QGIS.</p>
 <p><strong>Step 7:</strong> Open QGIS. From the top menu toolbar, select <strong>Database</strong> then <strong>DB Manager…</strong> This will open a new window where you can do basically everything you did in this task and the prior task. You can import/export data to whatever format you want, inspect the database, tables, and even preview the spatial features.</p>
