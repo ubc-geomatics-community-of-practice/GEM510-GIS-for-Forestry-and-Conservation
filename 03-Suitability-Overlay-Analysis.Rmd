@@ -74,7 +74,7 @@ You will find this lab much easier if you keep your data in a structure that mak
 
 Here is a table of files you will be creating:
 
-```{r 05-data-table, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+```{r 03-data-table, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
 files <- c("Humpback_BIA","Humpback_Hawaii_BIA","BIA_Sanctuary_Erase","BIA_Sightings","BIA_Multipart","BIA_Sightings_Multipart","Boat_Uses","BIA_Sightings_Boat","Top_Five_Sanctuary","Sanctuary_Buffer")
 tasks <- c("1","1","2","3","3","3","4","5","5","5")
 df <- data.frame(File=files,Task=tasks)
@@ -97,8 +97,8 @@ knitr::kable(
 
 Once you have started your new project, open the Catalog panel. Look for the folder where you downloaded your data. If you don’t see it in the Catalog, go to Computer and navigate to the folder where you saved the Canvas (Suitability-and-overlay-analysis-Data) data.
 
-```{r 05-catalog, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-catalog.png")
+```{r 03-catalog, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-catalog.png")
 ```
 
 **Note:** If it still doesn’t appear, select the Refresh option in the Catalog to ensure your folder is displayed correctly.
@@ -107,8 +107,8 @@ Once you have started your new project, open the Catalog panel. Look for the fol
 
 Once you find your data in the Catalog, you will see four data sets. Select Cetaceans_BIA, right click, and choose **Add to Current Map**.
 
-```{r 05-add-to-current-map, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-add-to-current-map.png")
+```{r 03-add-to-current-map, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-add-to-current-map.png")
 ```
 
 **Step 4:** Open Cetaceans_BIA attribute table 
@@ -117,24 +117,24 @@ Right click on the layer Cetaceans_BIA and select Attribute Table. A table will 
 
 To extract Humpback Whale, we need to use a SQL query. Once your attribute table is open, click on the **Select By Attributes** tab at the top of your table. 
 
-```{r 05-select-by-attributes, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-select-by-attributes.png")
+```{r 03-select-by-attributes, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-select-by-attributes.png")
 ```
 
 This will open a dialog where you can enter the query needed to extract the data. Leave the input data as **Cetaceans_BIA**, and select **New Selection** under Selection type. 
 
 Now,where it says **Where**, look for the Field that contains the **Humpback Whale** data. Write the SQL query to extract the attribute needed and select **OK**.
 
-```{r 05-select-by-attributes-box, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-select-by-attributes-box.png")
+```{r 03-select-by-attributes-box, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-select-by-attributes-box.png")
 ```
 
 **Step 5:** Export the features
 
 Once you have applied a SQL query and selected only the Humpback Whale data, right click again on Cetaceans_BIA layer, select **Data**, and then choose **Export Features**. Save the output in your ArcGIS Pro project geodatabase and name it as **Humpback_BIA**.
 
-```{r 05-export-feature, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-export-feature.png")
+```{r 03-export-feature, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-export-feature.png")
 ```
 
 Make sure that the exported layer is added to your map in ArcGIS Pro. Then, explore the new layer and its attribute table to verify that the information has been extracted correctly.
@@ -164,8 +164,8 @@ For Overlay Type, select **Erase**. This will remove the areas of overlap, allow
 
 **Step 3:** Save the output in your ArcGIS Pro project geodatabase and name the output file **BIA_Sanctuary_Erase** and click **Run**.
 
-```{r 05-overlay-layers, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-overlay-layers.png")
+```{r 03-overlay-layers, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-overlay-layers.png")
 ```
 
 ##### Q3. What percentage of the BIA is outside of the marine sancuary? Hint: Use the attribute tables. {.unnumbered}
@@ -184,8 +184,8 @@ Spatial Join is a valuable tool that joins attributes from one feature to anothe
 
 **Step 3:** Save the output in your ArcGIS Pro project geodatabase and name the output file **BIA_Sightings** and click Run.
 
-```{r 05-spatial-join, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-spatial-join.png")
+```{r 03-spatial-join, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-spatial-join.png")
 ```
 
 **Step 4:** Open the attribute table. Do you see anything that went wrong with this analysis?
@@ -202,8 +202,8 @@ To solve this, we will use **Multipart to Singlepart** tool. This tool will spli
  
 **Step 6:** Set the Input Layer to **BIA_Sanctuary_Erase** and Save the output in your ArcGIS Pro project geodatabase and nname the output file **BIA_Multipart** and click **Run**.
 
-```{r 05-multi-sinlge, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-multi-sinlge.png")
+```{r 03-multi-sinlge, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-multi-sinlge.png")
 ```
 
 ##### Q4. How many individual polygons now exist? {.unnumbered}
@@ -214,8 +214,8 @@ To solve this, we will use **Multipart to Singlepart** tool. This tool will spli
 
 Save the output in your ArcGIS Pro project geodatabase and name the output file **BIA_Sightings_Multipart** and click **Run**.
 
-```{r 05-spatial-join-keep-all-target, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-spatial-join-keep-all-target.png")
+```{r 03-spatial-join-keep-all-target, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-spatial-join-keep-all-target.png")
 ```
 
 **Step 8:** Use symbology to display the BIA polygons and by number of cetacean sightings.
@@ -238,16 +238,16 @@ The **Ocean_Uses** layer contains a wide range of human activities that occur at
 
 Take a moment to observe what changes have occurred.
 
-```{r 05-feature-class, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-feature-class.png")
+```{r 03-feature-class, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-feature-class.png")
 ```
 
 **Step 4:** Once the features are selected, we will export them by right clicking on the **Ocean_Uses** layer, selecting **Data**, and then **Export Features**.
 
 In the pop-up window, leave Input Features set to your **Ocean_Uses** layer, and save the output in your ArcGIS Pro project geodatabase and name it **Boat_Uses** and click **OK**.
 
-```{r images/05-boat-uses, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-boat-uses.png")
+```{r images/03-boat-uses, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-boat-uses.png")
 ```
 
 Now, we would like to combine the data on vessel usage with the BIA polygons using the Overlay Layers tool. This is important to visualize the spatial overlap between areas where humpback whales reproduce and rear their young, and locations where vessels are classified as Dominant Use, indicating a higher risk of boat strikes in these areas. 
@@ -260,8 +260,8 @@ For this process we will use again the **Overlay Layer** tool.
 
 **Step 7:** Save the output in your ArcGIS Pro project geodatabase and name the output file **BIA_Sightings_Boat** and click **Run**.
 
-```{r 05-overlay-layers-identity, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/05-overlay-layers-identity.png")
+```{r 03-overlay-layers-identity, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-overlay-layers-identity.png")
 ```
 
 ##### Q6. Open the attribute table for the output. What does the 0, 1, and 2 represent in the swimming column? {.unnumbered}
