@@ -38,12 +38,9 @@ Considered one of the world’s most important humpback whale habitats, the Hawa
 
 ## Deliverables {#lab3-deliverables .unnumbered}
  
-<input type="checkbox" unchecked> Scenario 1: </input>
-
--   An output table of the top 5 ranked features
--   Map of the final product
--   answers to the questions submitted to the Lab 4 section on Canvas
-
+<input type="checkbox" unchecked> An output table of the top 5 ranked features</input>
+<input type="checkbox" unchecked> Map of the final product</input>
+<input type="checkbox" unchecked> Answers to the questions submitted on the course management system</input>
 <input type="checkbox" unchecked> Report should satisfy the following requirements:</input>
 
 -   place maps and tables at the end of the document 
@@ -85,8 +82,6 @@ knitr::kable(
 ```
 
 ------------------------------------------------------------------------
-
-## Scenario 1 {.unnumbered}
 
 ## Task 1: Export Relevant Data from Biologically Important Areas Shapefile {.unnumbered}
 
