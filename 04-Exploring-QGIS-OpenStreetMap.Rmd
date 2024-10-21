@@ -184,6 +184,12 @@ In order to actually access any of the attributes in the other_tags field, we ne
     knitr::include_graphics("images/04-qgis-explode-hstore.png")
 ```
 
+If you get an error "Feature (XXXX) from "osm" has invalid geometry. Please fix the geometry or change the "Invalid features filtering" option for this input or globally in Processing settings" then you will need to click on the **Parameters** tab for the Explode HStore Field tool and click the little tool wrench next to the **Input Layer** and select **Skip (ignore) Features with Invalid Geometries** from the **Invalid feature filtering** drop down menu, then re-run the tool.
+
+```{r 04-qgis-invalid-geometry, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/04-qgis-invalid-geometry.png")
+```
+
 You should now find a new copy of your osm points in your **Layers** pane. It is also possible to achieve these results by using another popular plugin called **QuickOSM**, which allows you to refine your query based on available tags and it can also parse local .osm and .pbf files (the planetary OpenStreetMap dataset is distributed as a .pbf).
 
 **Step 5:** Repeat the last step again for the other OpenStreetMap layers, ensuring that you name the outputs to correspond to the data type (e.g., polygon, LineString, MultiLineString). You may need to inspect the layer properties to distinguish the two line layers.
