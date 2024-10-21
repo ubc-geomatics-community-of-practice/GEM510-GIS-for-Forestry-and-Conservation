@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2024-10-17" />
+<meta name="date" content="2024-10-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -288,6 +288,8 @@ Figure 4.1: Figure Credit: <a href='https://media.jochentopf.com/media/2018-07-3
 <p><strong>Step 3:</strong> From the top navigation menu, click <strong>Processing</strong>, then select <strong>Toolbox</strong>. This opens the <strong>Processing Toolbox</strong> pane for QGIS where you can find all available tools.</p>
 <p><strong>Step 4:</strong> In the search bar, search for the tool <strong>Explode HStore field</strong> and then double click the tool to open it. For the <strong>Input Layer</strong>, select the osm point layer from the drop-down menu and for <strong>HStore field</strong> select <strong>other_tags</strong>. For <strong>Exploded</strong>, enter <strong>osm_points_exploded.gpkg</strong> for the output file name geopackage and optionally the path to the directory where your project is located. You can click the icon to the right of the field and select <strong>Save to File…</strong> to navigate to your project directory.</p>
 <p><img src="images/04-qgis-explode-hstore.png" width="50%" /></p>
+<p>If you get an error “Feature (XXXX) from”osm” has invalid geometry. Please fix the geometry or change the “Invalid features filtering” option for this input or globally in Processing settings” then you will need to click on the <strong>Parameters</strong> tab for the Explode HStore Field tool and click the little tool wrench next to the <strong>Input Layer</strong> and select <strong>Skip (ignore) Features with Invalid Geometries</strong> from the <strong>Invalid feature filtering</strong> drop down menu, then re-run the tool.</p>
+<p><img src="images/04-qgis-invalid-geometry.png" width="50%" /></p>
 <p>You should now find a new copy of your osm points in your <strong>Layers</strong> pane. It is also possible to achieve these results by using another popular plugin called <strong>QuickOSM</strong>, which allows you to refine your query based on available tags and it can also parse local .osm and .pbf files (the planetary OpenStreetMap dataset is distributed as a .pbf).</p>
 <p><strong>Step 5:</strong> Repeat the last step again for the other OpenStreetMap layers, ensuring that you name the outputs to correspond to the data type (e.g., polygon, LineString, MultiLineString). You may need to inspect the layer properties to distinguish the two line layers.</p>
 <p><strong>Step 6:</strong> Inspect the attribute table for the MultiLineString layer.</p>
