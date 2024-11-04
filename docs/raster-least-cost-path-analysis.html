@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2024-10-21" />
+<meta name="date" content="2024-11-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -254,7 +254,7 @@ xmax (right) = x_resolution × ceiling(xmax / x_resolution) = 20 × ceiling(661,
 <div id="task-2-seamless-mosaicking" class="section level2 unnumbered hasAnchor">
 <h2>Task 2: Seamless mosaicking<a href="raster-least-cost-path-analysis.html#task-2-seamless-mosaicking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A common task in raster analysis is mosaicking multiple rasters together to perform analysis on a single file over a larger extent. We will practice doing this with some ASTER Digital Elevation Models (DEM) that are distributed as non-overlapping tiles in WGS 1984 (EPSG:4326). The source for these data can be found at <a href="https://search.earthdata.nasa.gov">NASA’s Earth Science Data Systems portal</a>, but we will be retrieving these data from the UBC PostgreSQL server instead.</p>
-<p><strong>Step 1:</strong> Open your QGIS project and from the “Data Source Manager” connect to the <code>bear</code> database of the UBC PostgreSQL server. You should see a listing of 15 rasters there, which have names prefixed with “astgtmv003”. Select all 15 and then click “Add”. It is very important that you add the rasters using this method rather than from the “Browser” pane, otherwise you might have unexpected errors.</p>
+<p><strong>Step 1:</strong> Open your QGIS project and from the “Data Source Manager” connect to the <code>bear</code> database of the UBC PostgreSQL server. You should see a listing of 14 rasters there, which have names prefixed with “astgtmv003”. Select all 14 and then click “Add”. It is very important that you add the rasters using this method rather than from the “Browser” pane, otherwise you might have unexpected errors.</p>
 <p><img src="images/05-qgis-data-source-manager.png" width="75%" /></p>
 <p><img src="images/05-qgis-aster-dem-tiles.png" width="75%" /></p>
 <p><strong>Step 2:</strong> Open the “Layer Properties” for “astgtmv003_n51w115” and inspect the extent values and the pixel size.</p>
@@ -292,7 +292,7 @@ os.environ[&#39;PGPASSWORD&#39;] = &#39;studentpasswordhere&#39;
 <li><p><code>aster_dem_wgs84.tif</code> is the input raster and <code>aster_dem_utm.tif</code> is the output (resampled) raster. Inspect the output in QGIS.</p></li>
 </ul>
 <p>Note that we did not use the <code>-ot</code> output data type flag, so <code>gdalwarp</code> used the <code>Int16</code> data type of our input raster. If you set <code>-ot Float32</code>, then you would see that the cubic resampling algorithm actually yields decimals instead of the integers that you see in the current output, but for our purposes that sub-meter level of precision is not needed.</p>
-<p><strong>Step 7:</strong> Search for the “Raster Calculator” tool. Double-click the “aster_d em_utm.tif” mosaic to add it to the expression, then click the multiply button “*“, then double-click the”yellowhead_bma_utm.tif” raster to add it to the expression. Scroll down further and click the ellipse “…” next to the “Reference layer(s)” field, toggle on “yellowhead_bma_utm.tif”, and then click “OK”. Scroll down further and click the ellipse “…” next to the “Output” field to save the output as “aster_dem_utm_aoi.tif”. Click “Run” and then inspect the output in your map.</p>
+<p><strong>Step 7:</strong> Search for the “Raster Calculator” tool. Double-click the “aster_d em_utm.tif” mosaic to add it to the expression, then click the multiply button “*“, then double-click the”yellowhead_bma_utm.tif” raster to add it to the expression. Scroll down farther and click the ellipse “…” next to the “Output” field to save the output as “aster_dem_utm_aoi.tif”. Click “Run” and then inspect the output in your map.</p>
 <p><img src="images/05-qgis-aster-dem-mask.png" width="75%" /></p>
 <hr />
 </div>

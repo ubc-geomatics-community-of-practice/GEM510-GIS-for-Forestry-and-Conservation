@@ -89,7 +89,7 @@ The above calculations are probably not immediately intuitive, but the idea is t
 
 A common task in raster analysis is mosaicking multiple rasters together to perform analysis on a single file over a larger extent. We will practice doing this with some ASTER Digital Elevation Models (DEM) that are distributed as non-overlapping tiles in WGS 1984 (EPSG:4326). The source for these data can be found at [NASA's Earth Science Data Systems portal](https://search.earthdata.nasa.gov), but we will be retrieving these data from the UBC PostgreSQL server instead.
 
-**Step 1:** Open your QGIS project and from the "Data Source Manager" connect to the `bear` database of the UBC PostgreSQL server. You should see a listing of 15 rasters there, which have names prefixed with "astgtmv003". Select all 15 and then click "Add". It is very important that you add the rasters using this method rather than from the "Browser" pane, otherwise you might have unexpected errors.
+**Step 1:** Open your QGIS project and from the "Data Source Manager" connect to the `bear` database of the UBC PostgreSQL server. You should see a listing of 14 rasters there, which have names prefixed with "astgtmv003". Select all 14 and then click "Add". It is very important that you add the rasters using this method rather than from the "Browser" pane, otherwise you might have unexpected errors.
 
 ```{r 05-qgis-data-source-manager, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/05-qgis-data-source-manager.png")
@@ -161,7 +161,7 @@ The mosaic still needs to be reprojected and clipped to the same extent as our A
 
 Note that we did not use the `-ot` output data type flag, so `gdalwarp` used the `Int16` data type of our input raster. If you set `-ot Float32`, then you would see that the cubic resampling algorithm actually yields decimals instead of the integers that you see in the current output, but for our purposes that sub-meter level of precision is not needed.
 
-**Step 7:** Search for the "Raster Calculator" tool. Double-click the "aster_d    em_utm.tif" mosaic to add it to the expression, then click the multiply button "*", then double-click the "yellowhead_bma_utm.tif" raster to add it to the expression. Scroll down further and click the ellipse "..." next to the "Reference layer(s)" field, toggle on "yellowhead_bma_utm.tif", and then click "OK". Scroll down further and click the ellipse "..." next to the "Output" field to save the output as "aster_dem_utm_aoi.tif". Click "Run" and then inspect the output in your map.
+**Step 7:** Search for the "Raster Calculator" tool. Double-click the "aster_d    em_utm.tif" mosaic to add it to the expression, then click the multiply button "*", then double-click the "yellowhead_bma_utm.tif" raster to add it to the expression. Scroll down farther and click the ellipse "..." next to the "Output" field to save the output as "aster_dem_utm_aoi.tif". Click "Run" and then inspect the output in your map.
 
 ```{r 05-qgis-aster-dem-mask, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/05-qgis-aster-dem-mask.png")
