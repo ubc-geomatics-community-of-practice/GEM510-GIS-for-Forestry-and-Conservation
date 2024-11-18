@@ -205,39 +205,33 @@ For example, we can allocate specific work to a specific branch, like a "digitiz
 
 ## Task 4: Digitize some buildings in ArcGIS Pro {.unnumbered}
 
-**Step 1:** Start a new ArcGIS Pro project. This time, we are going to show you how to add the UBC orthophoto as a Web Map Service (WMS) from the MGEM Geoserver. A WMS is a protocol for exchanging map tiles over the internet and is especially good for serving image data like the UBC orthophoto. Both ArcGIS and QGIS support the WMS protocol, though we will illustrate how to do this with ArcGIS Pro in this section.
+**Step 1:** Start a new ArcGIS Pro project.
 
-**Step 2:** Navigate to the MGEM Geoserver in your preferred web browser at the following URL: [https://206-12-122-94.cloud.computecanada.ca/geoserver/web/](https://206-12-122-94.cloud.computecanada.ca/geoserver/web/). From the home page, select "Layer Preview" on the left panel under "Data". Navigate through the pages until you find the UBC orthophoto series listed. Find the most recently published orthophoto, then click the "OpenLayers" link to the right of it to show a preview of the data in your browser. You should be able to zoom in and out with exceptional speed because these are encoded as COGs.
+As of the writing of this lab, ArcGIS Pro does not natively support adding a remote data source via a URL like you can do in QGIS. To get around this, we will create a reference to the remote COG by converting it to a virtual raster (VRT) format in QGIS.
 
-```{r 06-geoserver-preview, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/06-geoserver-preview.png")
-```
+**Step 2:** In QGIS, select "Raster" from the top menu bar, then "Conversion", and finally select "Translate (convert format)...". The input file will be the UBC orthophoto COG that you added to your QGIS project earlier and scroll down to "Converted", then navigate to a directory where you want to save the VRT on your machine. Your ArcGIS Pro project folder is a sensible choice. Name the output something like "UBC_ORTHOPHOTO_2022.vrt" and ensure that the file extension is VRT. Click "Run" and this tool should complete in a couple seconds.
 
-**Step 3:** Return to the Geoserver homepage and on the right you will see a bunch of acronyms listed with different version numbers under "Service Capabilities". Find "WMS", right-click "1.3.0", and copy the link to your clip board.
-
-**Step 4:** Return to ArcGIS Pro, click the "Insert" tab, then click the "Connections" icon, and finally select "New WMS Server". In the dialogue window that appears, paste the link you just copied for the WMS into the "Server URL" field, leave everything else as default and click "OK".
-
-**Step 5:** There are a few different ways to access the WMS resources in ArcGIS Pro. You can open a Catalog pane or window, expand "Servers", and continue expanding all the elements until you see the individual layers. Alternatively, you can click the "Add Data" icon on the "Map" tab, expand "Servers", and do the same. Add the most recent UBC orthophoto to your map as a WMS. If the orthophoto that you selected is unresponsive, try another year.
+**Step 3:** Navigate to the location of the VRT in ArcGIS Pro and add it to your project or just drop and drag it into your project map. It may take a few minutes to calculate statistics, but you can cancel that to immediately display the COG in ArcGIS Pro.
 
 In the following steps, we are going to digitize a building on campus. To do so in ArcGIS Pro, we need to first create a new feature class that will hold the polygon we are going to digitize.
 
-**Step 6:** In a Catalog window pane, expand "Databases" and then right-click the geodatabase for your project. Select "New" and then "Feature Class". Name it "my_ubc_buildings" and make sure the type is set to "Polygon". Click "Next" to view fields. Add two fields: "Name" (data type is text) and "Vertices" (data type is double). Click "Next" to view the spatial reference. Probably the default is set to WGS 1984. Under "Projected Coordinate System" find NAD 1983 UTM Zone 10N. You can continue clicking "Next" to view more properties that you can set, but we will leave these as the defaults, so you can click "Finish" when you are done. You should now have an empty polygon feature class in you map.
+**Step 4:** In a Catalog window pane, expand "Databases" and then right-click the geodatabase for your project. Select "New" and then "Feature Class". Name it "my_ubc_buildings" and make sure the type is set to "Polygon". Click "Next" to view fields. Add two fields: "Name" (data type is text) and "Vertices" (data type is double). Click "Next" to view the spatial reference. Probably the default is set to WGS 1984. Under "Projected Coordinate System" find NAD 1983 UTM Zone 10N. You can continue clicking "Next" to view more properties that you can set, but we will leave these as the defaults, so you can click "Finish" when you are done. You should now have an empty polygon feature class in you map.
 
-**Step 7:** Click the "Edit" tab and click the "Create" button to start creating new features. The "Create Features" pane will open. Click on "my_ubc_buildings" to highlight it and start the editing session. Now pick a building and zoom in so that you can clearly see its borders, then start left-clicking to add vertices along the building perimeter. Be sure to work either in a clockwise or counter-clockwise pattern otherwise you will criss-cross the boundary. Once you are happy, you can simply double left-click in the last position to finish the edit or press F2. Ta-da! You have now digitized your first building.
+**Step 5:** Click the "Edit" tab and click the "Create" button to start creating new features. The "Create Features" pane will open. Click on "my_ubc_buildings" to highlight it and start the editing session. Now pick a building and zoom in so that you can clearly see its borders, then start left-clicking to add vertices along the building perimeter. Be sure to work either in a clockwise or counter-clockwise pattern otherwise you will criss-cross the boundary. Once you are happy, you can simply double left-click in the last position to finish the edit or press F2. Ta-da! You have now digitized your first building.
 
 ```{r 06-arcgis-pro-editing, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-arcgis-pro-editing.png")
 ```
 
-**Step 8:** At the top ribbon on the "Edit" tab, click "Attributes" to open the attribute editor for the selected feature. Change the name to the name of the building and click "Apply".
+**Step 6:** At the top ribbon on the "Edit" tab, click "Attributes" to open the attribute editor for the selected feature. Change the name to the name of the building and click "Apply".
 
-**Step 9:** Digitize four more buildings on campus and add the building name to the attribute table. Once you are done, be sure to click "Save" on the top ribbon under the "Edit" tab to save your work to the feature class in the geodatabase.
+**Step 7:** Digitize four more buildings on campus and add the building name to the attribute table. Once you are done, be sure to click "Save" on the top ribbon under the "Edit" tab to save your work to the feature class in the geodatabase.
 
 Next, we are going to validate and compare your digitized buildings against the official building dataset that is produced by UBC Campus + Community Planning.
 
-**Step 10:** Add the official "ubcv_buildings" data to your map from the `ubcv` database on the PostgreSQL server. For information about connecting to the server, refer to Lab 1. Since these data are read-only from the PostgreSQL server, we need to export the feature class to our local geodatabase so that we can make some calculations. We also need to change the coordinate system from WGS 1984 to our preferred projected coordinate system of NAD 1983 UTM Zone 10N. To do this, we can use a single tool "Project". Save the output with a name of "ubcv_buildings_utm" to your geodatabase.
+**Step 8:** Add the official "ubcv_buildings" data to your map from the `ubcv` database on the PostgreSQL server. For information about connecting to the server, refer to Lab 1. Since these data are read-only from the PostgreSQL server, we need to export the feature class to our local geodatabase so that we can make some calculations. We also need to change the coordinate system from WGS 1984 to our preferred projected coordinate system of NAD 1983 UTM Zone 10N. To do this, we can use a single tool "Project". Save the output with a name of "ubcv_buildings_utm" to your geodatabase.
 
-**Step 11:** Add the local copy of "ubcv_buildings_utm" to your map and compare your digitization to the official record. Make some observations and answer the questions below.
+**Step 9:** Add the local copy of "ubcv_buildings_utm" to your map and compare your digitization to the official record. Make some observations and answer the questions below.
 
 ##### Q5. Describe why your boundary does not align with the official dataset? Give three possible sources of error. (3 points) {.unnumbered}
 
@@ -245,13 +239,13 @@ Next, we are going to validate and compare your digitized buildings against the 
 
 ##### Q7. How could relief displacement have impacted your digitization? (2 points) {.unnumbered}
 
-**Step 12:** Open the attribute table of the "ubcv_buildings_utm" layer and add a field called "Vertices" with double data type. Save the change then return to the attribute table, find the new field, right-click it, select "Calculate Geometry" and then under the "Property" drop-down, select "Number of vertices" and click "OK". Repeat this step for "my_ubc_buildings".
+**Step 10:** Open the attribute table of the "ubcv_buildings_utm" layer and add a field called "Vertices" with double data type. Save the change then return to the attribute table, find the new field, right-click it, select "Calculate Geometry" and then under the "Property" drop-down, select "Number of vertices" and click "OK". Repeat this step for "my_ubc_buildings".
 
 ```{r 06-arcgis-pro-calculate-geometry, out.width= "50%", echo = FALSE}
     knitr::include_graphics("images/06-arcgis-pro-calculate-geometry.png")
 ```
 
-**Step 13:** Inspect the attribute tables of "ubcv_buildings_utm" and "my_ubc_buildings" and compare the "Shape_Area", "Shape_Length", and "Vertices" fields then answer the questions below.
+**Step 11:** Inspect the attribute tables of "ubcv_buildings_utm" and "my_ubc_buildings" and compare the "Shape_Area", "Shape_Length", and "Vertices" fields then answer the questions below.
 
 ##### Q8. Which building that you digitized had the largest deviation of Shape_Area compared with the official buildings dataset? Give the value difference in square meters and discuss why you think this building had the worst area error. (2 points) {.unnumbered}
 
