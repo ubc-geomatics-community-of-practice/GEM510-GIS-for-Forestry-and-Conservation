@@ -68,7 +68,7 @@ access to the Metadata.
 
 **Step 2:** Instead of working with the entirety of the dataset, you will focus on one neighbourhood. To the left, there are filtering options. Scroll down to NEIGHBOURHOOD_NAME and choose the neighborhood with the highest number of trees. Now you should have the option to download street tree data.
 
-**Step 3:** The second dataset you will download is public parks. There should be a point and a polygon dataset. Make sure you download the polygon dataset.
+**Step 3:** The second dataset you will download is "Parks Polygon Representation". There should be a point and a polygon dataset. Make sure you download the polygon dataset.
 
 ------------------------------------------------------------------------
 
@@ -179,13 +179,13 @@ Oftentimes, you will encounter geospatial data in Comma Separated Format (CSV) o
 
 ##### Q7. Does ArcGIS Pro consider these data to be spatial? (1 point) {.unnumbered}
 
-**Step 2:** Right-click on the "parktrees" table in your Contents Pane and then select "Display XY Data". Choose the appropriate column names for the X and Y fields. Leave the Z field blank. This is very important, if you choose the wrong columns the points will be nowhere near Vancouver!
+**Step 2:** Right-click on the "parktrees" table in your Contents Pane and then select "Create Points From Table > Make XY Event Layer". Choose the appropriate column names for the X and Y fields. Leave the Z field blank. This is very important, if you choose the wrong columns the points will be nowhere near Vancouver! Specify the coordinate system by clicking on the Globe icon to the right-hand side of Coordinate System and locating NAD 1983 UTM Zone 10N under Projected Coordinate System \> UTM \> NAD 1983.
 
 ##### Q8. What does the z field represent? (1 point) {.unnumbered}
 
 ##### Q9. Which column did you choose for x, which column for y? (2 points) {.unnumbered}
 
-Specify the coordinate system by clicking on the Globe icon to the right-hand side of Coordinate System and locating NAD 1983 UTM Zone 10N under Projected Coordinate System \> UTM \> NAD 1983. You have now created an "Event Layer." Export the Events layer as a shapefile (right-click the layer \> Data \> Export Features). Save it in your output folder as "parktrees". Add "parktrees" to your display.
+ You have now created an "Event Layer." Export the Events layer as a shapefile (right-click the layer \> Data \> Export Features). Save it in your output folder as "parktrees". Add "parktrees" to your display.
 
 Event layers are temporary layers, and without Object-ID fields they are not editable or selectable.
 
@@ -197,10 +197,10 @@ Event layers are temporary layers, and without Object-ID fields they are not edi
 
 Now that all of the park trees are input, we will investigate tree density per park to get an idea about which parks in Vancouver have the highest tree density and which have the lowest. To answer this question, you will need to know the area of each park and the number of trees within them. Park area and name are in the "parks_polygon_representation" layer, but not in the "parktrees" shapefile. This information can be added to "parktrees" through a spatial join.
 
-**Step 5:** Right-click "parktrees", mouse down to Joins and Relates \> Spatial Join:
+**Step 5:** Find the "Spatial Join" tool and use these parameters
 
-- **Target Features:** parktrees 
-- **Join Features:** parks_polygon_representation 
+- **Target Features:** parks_polygon_representation
+- **Join Features:** parktrees
 - **Output Feature Class:** parks_numtrees 
 - **Join Operation:** Join one to one 
 - **Match Option:** Intersect
