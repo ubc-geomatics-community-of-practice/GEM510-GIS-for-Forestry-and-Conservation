@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2024-09-01" />
+<meta name="date" content="2024-11-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -114,7 +114,7 @@
 <li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#data-organization"><i class="fa fa-check"></i>Data Organization</a></li>
 <li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#files-to-create"><i class="fa fa-check"></i>Files to Create</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-1-export-relevant-data-from-biologically-important-areas-shapefile"><i class="fa fa-check"></i>Task 1: Export Relevant Data from Biologically Important Areas Shapefile</a></li>
+<li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-1-export-relevant-data-from-biologically-important-areas"><i class="fa fa-check"></i>Task 1: Export Relevant Data from Biologically Important Areas</a></li>
 <li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-2-identify-the-bia-of-the-humpback-whale-that-is-not-within-the-established-marine-sanctuary"><i class="fa fa-check"></i>Task 2: Identify the BIA of the Humpback Whale that is not within the established Marine Sanctuary</a></li>
 <li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-3-calculate-the-density-of-cetacean-sightings-using-the-bia-for-humpback-whales"><i class="fa fa-check"></i>Task 3: Calculate the Density of Cetacean Sightings using the BIA for Humpback Whales</a></li>
 <li class="chapter" data-level="" data-path="suitability-overlay-analysis.html"><a href="suitability-overlay-analysis.html#task-4-extract-the-boats-from-ocean-uses-and-identity-the-vessels-within-the-bia-polygons"><i class="fa fa-check"></i>Task 4: Extract the Boats from Ocean Uses and Identity the Vessels within the BIA Polygons</a></li>
@@ -288,6 +288,8 @@ Figure 4.1: Figure Credit: <a href='https://media.jochentopf.com/media/2018-07-3
 <p><strong>Step 3:</strong> From the top navigation menu, click <strong>Processing</strong>, then select <strong>Toolbox</strong>. This opens the <strong>Processing Toolbox</strong> pane for QGIS where you can find all available tools.</p>
 <p><strong>Step 4:</strong> In the search bar, search for the tool <strong>Explode HStore field</strong> and then double click the tool to open it. For the <strong>Input Layer</strong>, select the osm point layer from the drop-down menu and for <strong>HStore field</strong> select <strong>other_tags</strong>. For <strong>Exploded</strong>, enter <strong>osm_points_exploded.gpkg</strong> for the output file name geopackage and optionally the path to the directory where your project is located. You can click the icon to the right of the field and select <strong>Save to File…</strong> to navigate to your project directory.</p>
 <p><img src="images/04-qgis-explode-hstore.png" width="50%" /></p>
+<p>If you get an error “Feature (XXXX) from”osm” has invalid geometry. Please fix the geometry or change the “Invalid features filtering” option for this input or globally in Processing settings” then you will need to click on the <strong>Parameters</strong> tab for the Explode HStore Field tool and click the little tool wrench next to the <strong>Input Layer</strong> and select <strong>Skip (ignore) Features with Invalid Geometries</strong> from the <strong>Invalid feature filtering</strong> drop down menu, then re-run the tool.</p>
+<p><img src="images/04-qgis-invalid-geometry.png" width="50%" /></p>
 <p>You should now find a new copy of your osm points in your <strong>Layers</strong> pane. It is also possible to achieve these results by using another popular plugin called <strong>QuickOSM</strong>, which allows you to refine your query based on available tags and it can also parse local .osm and .pbf files (the planetary OpenStreetMap dataset is distributed as a .pbf).</p>
 <p><strong>Step 5:</strong> Repeat the last step again for the other OpenStreetMap layers, ensuring that you name the outputs to correspond to the data type (e.g., polygon, LineString, MultiLineString). You may need to inspect the layer properties to distinguish the two line layers.</p>
 <p><strong>Step 6:</strong> Inspect the attribute table for the MultiLineString layer.</p>
