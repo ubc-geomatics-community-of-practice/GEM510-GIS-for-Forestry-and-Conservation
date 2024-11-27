@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2024-11-18" />
+<meta name="date" content="2024-11-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ access to the Metadata.</p>
 <div id="q1.-what-is-the-maximum-number-of-records-you-can-export-from-the-city-of-vancouver-open-data-portal-as-a-shapefile-1-point" class="section level5 unnumbered hasAnchor">
 <h5>Q1. What is the maximum number of records you can export from the City of Vancouver open data portal as a shapefile? (1 point)<a href="geocoding.html#q1.-what-is-the-maximum-number-of-records-you-can-export-from-the-city-of-vancouver-open-data-portal-as-a-shapefile-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p><strong>Step 2:</strong> Instead of working with the entirety of the dataset, you will focus on one neighbourhood. To the left, there are filtering options. Scroll down to NEIGHBOURHOOD_NAME and choose the neighborhood with the highest number of trees. Now you should have the option to download street tree data.</p>
-<p><strong>Step 3:</strong> The second dataset you will download is public parks. There should be a point and a polygon dataset. Make sure you download the polygon dataset.</p>
+<p><strong>Step 3:</strong> The second dataset you will download is “Parks Polygon Representation”. There should be a point and a polygon dataset. Make sure you download the polygon dataset.</p>
 <hr />
 </div>
 </div>
@@ -324,14 +324,14 @@ access to the Metadata.</p>
 </div>
 <div id="q7.-does-arcgis-pro-consider-these-data-to-be-spatial-1-point" class="section level5 unnumbered hasAnchor">
 <h5>Q7. Does ArcGIS Pro consider these data to be spatial? (1 point)<a href="geocoding.html#q7.-does-arcgis-pro-consider-these-data-to-be-spatial-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p><strong>Step 2:</strong> Right-click on the “parktrees” table in your Contents Pane and then select “Display XY Data”. Choose the appropriate column names for the X and Y fields. Leave the Z field blank. This is very important, if you choose the wrong columns the points will be nowhere near Vancouver!</p>
+<p><strong>Step 2:</strong> Right-click on the “parktrees” table in your Contents Pane and then select “Create Points From Table &gt; Make XY Event Layer”. Choose the appropriate column names for the X and Y fields. Leave the Z field blank. This is very important, if you choose the wrong columns the points will be nowhere near Vancouver! Specify the coordinate system by clicking on the Globe icon to the right-hand side of Coordinate System and locating NAD 1983 UTM Zone 10N under Projected Coordinate System &gt; UTM &gt; NAD 1983.</p>
 </div>
 <div id="q8.-what-does-the-z-field-represent-1-point" class="section level5 unnumbered hasAnchor">
 <h5>Q8. What does the z field represent? (1 point)<a href="geocoding.html#q8.-what-does-the-z-field-represent-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 </div>
 <div id="q9.-which-column-did-you-choose-for-x-which-column-for-y-2-points" class="section level5 unnumbered hasAnchor">
 <h5>Q9. Which column did you choose for x, which column for y? (2 points)<a href="geocoding.html#q9.-which-column-did-you-choose-for-x-which-column-for-y-2-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p>Specify the coordinate system by clicking on the Globe icon to the right-hand side of Coordinate System and locating NAD 1983 UTM Zone 10N under Projected Coordinate System &gt; UTM &gt; NAD 1983. You have now created an “Event Layer.” Export the Events layer as a shapefile (right-click the layer &gt; Data &gt; Export Features). Save it in your output folder as “parktrees”. Add “parktrees” to your display.</p>
+<p>You have now created an “Event Layer.” Export the Events layer as a shapefile (right-click the layer &gt; Data &gt; Export Features). Save it in your output folder as “parktrees”. Add “parktrees” to your display.</p>
 <p>Event layers are temporary layers, and without Object-ID fields they are not editable or selectable.</p>
 <p><strong>Step 3:</strong> View “parktrees” in ArcGIS Pro. The trees should all be in Vancouver. If they are not, something was input incorrectly and you will have to repeat Step 2. Once the tree points are properly mapped, change the symbology. Right-click “parktrees” in the Contents Pane and choose “Symbology.” A Symbology pop-up should appear. Click the symbol—and choose “Circle 3” from Gallery. Click the Properties Tab. Make the symbol smaller and change its colour.</p>
 <p><strong>Step 4:</strong> Add “parks_polygon_representation” and a satellite basemap to your map (Map &gt; Basemap &gt; Imagery). In the Contents Pane, drag the basemap to the bottom so that it does not cover anything. Symbolize “parks_polygon_representation” so that you can clearly the basemap for each park. You can do this in the Contents Pane by right-clicking the coloured rectangle beneath “parks_polygon_representation” and choosing “Color Properties…” at the bottom. Adjust the colours and transparency as you see fit.</p>
@@ -339,10 +339,10 @@ access to the Metadata.</p>
 <div id="q10.-what-sort-of-discrepancies-do-you-see-between-the-number-of-trees-in-the-satellite-image-versus-the-number-of-trees-shown-in-the-dataset-do-any-specific-parks-stand-out-why-might-this-be-the-case-4-points" class="section level5 unnumbered hasAnchor">
 <h5>Q10. What sort of discrepancies do you see between the number of trees in the satellite image versus the number of trees shown in the dataset? Do any specific parks stand out? Why might this be the case? (4 points)<a href="geocoding.html#q10.-what-sort-of-discrepancies-do-you-see-between-the-number-of-trees-in-the-satellite-image-versus-the-number-of-trees-shown-in-the-dataset-do-any-specific-parks-stand-out-why-might-this-be-the-case-4-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p>Now that all of the park trees are input, we will investigate tree density per park to get an idea about which parks in Vancouver have the highest tree density and which have the lowest. To answer this question, you will need to know the area of each park and the number of trees within them. Park area and name are in the “parks_polygon_representation” layer, but not in the “parktrees” shapefile. This information can be added to “parktrees” through a spatial join.</p>
-<p><strong>Step 5:</strong> Right-click “parktrees”, mouse down to Joins and Relates &gt; Spatial Join:</p>
+<p><strong>Step 5:</strong> Find the “Spatial Join” tool and use these parameters</p>
 <ul>
-<li><strong>Target Features:</strong> parktrees</li>
-<li><strong>Join Features:</strong> parks_polygon_representation</li>
+<li><strong>Target Features:</strong> parks_polygon_representation</li>
+<li><strong>Join Features:</strong> parktrees</li>
 <li><strong>Output Feature Class:</strong> parks_numtrees</li>
 <li><strong>Join Operation:</strong> Join one to one</li>
 <li><strong>Match Option:</strong> Intersect</li>
