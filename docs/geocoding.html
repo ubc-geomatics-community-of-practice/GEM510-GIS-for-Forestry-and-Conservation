@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2024-11-27" />
+<meta name="date" content="2024-12-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -200,7 +200,7 @@ Amy Blood</p>
 <div id="learning-objectives-6" class="section level2 unnumbered hasAnchor">
 <h2>Learning Objectives<a href="geocoding.html#learning-objectives-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li>Import and convert tabular tdata to spatial data in ArcGIS Pro</li>
+<li>Import and convert tabular data to spatial data in ArcGIS Pro</li>
 <li>Query and extract geospatial data from an online portal</li>
 <li>Build a custom address locator using geospatial data</li>
 <li>Geocode addresses and assess quality</li>
@@ -215,8 +215,7 @@ Amy Blood</p>
 <li>The map should show the neighbourhood for which you downloaded street
 tree data for</li>
 <li>Parks symbolized by tree density</li>
-<li>Coordinate-created points and address-created points (symbolized differently from each
-other)</li>
+<li>Coordinate-created points (geocoded) and address-created points (AssignedTrees) symbolized differently from each other (do not include the entire tree dataset)</li>
 <li>Roads symbolized</li>
 <li>An appropriate basemap</li>
 </ul>
@@ -293,7 +292,7 @@ access to the Metadata.</p>
 <p>You can also use the “Locate” tool to search an address using the ArcGIS World Geocoding Service. Type in the address of Queen Elizabeth Park (4600 Cambie St, Vancouver) and notice the map highlights near the park! The ArcGIS World Geocoding Service will consume credits through your ArcGIS account, so it is not the most cost-effective way to geocode many addresses.</p>
 <p><img src="images/07-locate.png" width="50%" /></p>
 <p><strong>Step 3:</strong> Geocode a table of addresses using “GVRDaddresses”. The table of addresses you will be geocoding is the “AssignedTrees” dataset. To access the geocoding tool, you can search for “Geocode Addresses”.</p>
-<p>If you downloaded “GVRDaddresses” as a shapefile instead of a table, then you will need to convert it to a table for this step. Right-click the layer in ArcGIS Pro and export it to a table.</p>
+<p>If you downloaded “AssignedTrees” as a shapefile instead of a table, then you will need to convert it to a table for this step. Right-click the layer in ArcGIS Pro and export it to a table.</p>
 <p>Below are the tool’s parameters:</p>
 <ul>
 <li><strong>Input Table:</strong> AssignedTrees</li>

@@ -24,7 +24,7 @@ Working with and manipulating your own geospatial data is essential for many geo
 
 ## Learning Objectives {.unnumbered}
 
--   Import and convert tabular tdata to spatial data in ArcGIS Pro
+-   Import and convert tabular data to spatial data in ArcGIS Pro
 -   Query and extract geospatial data from an online portal
 -   Build a custom address locator using geospatial data
 -   Geocode addresses and assess quality
@@ -40,8 +40,7 @@ Working with and manipulating your own geospatial data is essential for many geo
 - The map should show the neighbourhood for which you downloaded street
 tree data for
 - Parks symbolized by tree density 
-- Coordinate-created points and address-created points (symbolized differently from each
-other) 
+- Coordinate-created points (geocoded) and address-created points (AssignedTrees) symbolized differently from each other (do not include the entire tree dataset)
 - Roads symbolized
 - An appropriate basemap
 
@@ -146,7 +145,7 @@ You can also use the "Locate" tool to search an address using the ArcGIS World G
 
 **Step 3:** Geocode a table of addresses using "GVRDaddresses". The table of addresses you will be geocoding is the "AssignedTrees" dataset. To access the geocoding tool, you can search for "Geocode Addresses".
 
-If you downloaded "GVRDaddresses" as a shapefile instead of a table, then you will need to convert it to a table for this step. Right-click the layer in ArcGIS Pro and export it to a table.
+If you downloaded "AssignedTrees" as a shapefile instead of a table, then you will need to convert it to a table for this step. Right-click the layer in ArcGIS Pro and export it to a table.
 
 Below are the tool's parameters: 
 
