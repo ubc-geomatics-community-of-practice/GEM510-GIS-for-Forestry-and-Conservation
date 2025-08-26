@@ -1,8 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
 
 ```{r echo=FALSE}
 yml_content <- yaml::read_yaml("chapterauthors.yml")
@@ -83,18 +78,13 @@ By the end of this lab, you will be able to:
 
 ## Deliverables {.unnumbered}
 
-Submit the following:
+<input type="checkbox" unchecked> A map showing the study area and the distribution of old-growth percentage by polygon </input>
 
--   A map showing the study area and the distribution of old-growth
-    percentage by polygon
+<input type="checkbox" unchecked> A table with fields for total area, old-growth area, and percentage old growth </input>
 
--   A table with fields for total area, old-growth area, and percentage
-    old growth
+<input type="checkbox" unchecked> A screenshot of the python expression created for Task 2 Step 8 </input>
 
--   A screenshot of the python expression created for Task 2 Step 8
-
--   Responses to the questions posed throughout the lab on the course
-    management system
+<input type="checkbox" unchecked> Responses to the questions posed throughout the lab on the course management system </input>
 
 ------------------------------------------------------------------------
 
@@ -109,7 +99,7 @@ lab, which is the extent of Vancouver Island.
 
 | Layer Name | File Name | Reference Link |
 |----|----|----|
-| Vegetation Resource Inventory 2024 | `veg_comp_lyr_r1_poly_2024` |  |
+| Vegetation Resource Inventory 2024 | `veg_comp_lyr_r1_poly_2024` | <https://www2.gov.bc.ca/gov/content/industry/forestry/managing-our-forest-resources/forest-inventory/data-management-and-access/vri-data-standards> |
 | Generalized Forest Cover Ownership | `f_own` | <https://catalogue.data.gov.bc.ca/dataset/generalized-forest-cover-ownership> |
 | Cumulative Effects Framework: Human Disturbance (current) | `bc_cef_human_disturbance_2023` | <https://catalogue.data.gov.bc.ca/dataset/bc-cumulative-effects-framework-human-disturbance-current> |
 | Landscape Units (current) | `landscape_units` | <https://catalogue.data.gov.bc.ca/dataset/landscape-units-of-british-columbia-current> |
@@ -538,7 +528,7 @@ Open the **Pairwise Intersect** tool again:
 
 ## Task 2: Calculate Percentage of Old Growth Forests {.unnumbered}
 
-**Step 1.** Now that we have prepared our layers, we will calculate the
+**Step 1:** Now that we have prepared our layers, we will calculate the
 percentage of old growth forest within each land unit. To do this we’ll
 create a key that uniquely identifies each Landscape Unit + BEC zone +
 BEC subzone combination. This is a good opportunity to close any
@@ -560,7 +550,7 @@ The str() function ensures that the attribute values are treated as text
 strings rather than numeric values for addition. The result should be a
 new string of landscape unit, bec zone and subzone.
 
-**Step 2.** We will now calculate the total amount of forested area in
+**Step 2:** We will now calculate the total amount of forested area in
 each of these landscape unit/bec zone combination. With the **Dissolve**
 tool, we can create new polygons from the landscape identifier:
 
@@ -573,7 +563,7 @@ tool, we can create new polygons from the landscape identifier:
 This creates a polygon layer where each feature is one LU_BEC area with
 total crown forest area as an attribute.
 
-**Step 3.** To identify areas of assumed old growth, we will calculate
+**Step 3:** To identify areas of assumed old growth, we will calculate
 the area of only forests with “Seral_stage” = old. We can select for old
 forest by using **Select by Attributes on CrownForest_LU** before using
 the **Dissolve** tool. Ensure that the “use the selected records” option
@@ -589,7 +579,7 @@ is switched on.
 Now we have created a table of total crown forest area and a table of
 old growth crown forest area, each by landscape unit.
 
-**Step 4.** We can join these tables back together using a
+**Step 4:** We can join these tables back together using a
 
 Use **Join Field** with the following expression:
 
@@ -610,7 +600,7 @@ column in the attribute table. Right-click the attribute name to open
 the field view. Rename the alias of `Shape_Area` to `Total_Area` and the
 alias of `Shape_Area_1` to `Old_Area`. Save your changes.
 
-**Step 5.** Calculate Percent Old Growth
+**Step 5:** Calculate Percent Old Growth
 
 Add a new field to `Total_Forest_Area`:
 
@@ -637,7 +627,7 @@ def calcPercent(old, total):
     return (old / total) * 100
 ```
 
-**Step 7.** Classify Percent Compared to Provincial Targets.
+**Step 7:** Classify Percent Compared to Provincial Targets.
 
 The target percentages of old growth forests are dependent on the BEC
 subzone. Instead of assigning each LU–BEC to a discrete class (Low /
@@ -692,7 +682,7 @@ characters with a slice. This would look something like this:
 bec = lu_bec[5:] 
 ```
 
-**Step 8.**. Visualize Results
+**Step 8:**. Visualize Results
 
 In the **Contents** pane, right-click the `Total_Forest_Area` layer and
 select **Symbology**. In the Symbology panel, set the **Field** to
@@ -712,7 +702,7 @@ ranges.
 
 ------------------------------------------------------------------------
 
-**Step 9.**. Create the Layout Map
+**Step 9:**. Create the Layout Map
 
 From the top ribbon, go to the **Insert** tab and select **New Layout**.
 Choose an appropriate page size (e.g., Letter 8.5x11 or A4). Use the
@@ -737,7 +727,7 @@ easy to read. Avoid cluttering the map with overlapping items.
 
 ------------------------------------------------------------------------
 
-**Step 10.**. Create the Layout Map
+**Step 10:**. Create the Layout Map
 
 When you are satisfied with the layout, go to **Share → Export Layout**.
 Choose **PNG** as the file format. Insert this exported map into your
