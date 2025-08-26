@@ -78,13 +78,13 @@ By the end of this lab, you will be able to:
 
 ## Deliverables {.unnumbered}
 
-<input type="checkbox" unchecked> A map showing the study area and the distribution of old-growth percentage by polygon </input>
+<input type="checkbox" unchecked> A map showing the study area and the distribution of difference in calculated old-growth percentage and targets, by polygon (20 points)</input>
 
-<input type="checkbox" unchecked> A table with fields for total area, old-growth area, and percentage old growth </input>
+<input type="checkbox" unchecked> A table with fields for total area, old-growth area, and percentage old growth (10 points)</input>
 
-<input type="checkbox" unchecked> A screenshot of the python expression created for Task 2 Step 8 </input>
+<input type="checkbox" unchecked> A screenshot of the python expression created for Task 2 Step 8 (10 points)</input>
 
-<input type="checkbox" unchecked> Responses to the questions posed throughout the lab on the course management system </input>
+<input type="checkbox" unchecked> Responses to the questions posed throughout the lab on the course management system (60 points)</input>
 
 ------------------------------------------------------------------------
 
@@ -99,7 +99,7 @@ lab, which is the extent of Vancouver Island.
 
 | Layer Name | File Name | Reference Link |
 |----|----|----|
-| Vegetation Resource Inventory 2024 | `veg_comp_lyr_r1_poly_2024` | <https://www2.gov.bc.ca/gov/content/industry/forestry/managing-our-forest-resources/forest-inventory/data-management-and-access/vri-data-standards> |
+| Vegetation Resource Inventory 2024 | `veg_comp_lyr_r1_poly_2024` | <https://catalogue.data.gov.bc.ca/dataset/vri-2024-forest-vegetation-composite-layer-1-l1-> |
 | Generalized Forest Cover Ownership | `f_own` | <https://catalogue.data.gov.bc.ca/dataset/generalized-forest-cover-ownership> |
 | Cumulative Effects Framework: Human Disturbance (current) | `bc_cef_human_disturbance_2023` | <https://catalogue.data.gov.bc.ca/dataset/bc-cumulative-effects-framework-human-disturbance-current> |
 | Landscape Units (current) | `landscape_units` | <https://catalogue.data.gov.bc.ca/dataset/landscape-units-of-british-columbia-current> |
@@ -256,7 +256,7 @@ get all the polygon values for only the `for_mgmt_land_base_ind` column
 name (subset columns, but not rows). You can test this SQL query but do
 not complete it as a new layer.
 
-#### Q1. What does for_mgmt_land_base_ind select for? What parameters are required to receive a "Yes" value? Hint: take a look at the VRI Relational Data Dictionary.
+#### Q1. What does for_mgmt_land_base_ind select for? What parameters are required to receive a "Yes" value? Hint: take a look at the VRI Relational Data Dictionary. (10 points)
 
 **Pro tip:** When a column value stores a text string, we use single
 quotation marks in SQL `'abc'` around the values that we are searching
@@ -479,7 +479,7 @@ is described below.
 
 Review that all the rows have been populated in the `Seral_stage` field.
 
-#### Q2. Define "old growth" and cite at least one primary source. What characteristics might be overlooked by a definition of "old growth" that only accounts for stand age?
+#### Q2. Define "old growth" and cite at least one primary source. What characteristics might be overlooked by a definition of "old growth" that only accounts for stand age? (10 points)
 
 **Step 15:** Our current layers only depict where crown forests could
 possibly be. In this step we will remove any areas that have experienced
@@ -733,13 +733,13 @@ When you are satisfied with the layout, go to **Share → Export Layout**.
 Choose **PNG** as the file format. Insert this exported map into your
 final report.
 
-#### Q3. Describe the results of your final output. What is the distribution of old growth targets met across Vancouver Island?
+#### Q3. Describe the results of your final output. What is the distribution of old growth targets met across Vancouver Island? (10 points)
 
-#### Q4. Select 3 other fields in the VRI layer and briefly discuss how they could provide further insight into current old growth status
+#### Q4. Select 3 other fields in the VRI layer and briefly discuss how they could provide further insight into current old growth status. (10 points)
 
-#### Q5. How is VRI data collected and what limitations does it pose?
+#### Q5. How is VRI data collected and what limitations does it pose? (10 points)
 
-#### Q6. How might the scale and resolution of GIS data affect the accuracy of old growth assessments?
+#### Q6. How might the scale and resolution of GIS data affect the accuracy of old growth assessments? (10 points)
 
 ------------------------------------------------------------------------
 
