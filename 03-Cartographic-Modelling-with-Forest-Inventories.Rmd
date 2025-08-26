@@ -397,7 +397,7 @@ easier to see the area of many smaller polygons combined.
 
 **Step 13:** In BC forestry standards, the age of a forest stand is
 categorized by "Seral Stage." Since the required ages for mature or old
-growth forests varies depending on the bec zone, seral stages are used
+growth forests varies depending on the BEC zone, seral stages are used
 to denote the relative age class of a stand; "Early", "Mid", "Mature",
 and "Old". We will create a new field and classify each polygon
 depending on it's estimated age.
