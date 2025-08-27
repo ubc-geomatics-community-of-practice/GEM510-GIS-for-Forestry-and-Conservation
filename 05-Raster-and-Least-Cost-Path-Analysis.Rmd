@@ -114,7 +114,7 @@ Latitude(j) = 52.0001388888888982 + j × -0.000277778
 
 ##### Q2. Given the equations above, what is the exact latitude and longtiude of the pixel with image coordinates (1907,1918)? Show your work for full credit. (2 points) {.unnumbered} 
 
-**Step 3:** Copy the coordinates from Q2 and paste them into the "Coordinate" field at the bottom of your QGIS screen (see image below) in the format `latitude, longitude` and press "Enter". Change the scale to `1:500` and press "Enter". You should now be able to distinguish individual pixels. Click the coordinate reference system at the bottom right of the screen and change it from the default value of `EPSG:4326` (WGS 1984) to `EPSG:26911` (NAD 1983 UTM Zone 11N).
+**Step 3:** Make sure the coordinate system for the map is initially set to `EPSG:4326` then copy the lat/lon coordinates from Q2 and paste them into the "Coordinate" field at the bottom of your QGIS screen in the format `latitude, longitude` and press "Enter". Change the scale to `1:500` and press "Enter". You should now be able to distinguish individual pixels. Click the coordinate reference system at the bottom right of the screen and change it from the default value of `EPSG:4326` (WGS 1984) to `EPSG:26911` (NAD 1983 UTM Zone 11N).
 
 ```{r 05-qgis-project-srs, out.width= "100%", echo = FALSE}
     knitr::include_graphics("images/05-qgis-project-srs.png")
@@ -147,7 +147,7 @@ The mosaic still needs to be reprojected and clipped to the same extent as our A
 
 **Step 6:** Open the OSGeo4W shell and navigate to your project folder where you saved "aster_dem_wgs84.tif". Type the following command into the console and then hit "Enter": `gdalwarp -s_srs EPSG:4326 -t_srs EPSG:26911 -te 401480 5753440 661680 5936300 -tr 20 20 -r cubic aster_dem_wgs84.tif aster_dem_utm.tif`.
 
-- `-s_srs` flag defines the input spatial reference system (coordinate system), which is WGS 1984 or `EPSG:4326`.
+- `-s_srs` flag defines the input (s = source) spatial reference system (coordinate system), which is WGS 1984 or `EPSG:4326`.
 
 - `-t_srs` flag defines our target SRS, which is NAD 1983 UTM Zone 11N or `EPSG:26911`.
 
