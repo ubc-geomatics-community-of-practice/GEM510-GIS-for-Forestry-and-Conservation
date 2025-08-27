@@ -44,9 +44,9 @@ All data for this lab are accessible via the UBC PostgreSQL server. Instructions
 
 **Step 1:** Open pgAdmin.
 
-**Step 2:** From the **Browser** pane on the left, right-click **Servers** and then select **Register** then **Server...**. We are going to add another server, but this time, it will be hosted on your local machine.
+**Step 2:** From the "Browser" pane on the left, right-click "Servers" and then select "Register" then "Server...". We are going to add another server, but this time, it will be hosted on your local machine.
 
-**Step 3:** Name the server **localhost** then click the **Connection** tab and set the **Host Name/Address** also as **localhost**. Enter a password for the server and leave everything else as the default. When finished, click **Save**. The new localhost server should now appear in your Browser. You can expand it, navigate through **Databases**, **postgres**, **Schemas**, **public**, and **Tables** to find that it is indeed empty. 
+**Step 3:** Name the server "localhost" then click the "Connection" tab and set the "Host Name/Address" also as "localhost". Enter a password for the server and leave everything else as the default. When finished, click "Save". The new localhost server should now appear in your Browser. You can expand it, navigate through "Databases", "postgres", "Schemas", "public", and "Tables" to find that it is indeed empty. 
 
 ```{r 01-pgadmin-localhost-connection, out.width= "50%", echo = FALSE}
     knitr::include_graphics("images/01-pgadmin-localhost-connection.png")
@@ -64,7 +64,7 @@ The prompt should then say `Port [5432]:`. This is the default port that the Pos
 
 The prompt should then say `Username [postgres]:`. This is the default username that you created when you set up the PostgreSQL server in pgAdmin. Press "Enter" on your keyboard to accept the postgres username. 
 
-The prompt should then ask you for your password, `Password for user postgres:`. Type your password and then press "Enter" on your keyboard.
+The prompt should then ask you for your password, `Password for user postgres:`. Type your password that you set in the earlier step with pgAdmin and then press "Enter" on your keyboard. Note that there is no feedback given to indicate what you are typing.
 
 If everything is successful, then you should see `postgres=#`, which indicates you can now enter either psql commands or SQL statements. Note that the hashtag `#` indicates that you are connected to the current database with the "SUPERUSER" role, which is essentially the highest admin privilege.
 
@@ -117,7 +117,9 @@ DO NOT modify this table with any srids in the valid range otherwise you will ne
 
 This table contains EPSG codes, which are used to easily relate spheroids, datums, and measurement units to geospatial data. You will find these codes used everywhere when you look at metadata and the properties of different data layers. One very commonly used code is EPSG 4326, which references the WGS 1984 datum.
 
-**Step 6:** Write an SQL query to return the proj4text of the WGS 1984 datum from the spatial_ref_sys table.
+Use the following query to return the contents of the entire spatial_ref_sys table: `SELECT * FROM spatial_ref_sys;`
+
+**Step 6:** Write an SQL query to return proj4text of the WGS 1984 datum from the spatial_ref_sys table.
 
 Now we will create some new data, just to show you how to use some useful SQL keywords. We will start with aspatial data first, then move on to spatial data. You can create a new table in your database with the following syntax (note that you cannot simply copy-paste below, you need to supply actual data type variable names):
 
@@ -182,7 +184,9 @@ PRIMARY KEY(this_field_is_int2, this_field_is_bool)
 );
 ```
 
-**Step 7:** Create a new table of assignments that are due next week. Include course code, assignment name, the percent weighting of the assignment on your final grade in that course, and the due date. Use the appropriate data types for each field and define a primary key.
+Note that if you use a compound primary key, like in the example above, or if you use one of your data fields as the primary key, then you are imposing a logic onto the table that prevents you from creating, updating, or inserting new rows that duplicate those values or combinations of values. After all, that is the purpose of a primary key, to uniquely identify all the tuples. Sometimes, this logic can be useful in the design of a table, but generally it is best practice to create a dedicated field for the primary key and this is also the behaviour that you will observe in attribute tables viewed in ArcGIS Pro and QGIS.
+
+**Step 7:** Create a new table of assignments that are due next week (up to four total). Include course code, assignment name, the percent weighting of the assignment on your final grade in that course, and the due date. Use the appropriate data types for each field and define a primary key.
 
 Now that the table and fields are defined, we will insert some data into the table. Inserting data uses the `INSERT` keyword followed by `VALUES` and then a comma-separated list of the values you want to insert in parentheses. For example:
 
@@ -226,7 +230,9 @@ INSERT INTO my_new_table (this_field_is_date) VALUES (TO_DATE('31-12-1963', 'DD-
 
 Once you are satisfied with the state of your table, you will dump your entire PostGIS database to an output SQL file and this will be one of your deliverables for this lab. PostgreSQL features a utility program called `pg_dump` that will take any database and output an SQL statement in a file that can be used to re-create the database. In other words, `pg_dump` is a backup method. This is also really handy if you want to create a local backup of a remote server! If you want more practice, try using it on the UBC PostgreSQL server.
 
-**Step 9:** Open a Windows command prompt (search "command"). Take note of your current working directory, which is probably something like `C:\Users\[your username]`. This is where your database SQL file will be saved to. If your command prompt shows your working directory as `C:\Program Files\QGIS x.xx.x` or similar, then you will first need to change to a directory where you have permission to write to. Usually, this is somewhere in your user folder, which you can navigate to in the terminal with the change directory `cd` command: `cd C:\Users\[your username]\Documents`. To dump your database, use the following command: `pg_dump -d mypostgisdb -U postgres -h localhost > mypostgisdb.sql`. You will be prompted to enter your password and then the new file `mypostgisdb.sql` will be saved in your working directory. 
+**Step 9:** Open a Windows command prompt (search "command"). Take note of your current working directory, which is probably something like `C:\Users\[your username]`. This is where your database SQL file will be saved to. If your command prompt shows your working directory as `C:\Program Files\QGIS x.xx.x` or similar, then you will first need to change to a directory where you have permission to write to. Usually, this is somewhere in your user folder, which you can navigate to in the terminal with the change directory `cd` command: `cd C:\Users\[your username]\Documents`. 
+
+To dump your database, use the following command: `pg_dump -d mypostgisdb -U postgres -h localhost > mypostgisdb.sql`. You will be prompted to enter your password and then the new file `mypostgisdb.sql` will be saved in your working directory. 
 
 **Step 10:** Check to make sure that you can load the database back into PostgreSQL. In psql, create a new empty database named mypostgisdb_backup. Then, enter the following command from the Windows command prompt: `psql -U postgres -h localhost mypostgisdb_backup < mypostgisdb.sql`. You can now query the postgisdb_backup database to check that it is a copy of your other mypostgisdb database.
 
@@ -260,7 +266,15 @@ ogr2ogr -where bldg_code='FSC' -f "ESRI Shapefile" ubcv_FSC.shp PG:"host=FRST-Po
 
 You can write more complex SQL statements with the `-sql` flag instead of `-where`.
 
-**Step 5:** Getting data into a PostGIS database is unremarkably similar as to taking it out. Import the FSC polygon into your **localhost PostGIS database** using the same command as Step 3, but change `"ESRI Shapefile"` to `"PostgreSQL"`, delete `ubcv_campus_trees.shp`, modify the connection parameters for your localhost server, change `"ubcv_campus_trees"` to `ubcv_FSC.shp`, and finally specify that we want these data reprojected into UTM Zone 10N coordinates `-t_srs EPSG:3157`. You will receive no feedback in the terminal if you were successful, but you can check in QGIS, ArcGIS Pro, or by using the ogrinfo program.
+**Step 5:** Getting data into a PostGIS database is unremarkably similar as to taking it out. Import the FSC polygon into your localhost PostGIS database using the same command as Step 3, but change the following: 
+
+- `"ESRI Shapefile"` to `"PostgreSQL"`
+- delete `ubcv_campus_trees.shp`
+- modify the connection parameters for your localhost server
+- change `"ubcv_campus_trees"` to `ubcv_FSC.shp`
+- specify that we want these data re-projected into UTM Zone 10N coordinates `-t_srs EPSG:3157`
+
+You will receive no feedback in the terminal if you were successful, but you can check in QGIS, ArcGIS Pro, or by using the ogrinfo program.
 
 ogrinfo is a utility that is able to read a wide-variety of spatial data formats and return metadata for inspection. This program is useful for getting the geometry type of a file, the spatial extent of the features, and the coordinate system or the datum. You can also apply SQL queries and even inspect the attributes of specific features.
 
@@ -342,17 +356,35 @@ SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer_qgis FROM ubcv_fsc;
 
 You should now have a new table in the database now called **ubcv_fsc_buffer_qgis**. You can also save the query by giving it a name in the **Name** field and even output the SQL query to a file. This can be helpful for managing large complex queries. The **Create a view** button will display the layer in your map view.
 
+Examine that query above carefully. Remember that `SELECT` operates on column names, so what exactly are we selecting when we apply a function on a column name? What is the output column name of that function that is returned in **ubcv_fsc_buffer_qgis**? Open the attribute table in QGIS and look at the column name. When we apply a function on a column and do not specify a name for the output column name of the function, then the default column name will simply be the name of the function. So in this case, the output column name will be `st_buffer`, which is not very informative.
+
+Note that the default behaviour of any `SELECT` is to simply return the existing column names. However, we could choose to rename any of those in the table that is returned. For example:
+
+```
+SELECT name AS a, bldg_code AS b, postal_code AS c FROM ubcv_buildings 
+WHERE bldg_code = 'FSC';
+```
+
+The `AS` is how we assign aliases to selected column names, which are returned in the new table. We can also completely omit `AS` and just provide the alias after the column name like:
+
+```
+SELECT name a, bldg_code b, postal_code c FROM ubcv_buildings 
+WHERE bldg_code = 'FSC';
+```
+
+You should spend some time understanding this behaviour because it is very important for how you structure more complex queries, which we will examine next.
+
 **Step 9:** Using the `WITH` clause, combine all of our independent queries above into a single query in QGIS that buffers the FSC polygon by 15 m, intersects the buffer with the campus trees, and then reports the number of unique taxa around the building. See the screenshot below.
 
 ```{r 02-qgis-complex-sql, out.width= "75%", echo = FALSE}
-    knitr::include_graphics("images/02-qgis-complex-sql.png")
+    knitr::include_graphics("images/02-qgis-complex-sql.PNG")
 ```
 
 The `WITH` clause allows us to create temporary relations that can be referenced by name in subsequent `SELECT` statements. In the case above, **ubcv_fsc_buffer_temporary** is the temporary result from the buffer and **ubcv_fsc_trees_temporary** is the temporary result from intersecting the buffer with the campus trees. 
 
 As you will see, this is slightly different than using the `INTO` method from our prior examples, which creates a new relation in our database. The benefit of `WITH` and `AS` is that the relation is ephemeral and only exists for the moment that the SQL entire statement is executed; no new relation is written into our database.
 
-**Step 10:** Using what you have learned, select one of the other [PostGIS overlay methods](https://postgis.net/docs/reference.html#Overlay_Functions) and then apply it to any two datasets in the `ubcv` database on the UBC PostgreSQL server. You must use the `WITH` clause and you must also use one of the [SQL aggregation functions](https://www.postgresql.org/docs/9.5/functions-aggregate.html). It is not important that your analysis makes sense, but it is important that your entire SQL statement can be executed from either QGIS or psql. Once your are satisfied with your SQL statement, copy and paste it to the assignment submission page on the UBC course management system.
+**Step 10:** Using what you have learned, select one of the other [PostGIS overlay methods](https://postgis.net/docs/reference.html#Overlay_Functions) and then apply it to any two datasets in the `ubcv` database on the UBC PostgreSQL server. You must use the `WITH` clause and you must also use one of the [SQL aggregation functions](https://www.postgresql.org/docs/17/functions-aggregate.html). Refer to the examples provided in class and use those as a template to explore how these functions work. It is not important that your analysis makes sense, but it is important that your entire SQL statement can be executed from either QGIS or psql. Once your are satisfied with your SQL statement, copy and paste it to the assignment submission page on the course management system.
 
 Hint: Check what the geometry column name is called for the layers that you choose to use and enter those exactly as you see them into your overlay function. Make sure that you are using compatible geometries for the overlay method you choose and read the linked documentation above if you have any doubts!
 
