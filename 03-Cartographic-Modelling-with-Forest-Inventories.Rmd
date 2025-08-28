@@ -60,7 +60,7 @@ By the end of this lab, you will be able to:
 All data for this lab are accessible via the UBC PostgreSQL server. Instructions for connecting to the server are given in the tasks below. These are very large datasets that come from the BC Data Catalog and are described in the table below. Accessing these data from the UBC PostgreSQL server allows us to extract only the data we need for this lab, which is the extent of Vancouver Island.
 
 | Layer Name | File Name | Reference Link |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Vegetation Resource Inventory 2024 | `veg_comp_lyr_r1_poly_2024` | <https://catalogue.data.gov.bc.ca/dataset/vri-2024-forest-vegetation-composite-layer-1-l1-> |
 | Generalized Forest Cover Ownership | `f_own` | <https://catalogue.data.gov.bc.ca/dataset/generalized-forest-cover-ownership> |
 | Cumulative Effects Framework: Human Disturbance (current) | `bc_cef_human_disturbance_2023` | <https://catalogue.data.gov.bc.ca/dataset/bc-cumulative-effects-framework-human-disturbance-current> |
@@ -372,11 +372,9 @@ The target percentages of old growth forests are dependent on the BEC subzone. I
 
 Begin by adding a new field to `Total_Forest_Area`:
 
-```         
 -   Name: DiffFromHigh
 
 -   Type: Double
-```
 
 The percentage thresholds for each class is as follows:
 
