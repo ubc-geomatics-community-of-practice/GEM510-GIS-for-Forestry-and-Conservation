@@ -1,7 +1,3 @@
-------------------------------------------------------------------------
-
-------------------------------------------------------------------------
-
 ```{r echo=FALSE}
 yml_content <- yaml::read_yaml("chapterauthors.yml")
 author <- yml_content[["cartographic-modelling-with-forest-inventories"]][["author"]]
@@ -32,18 +28,14 @@ Vancouver Island, British Columbia, has been an area of highly contentious Old G
 By the end of this lab, you will be able to:
 
 -   Prepare and clean a forest inventory dataset and related layers for analysis
-
 -   Perform attribute/select-by-expression filtering to isolate old-growth candidate polygons
-
 -   Calculate old-growth area and percentages by polygon using field calculations
-
 -   Produce a cartographic summary (map + table) that communicates old-growth distribution
-
 -   Reflect on limitations and assumptions of VRI-derived old-growth estimates
 
 ------------------------------------------------------------------------
 
-## Deliverables {.unnumbered}
+## Deliverables {#lab3-deliverables .unnumbered}
 
 <input type="checkbox" unchecked> A map showing the study area and the distribution of difference in calculated old-growth percentage and targets, by polygon (20 points)</input>
 
@@ -74,10 +66,16 @@ All data for this lab are accessible via the UBC PostgreSQL server. Instructions
 
 **Step 2:** Start ArcGIS Pro and create a new Map project.
 
-**Step 3:** From the top ribbon, navigate to the "Insert" tab, then click "Connections", and from the drop-down menu, select "New Database Connection". You can name it "UBC PostgreSQL Server" and for the host enter "FRST-PostgreSQL.ead.ubc.ca". The username and password will be provided to students enrolled in the course. Once you have correctly entered the correct credentials, ArcGIS Pro will do a "soft" connection to the server to retrieve the available databases. From the "Database" drop-down menu, select "vri" and then click "OK".
+**Step 3:** From the top ribbon, navigate to the "Insert" tab, then click "Connections", and from the drop-down menu, select "New Database Connection". 
 
-```{r 03-arcgispro-postgres-connection, out.width= "75%", echo = FALSE}
-    knitr::include_graphics("images/03-arcgispro-postgres-connection.png")
+```{r 03-arcgispro-postgres-connection-1, out.width= "75%", echo = FALSE}
+    knitr::include_graphics("images/03-arcgispro-postgres-connection-1.png")
+```
+
+You can name it "UBC PostgreSQL Server" and for the host enter "FRST-PostgreSQL.ead.ubc.ca". The username and password will be provided to students enrolled in the course. Once you have correctly entered the correct credentials, ArcGIS Pro will do a "soft" connection to the server to retrieve the available databases. From the "Database" drop-down menu, select "vri" and then click "OK".
+
+```{r 03-arcgispro-postgres-connection-2, out.width= "50%", echo = FALSE}
+    knitr::include_graphics("images/03-arcgispro-postgres-connection-2.png")
 ```
 
 The database connection has now been added to your ArcGIS Pro project, and you can view the tables inside the database from the Catalog Pane ("View" tab \> "Catalog Pane" \> expand "Databases" \> expand "PostgreSQL-FRST-PostgreSQL-vri(student)" \> now you can see all the tables in the `vri` database). You can drag and drop any of the layers of the database directly into your map to visualize them if you want. Though be aware that these are large layers and they may take a while to draw on your map. We do not actually need all of these data, so instead, we are going to use the power of SQL (Structured Query Language) to write a query that will return to us the tiny fraction that we need to use for this lab. First, let us break down what a generic SQL SELECT query looks like:
@@ -94,7 +92,9 @@ What follows the `SELECT` keyword is a comma-separated list of column names that
 
 -   `gid` is the primary key of the VRI table, this uniquely identifies all of the polygons from each other. When we select any subset of a table, we always want to grab the primary key because this allows us to keep track of which polygon we are dealing with from the originating table.
 
--   `site_index` is the estimate of site productivity for tree growth for the polygon; the values are recorded as decimal numbers. - `species_cd_1` is the leading tree species code for the polygon; the values are recorded as text strings.
+-   `site_index` is the estimate of site productivity for tree growth for the polygon; the values are recorded as decimal numbers. 
+
+- `species_cd_1` is the leading tree species code for the polygon; the values are recorded as text strings.
 
 -   `species_pct_1` is the percentage of the polygon occupied by the leading species represented by the `species_cd_1`; the values are recorded as integers. Note that "occupy" here is defined differently, depending on whether the stand is young or mature.
 
@@ -116,17 +116,13 @@ We are going to write a select query to retrieve these data from the server, but
 
 **Step 5:** Toggle on "List of Tables" to see the table names and then click on the VRI table in the list "vri.public.vancouver_island_vri" to show the list of columns. (If you get an error message here, then save your project, restart ArcGIS Pro and try again). We are going to write a SQL query to select the polygons that meet some of our initial criteria and then return the values of the columns (attributes) that we will need later. In the "Name" field, name the new query layer "vancouver_island_vri_select".
 
-```{r 03-arcgispro-query-layer-1, out.width= "75%", echo = FALSE}
-    knitr::include_graphics("images/03-arcgispro-query-layer-1.png")
-```
-
 The VRI data include descriptions about both forested and non-forested lands in British Columbia. Since we are only concerned with forests, we are going to only find polygons that are managed forests. We can do this simply with `SELECT * FROM vancouver_island_vri WHERE for_mgmt_land_base_ind = 'Y'`. See here that we have not defined any specific column names to return, `SELECT *` means *give me all the columns*, so in this example, we are only subsetting on the rows with `WHERE for_mgmt_land_base_ind = 'Y'`, but not the columns. If instead we used `SELECT for_mgmt_land_base_ind FROM vancouver_island_vri`, then we would get all the polygon values for only the `for_mgmt_land_base_ind` column name (subset columns, but not rows). You can test this SQL query but do not complete it as a new layer.
 
-#### Q1. What does for_mgmt_land_base_ind select for? What parameters are required to receive a "Yes" value? Hint: take a look at the VRI Relational Data Dictionary. (10 points)
+##### Q1. What does for_mgmt_land_base_ind select for? What parameters are required to receive a "Yes" value? Hint: take a look at the VRI Relational Data Dictionary. (10 points) {.unnumbered}
 
 **Pro tip:** When a column value stores a text string, we use single quotation marks in SQL `'abc'` around the values that we are searching for, double quotation marks `"abc"` will fail for a SQL query.
 
-**Step 6:** Using what you just learned, draft a select statement that limits the VRI polygons to are managed forests and return only the column names `gid`, `bec_zone_code`, `bec_subzone`, `proj_age_1`, and `geom`. Do not run this just yet in ArcGIS Pro, but have it validated by the instructor then press the "Validate" button on the bottom of the dialogue window. If the statement validates successfully, then the "Next" button will allow you to proceed.
+**Step 6:** Using what you just learned, draft a select statement that limits the VRI polygons to only managed forests and return only the column names `gid`, `bec_zone_code`, `bec_subzone`, `proj_age_1`, and `geom`. Do not run this just yet in ArcGIS Pro, but have it validated by the instructor then press the "Validate" button on the bottom of the dialogue window. If the statement validates successfully, then the "Next" button will allow you to proceed.
 
 **Pro tip:** If you are working from a laptop, be sure to plug into your power source as your computer power options may significantly slow down your ArcGIS Pro performance to conserve battery.
 
@@ -238,7 +234,7 @@ To better understand what is being done in this code chunk, the syntax is descri
 
 Review that all the rows have been populated in the `Seral_stage` field.
 
-#### Q2. Define "old growth" and cite at least one primary source. What characteristics might be overlooked by a definition of "old growth" that only accounts for stand age? (10 points)
+##### Q2. Define "old growth" and cite at least one primary source. What characteristics might be overlooked by a definition of "old growth" that only accounts for stand age? (10 points) {.unnumbered}
 
 **Step 15:** Our current layers only depict where crown forests could possibly be. In this step we will remove any areas that have experienced human disturbance in the forms of roads, buildings, and logging. We will use `vancouver_island_human_disturbance` to do so. Select by attribute where `cef_human_disturb_flag` is equal to `Human Disturb Current 20yr`. Export the selected attributes as a new feature named `Disturbed_areas`.
 
@@ -328,7 +324,7 @@ Use **Join Field** with the following expression:
 -   Join Field: LU_BEC
 -   Transfer Field: Shape_Area (from Old_Forest_Area)
 
-```{r 03-VRI_FieldJoin, out.width= "75%", echo = FALSE}
+```{r 03-VRI_FieldJoin, out.width= "50%", echo = FALSE}
     knitr::include_graphics("images/03-VRI_FieldJoin.png")
 ```
 
@@ -403,15 +399,15 @@ Now write your own expression to calculate the difference between the old growth
 bec = lu_bec[5:] 
 ```
 
-**Step 8:**. Visualize Results
+We read this as _give me all the elements from position 5 to the end of the string_, where the colon `:` separates the "from" and "to" values. If we leave one side of the colon blank, then we are saying we want whatever the minimum (left side of colon) or maximum (right side of colon) number of elements is. Python indexing starts at zero, so if I want to return the letter "g" from the alphabet string `abcdefghijklmnopqrstuvwxyz`, then I would write something like `alphabet[6]` or if I want all letters before "g", then `alphabet[:5]`.
+
+**Step 8:** Visualize Results
 
 In the **Contents** pane, right-click the `Total_Forest_Area` layer and select **Symbology**. In the Symbology panel, set the **Field** to `DiffFromHigh`. This will display the data based on the values in that field. Under **Primary symbology**, choose **Graduated Colors** (a gradient).
 
 Select a **color ramp** that makes sense for your data. For values that represent *low to high* differences, use a single-hue light-to-dark ramp (e.g., light yellow → dark green). Avoid using colors that are difficult to interpret (e.g., bright rainbow colors). - Think about your audience—pick colors that clearly show the trend and are readable to someone with color-vision deficiencies.Adjust the **classification method and number of classes** if needed (e.g., Natural Breaks, Quantile). This determines how your data values are grouped into color ranges.
 
-------------------------------------------------------------------------
-
-**Step 9:**. Create the Layout Map
+**Step 9:** Create the Layout Map
 
 From the top ribbon, go to the **Insert** tab and select **New Layout**. Choose an appropriate page size (e.g., Letter 8.5x11 or A4). Use the **Map Frame** tool to insert your map view into the layout. Resize and position it so it fills most of the page. - Add essential map elements: - **Title**: Insert a descriptive map title (e.g., *“Difference from High Threshold in Total Forest Area”*).
 
@@ -425,19 +421,19 @@ From the top ribbon, go to the **Insert** tab and select **New Layout**. Choose 
 
 Rearrange and resize elements so the layout looks clean, balanced, and easy to read. Avoid cluttering the map with overlapping items.
 
-------------------------------------------------------------------------
+**Step 10:** Create the Layout Map
 
-**Step 10:**. Create the Layout Map
+When you are satisfied with the layout, go to **Share → Export Layout**. Choose **PNG** as the file format.
 
-When you are satisfied with the layout, go to **Share → Export Layout**. Choose **PNG** as the file format. Insert this exported map into your final report.
+##### Q3. Describe the results of your final output. What is the distribution of old growth targets met across Vancouver Island? (10 points) {.unnumbered}
 
-#### Q3. Describe the results of your final output. What is the distribution of old growth targets met across Vancouver Island? (10 points)
+##### Q4. Select 3 other fields in the VRI layer and briefly discuss how they could provide further insight into current old growth status. (10 points) {.unnumbered}
 
-#### Q4. Select 3 other fields in the VRI layer and briefly discuss how they could provide further insight into current old growth status. (10 points)
+##### Q5. How is VRI data collected and what limitations does it pose? (10 points) {.unnumbered}
 
-#### Q5. How is VRI data collected and what limitations does it pose? (10 points)
+##### Q6. How might the scale and resolution of GIS data affect the accuracy of old growth assessments? (10 points) {.unnumbered}
 
-#### Q6. How might the scale and resolution of GIS data affect the accuracy of old growth assessments? (10 points)
+##### Map 1. Upload your map that shows the 
 
 ------------------------------------------------------------------------
 
@@ -462,3 +458,5 @@ Ministry of Water, Land and Resource Stewardship. 2024. Old Growth Forest Manage
 ## Summary {.unnumbered}
 
 In this lab you standardized VRI layers, filtered the Forest Management Landbase, calculated old-growth areas, and derived percentages to compare across polygons. You then produced a map and exportable table to communicate your findings. The key skills reinforced were: consistent data preparation, careful attribute logic for inventory fields, transparent calculation workflows, and interpreting results within an ecological and management context.
+
+Return to the [**Deliverables**](#lab3-deliverables) section to check off everything you need to submit for credit in the course management system.
