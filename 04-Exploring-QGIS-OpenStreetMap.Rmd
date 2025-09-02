@@ -95,31 +95,43 @@ This current view does not directly show you the OpenStreetMap data. Instead, yo
 
 In order to get the OpenStreetMap data, we need to install a plugin for QGIS. Plugins are written by a community of volunteer developers, some from organizations that pay for the plugin to be developed and then released as FOSS, and others just volunteer their time. Plugins are incredibly important for QGIS, because only basic features end up in the core GIS software. If there is ever something you want to do that is not a basic feature of QGIS, you probably need to search for a plugin or write one yourself!
 
-**Step 5:** From the menu bar at the top, click **Plugins** and then select **Manage and Install Plugins…** to open the **Plugin Manager**. Since these plugins are fetched from a server, you need to be connected to the internet to see plugins available for download. In the search bar, search for the **OSMDownloader** plugin. Click **Install Plugin**.
+**Step 5:** From the menu bar at the top, click **Plugins** and then select **Manage and Install Plugins…** to open the **Plugin Manager**. Since these plugins are fetched from a server, you need to be connected to the internet to see plugins available for download. In the search bar, search for the **QuickOSM** plugin. Click **Install Plugin**.
 
 ```{r 04-qgis-osm-downloader-plugin, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/04-qgis-osm-downloader-plugin.png")
 ```
 
-Once the plugin is installed, you can click **Close** to dismiss the Plugin Manager. Most plugins will automatically add an icon to your toolbar at the top, so search for and click the OSMDownloader icon that looks like this:
+Once the plugin is installed, you can click **Close** to dismiss the Plugin Manager. Most plugins will automatically add an icon to your toolbar at the top, so search for and click the QuickOSM icon that looks like this:
 
 ```{r 04-qgis-osm-downloader-icon, out.width= "30pt", echo = FALSE}
-    knitr::include_graphics("images/04-qgis-osm-downloader-icon.png")
+   knitr::include_graphics("images/04-qgis-osm-downloader-icon.png")
 ```
 
-Your cursor should now appear as a crosshair on your map and now you can select a rectangular area to fetch the OpenStreetMap data from.
 
-**Step 6:** Click and drag your cursor on the base map to select the UBC campus. A dialogue box will open showing you the extent of your selection. Save the file to the project folder your created earlier. Name the file **UBC.osm** and toggle on **Load layer after download**. Your coordinates need not be exactly the same as the image below, but you can modify your selection if you want by either manually editing the extent values (in decimal degrees) or clicking **Cancel** and then selecting again with your cursor.
 
-```{r 04-qgis-osm-downloader-extent, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/04-qgis-osm-downloader-extent.png")
+Once you click on the QuickOSM icon, A box will appear showing CTR, Hiking, and Urban, select **Urban**, and below where it says “A village, a town...” type **UBC**, leave it set to "In", and click on "Run preset". 
+
+```{r 04-qgis-quick-osm.png, out.width= "50%", echo = FALSE}
+   # knitr::include_graphics("images/04-qgis-quick-osm.png")
 ```
 
-```{r 04-qgis-osm-downloader-success, out.width= "25%", echo = FALSE}
-    knitr::include_graphics("images/04-qgis-osm-downloader-success.png")
+Once it finishes loading, on the left panel you will see the Query options. Select **Quick query**.
+
+```{r 04-qgis-osm-quick-query.png, out.width= "30pt", echo = FALSE}
+    knitr::include_graphics("images/04-qgis-osm-quick-query.png")
 ```
 
-A progress bar will appear at the top and then a message will be displayed that the download was successful. You should now see an updated list of layers available in your Layers pane. 
+**Step 6:** You will see the fields for **Key** and **Value**. In Key section, start by searching **amenity** and in Value section select **recycling**. Then, below where it says "A village, a town...” type again **UBC**, and leave it set to "In".
+
+Next, expand the Advanced option, leave all the settings as default, and save your file under the **Directory** option in ESRI Shapefile format. Then click **Run query**.
+
+Repeat the same steps with Key/Value, but this time test them one by one with the following values: **toilets**, **bench**, and **tree**.
+
+To find and learn more about Key/Values you can check this link:
+https://docs.3liz.org/QuickOSM/ 
+
+
+Now, you should now see an updated list of layers available in your Layers pane. 
 
 ```{r 04-qgis-osm-layers-toggle, out.width= "25%", echo = FALSE}
     knitr::include_graphics("images/04-qgis-osm-layers-toggle.png")
