@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2025-08-31" />
+<meta name="date" content="2025-09-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -303,15 +303,19 @@ Paul Pickell</p>
 <p>This current view does not directly show you the OpenStreetMap data. Instead, you are looking at a tile service provided by OpenStreetMap, which symbolizes the OpenStreetMap data and then, depending on your zoom level and location, sends the necessary information to your computer in the form of a tile like the one pictured below showing a 256x256 pixel tile at zoom level 10 (zoom level 1 is the smallest scale world map).</p>
 <p><img src="images/04-qgis-tile.png" width="256pt" /></p>
 <p>In order to get the OpenStreetMap data, we need to install a plugin for QGIS. Plugins are written by a community of volunteer developers, some from organizations that pay for the plugin to be developed and then released as FOSS, and others just volunteer their time. Plugins are incredibly important for QGIS, because only basic features end up in the core GIS software. If there is ever something you want to do that is not a basic feature of QGIS, you probably need to search for a plugin or write one yourself!</p>
-<p><strong>Step 5:</strong> From the menu bar at the top, click <strong>Plugins</strong> and then select <strong>Manage and Install Plugins…</strong> to open the <strong>Plugin Manager</strong>. Since these plugins are fetched from a server, you need to be connected to the internet to see plugins available for download. In the search bar, search for the <strong>OSMDownloader</strong> plugin. Click <strong>Install Plugin</strong>.</p>
+<p><strong>Step 5:</strong> From the menu bar at the top, click <strong>Plugins</strong> and then select <strong>Manage and Install Plugins…</strong> to open the <strong>Plugin Manager</strong>. Since these plugins are fetched from a server, you need to be connected to the internet to see plugins available for download. In the search bar, search for the <strong>QuickOSM</strong> plugin. Click <strong>Install Plugin</strong>.</p>
 <p><img src="images/04-qgis-osm-downloader-plugin.png" width="75%" /></p>
-<p>Once the plugin is installed, you can click <strong>Close</strong> to dismiss the Plugin Manager. Most plugins will automatically add an icon to your toolbar at the top, so search for and click the OSMDownloader icon that looks like this:</p>
+<p>Once the plugin is installed, you can click <strong>Close</strong> to dismiss the Plugin Manager. Most plugins will automatically add an icon to your toolbar at the top, so search for and click the QuickOSM icon that looks like this:</p>
 <p><img src="images/04-qgis-osm-downloader-icon.png" width="30pt" /></p>
-<p>Your cursor should now appear as a crosshair on your map and now you can select a rectangular area to fetch the OpenStreetMap data from.</p>
-<p><strong>Step 6:</strong> Click and drag your cursor on the base map to select the UBC campus. A dialogue box will open showing you the extent of your selection. Save the file to the project folder your created earlier. Name the file <strong>UBC.osm</strong> and toggle on <strong>Load layer after download</strong>. Your coordinates need not be exactly the same as the image below, but you can modify your selection if you want by either manually editing the extent values (in decimal degrees) or clicking <strong>Cancel</strong> and then selecting again with your cursor.</p>
-<p><img src="images/04-qgis-osm-downloader-extent.png" width="50%" /></p>
-<p><img src="images/04-qgis-osm-downloader-success.png" width="25%" /></p>
-<p>A progress bar will appear at the top and then a message will be displayed that the download was successful. You should now see an updated list of layers available in your Layers pane.</p>
+<p>Once you click on the QuickOSM icon, A box will appear showing CTR, Hiking, and Urban, select <strong>Urban</strong>, and below where it says “A village, a town…” type <strong>UBC</strong>, leave it set to “In”, and click on “Run preset”.</p>
+<p>Once it finishes loading, on the left panel you will see the Query options. Select <strong>Quick query</strong>.</p>
+<p><img src="images/04-qgis-osm-quick-query.png" width="30pt" /></p>
+<p><strong>Step 6:</strong> You will see the fields for <strong>Key</strong> and <strong>Value</strong>. In Key section, start by searching <strong>amenity</strong> and in Value section select <strong>recycling</strong>. Then, below where it says “A village, a town…” type again <strong>UBC</strong>, and leave it set to “In”.</p>
+<p>Next, expand the Advanced option, leave all the settings as default, and save your file under the <strong>Directory</strong> option in ESRI Shapefile format. Then click <strong>Run query</strong>.</p>
+<p>Repeat the same steps with Key/Value, but this time test them one by one with the following values: <strong>toilets</strong>, <strong>bench</strong>, and <strong>tree</strong>.</p>
+<p>To find and learn more about Key/Values you can check this link:
+<a href="https://docs.3liz.org/QuickOSM/" class="uri">https://docs.3liz.org/QuickOSM/</a></p>
+<p>Now, you should now see an updated list of layers available in your Layers pane.</p>
 <p><img src="images/04-qgis-osm-layers-toggle.png" width="25%" /></p>
 <p><strong>Step 7:</strong> Toggle off the OpenStreetMap base map and depending on how you made your selection in the last step, you should see something like this in your map view:</p>
 <p><img src="images/04-qgis-osm-map.png" width="75%" /></p>
