@@ -217,7 +217,7 @@ WHERE this_field_is_bool IS NULL;
 ```
 
 ```{r 02-psql-update, out.width= "90%", echo = FALSE}
-    knitr::include_graphics("images/02-psql-update.PNG")
+    knitr::include_graphics("images/02-psql-update.png")
 ```
 
 Dates require special handling because if you just try to insert them as strings or otherwise, they are treated as literals. For dates, we need to use the special `TO_DATE` function:
@@ -377,7 +377,7 @@ You should spend some time understanding this behaviour because it is very impor
 **Step 9:** Using the `WITH` clause, combine all of our independent queries above into a single query in QGIS that buffers the FSC polygon by 15 m, intersects the buffer with the campus trees, and then reports the number of unique taxa around the building. See the screenshot below.
 
 ```{r 02-qgis-complex-sql, out.width= "75%", echo = FALSE}
-    knitr::include_graphics("images/02-qgis-complex-sql.PNG")
+    knitr::include_graphics("images/02-qgis-complex-sql.png")
 ```
 
 The `WITH` clause allows us to create temporary relations that can be referenced by name in subsequent `SELECT` statements. In the case above, **ubcv_fsc_buffer_temporary** is the temporary result from the buffer and **ubcv_fsc_trees_temporary** is the temporary result from intersecting the buffer with the campus trees. 
