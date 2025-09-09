@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2025-09-02" />
+<meta name="date" content="2025-09-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -249,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="introduction-postgresql-postgis" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Lab 1</span> Introduction to PostgreSQL and PostGIS<a href="introduction-postgresql-postgis.html#introduction-postgresql-postgis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Written by
-Paul Pickell</p>
+Paul D. Pickell</p>
 <div id="lab-overview" class="section level2 unnumbered hasAnchor">
 <h2>Lab Overview<a href="introduction-postgresql-postgis.html#lab-overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this lab, you will be introduced to a Free and Open Source Software (FOSS) and widely-used database management system known as PostgreSQL. You will learn how to set up your own database, connect to an enterprise database, and write Structured Query Language (SQL) queries both from the command line and a popular postgres server admin graphical user interface. The software used in this lab includes PostgreSQL, psql, pgAdmin, and QGIS.</p>
@@ -312,7 +312,7 @@ Paul Pickell</p>
 <p>At this point, keep in mind that all the data still live on the postgres server. You may have already seen the other databases on the server. If you want to view the data in those databases, you will need to create a new database connection for each database that you want to connect to. Feel free to explore the data in the other databases, noting that what is available at any given time may be different from what you see in the screenshots in this lab. The UBC PostgreSQL server hosts many databases that are used for research and teaching!</p>
 <p><strong>Step 4:</strong> You can also execute SQL queries in QGIS directly from the PostGIS database. From the Browser pane, right-click any available table in the PostGIS database and then select “Execute SQL…”. In the dialogue window that opens, you will see a default SQL query that will return the first 10 features (tuples) of the selected relation.</p>
 <p><img src="images/01-qgis-query.png" width="75%" /></p>
-<p><strong>Step 5:</strong> Write an SQL query to return some subset of the data then click the “Execute” button. QGIS will return a preview of the attribute table for the query. From here, you can export this as a layer to view the result in the map. Expand “Load as a new layer” and then toggle on “Column(s) with unique values” and ensure the field is set to “ogc_fid”, this is the primary key for the table in PostGIS. Toggle on “Geometry column” and ensure the field is set to “wbk_geometry”, this is the “Well Known Binary” format used to represent features in PostGIS. Finally, change the “Layer name” to something to distinguish your query from others and then click “Load layer” and then “Close”. The result of the SQL query should now appear as a layer in your QGIS map.</p>
+<p><strong>Step 5:</strong> Write an SQL query to return some subset of the data then click the “Execute” button. QGIS will return a preview of the attribute table for the query. From here, you can export this as a layer to view the result in the map. Expand “Load as a new layer” and then toggle on “Column(s) with unique values” and ensure the field is set to “ogc_fid”, this is the primary key for the table in PostGIS. Toggle on “Geometry column” and ensure the field is set to “wkb_geometry”, this is the “Well Known Binary” format used to represent features in PostGIS. Finally, change the “Layer name” to something to distinguish your query from others and then click “Load layer” and then “Close”. The result of the SQL query should now appear as a layer in your QGIS map.</p>
 <p>Note that the layer you just created does not actually exist outside your QGIS project. If you navigate into the properties of this layer, you will see the Source is simply a reference to the data that are still stored on the postgres server. This can be a really efficient way to handle data without unnecessarily copying it to a new file!</p>
 <p><img src="images/01-qgis-query-properties.png" width="75%" /></p>
 <p><strong>Step 5:</strong> You can export any table in the PostGIS database to your local computer by right-clicking the table name in the PostGIS database and then selecting “Export Layer” &gt; “To File…”. From the new dialogue window, you can configure the output file however you want. You can do the same for the query layer by right-clicking the query layer created in Step 5 and selecting “Export” &gt; “Save Features As…”.</p>

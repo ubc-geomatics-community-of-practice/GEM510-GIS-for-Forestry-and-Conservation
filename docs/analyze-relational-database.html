@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2025-09-02" />
+<meta name="date" content="2025-09-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -249,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="analyze-relational-database" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">Lab 2</span> Analyze a Relational Database<a href="analyze-relational-database.html#analyze-relational-database" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Written by
-Paul Pickell</p>
+Paul D. Pickell</p>
 <div id="lab-overview-1" class="section level2 unnumbered hasAnchor">
 <h2>Lab Overview<a href="analyze-relational-database.html#lab-overview-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this lab you will learn how to create, manage, and analyze your own relational database. You will continue to practice with the tools that you learned in the prior lab: pgAdmin, QGIS, ArcGIS Pro, and psql. You will also be introduced to the Geospatial Data Abstraction Library (GDAL) and some of the handy programs that are available from this software library for managing data. You will learn more advanced Structured Query Language (SQL) statements that will allow you join tables, insert and update data, and analyze data in a relational database.</p>
@@ -318,12 +318,12 @@ DETAIL:  Failing row contains (0, null, null, null, null).</code></pre>
 <p>Use the following query to return the contents of the entire spatial_ref_sys table: <code>SELECT * FROM spatial_ref_sys;</code></p>
 <p><strong>Step 6:</strong> Write an SQL query to return proj4text of the WGS 1984 datum from the spatial_ref_sys table.</p>
 <p>Now we will create some new data, just to show you how to use some useful SQL keywords. We will start with aspatial data first, then move on to spatial data. You can create a new table in your database with the following syntax (note that you cannot simply copy-paste below, you need to supply actual data type variable names):</p>
-<pre><code>CREATE TABLE table-name (
-colunm-name-1 datatype,
-colunm-name-2 datatype,
-colunm-name-3 datatype,
-...
-);</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="analyze-relational-database.html#cb2-1" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="kw">table</span><span class="op">-</span>name (</span>
+<span id="cb2-2"><a href="analyze-relational-database.html#cb2-2" tabindex="-1"></a>colunm<span class="op">-</span>name<span class="op">-</span><span class="dv">1</span> datatype,</span>
+<span id="cb2-3"><a href="analyze-relational-database.html#cb2-3" tabindex="-1"></a>colunm<span class="op">-</span>name<span class="op">-</span><span class="dv">2</span> datatype,</span>
+<span id="cb2-4"><a href="analyze-relational-database.html#cb2-4" tabindex="-1"></a>colunm<span class="op">-</span>name<span class="op">-</span><span class="dv">3</span> datatype,</span>
+<span id="cb2-5"><a href="analyze-relational-database.html#cb2-5" tabindex="-1"></a><span class="op">..</span>.</span>
+<span id="cb2-6"><a href="analyze-relational-database.html#cb2-6" tabindex="-1"></a>);</span></code></pre></div>
 <p>Data types are very important and the shorthand notation for these in PostgreSQL are <a href="https://www.postgresql.org/docs/current/datatype.html">listed on this web page</a> and some commonly used data types are reproduced below with examples.</p>
 <table>
 <caption><span id="tab:unnamed-chunk-5">Table 2.1: </span>Some PostgreSQL data types with example value ranges.</caption>
@@ -393,43 +393,43 @@ colunm-name-3 datatype,
 </tbody>
 </table>
 <p>Here is an example of creating a new table with some different data types:</p>
-<pre><code>CREATE TABLE my_new_table (
-this_field_is_int2 int2,
-this_field_is_bool bool,
-this_field_is_varchar_50 varchar(50)
-);</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="analyze-relational-database.html#cb3-1" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> my_new_table (</span>
+<span id="cb3-2"><a href="analyze-relational-database.html#cb3-2" tabindex="-1"></a>this_field_is_int2 int2,</span>
+<span id="cb3-3"><a href="analyze-relational-database.html#cb3-3" tabindex="-1"></a>this_field_is_bool bool,</span>
+<span id="cb3-4"><a href="analyze-relational-database.html#cb3-4" tabindex="-1"></a>this_field_is_varchar_50 <span class="dt">varchar</span>(<span class="dv">50</span>)</span>
+<span id="cb3-5"><a href="analyze-relational-database.html#cb3-5" tabindex="-1"></a>);</span></code></pre></div>
 <p><img src="images/02-psql-mynewtable.png" width="90%" /></p>
 <p>Watch out for unescaped parentheses when running multiline SQL statements! If you see <code>mypostgisdb=#</code>, then you are able to submit a new psql command or start an SQL statement. If you see <code>mypostgisdb=-</code>, then you have already started an SQL statement on a line above in the terminal. If you see <code>mypostgisdb=(</code>, then you have added an open parenthesis ‘(’ somewhere in your statement on a line above. When running a SQL statement over multiple lines, you need to ensure that you enclose all parentheses and end the statement with a semicolon <code>;</code> in order to return the psql command line back to <code>mypostgisdb=#</code>. If you find yourself stuck an unable to exit <code>mypostgisdb=(</code>, try to close any open parentheses by typing <code>)</code> and pressing “Enter”. If you find yourself unable to exit <code>mypostgisdb=-</code>, try ending the SQL statement by typing <code>;</code> and pressing “Enter”. If both of those fail, you can try exiting the command with <code>CTRL + C</code>, which may also end psql and require you to reconnect to the database.</p>
 <p>You can experiment with creating as many new tables as you want. If you need to delete a table, use the <code>DROP</code> keyword like this <code>DROP TABLE my_new_table;</code>.</p>
 <p>It is good practice to assign a field (multiple fields) as a primary key when you create a table. This is done by simply adding <code>PRIMARY KEY</code> after the field definition when you make the table. For example:</p>
-<pre><code>CREATE TABLE my_new_table (
-this_field_is_bigserial bigserial PRIMARY KEY,
-this_field_is_int2 int2,
-this_field_is_bool bool,
-this_field_is_varchar_50 varchar(50)
-);</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="analyze-relational-database.html#cb4-1" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> my_new_table (</span>
+<span id="cb4-2"><a href="analyze-relational-database.html#cb4-2" tabindex="-1"></a>this_field_is_bigserial bigserial <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb4-3"><a href="analyze-relational-database.html#cb4-3" tabindex="-1"></a>this_field_is_int2 int2,</span>
+<span id="cb4-4"><a href="analyze-relational-database.html#cb4-4" tabindex="-1"></a>this_field_is_bool bool,</span>
+<span id="cb4-5"><a href="analyze-relational-database.html#cb4-5" tabindex="-1"></a>this_field_is_varchar_50 <span class="dt">varchar</span>(<span class="dv">50</span>)</span>
+<span id="cb4-6"><a href="analyze-relational-database.html#cb4-6" tabindex="-1"></a>);</span></code></pre></div>
 <p>The bigserial data type is especially useful for this purpose because it auto-increments as you add rows and can accommodate more than 18 <em>quintrillion</em> rows, that is more than 18 million trillions! You can also create composite primary keys that are comprised of two or more fields to uniquely identify all rows:</p>
-<pre><code>CREATE TABLE my_new_table ( 
-this_field_is_int2 int2,
-this_field_is_bool bool,
-this_field_is_varchar_50 varchar(50),
-PRIMARY KEY(this_field_is_int2, this_field_is_bool)
-);</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="analyze-relational-database.html#cb5-1" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> my_new_table ( </span>
+<span id="cb5-2"><a href="analyze-relational-database.html#cb5-2" tabindex="-1"></a>this_field_is_int2 int2,</span>
+<span id="cb5-3"><a href="analyze-relational-database.html#cb5-3" tabindex="-1"></a>this_field_is_bool bool,</span>
+<span id="cb5-4"><a href="analyze-relational-database.html#cb5-4" tabindex="-1"></a>this_field_is_varchar_50 <span class="dt">varchar</span>(<span class="dv">50</span>),</span>
+<span id="cb5-5"><a href="analyze-relational-database.html#cb5-5" tabindex="-1"></a><span class="kw">PRIMARY</span> <span class="kw">KEY</span>(this_field_is_int2, this_field_is_bool)</span>
+<span id="cb5-6"><a href="analyze-relational-database.html#cb5-6" tabindex="-1"></a>);</span></code></pre></div>
 <p>Note that if you use a compound primary key, like in the example above, or if you use one of your data fields as the primary key, then you are imposing a logic onto the table that prevents you from creating, updating, or inserting new rows that duplicate those values or combinations of values. After all, that is the purpose of a primary key, to uniquely identify all the tuples. Sometimes, this logic can be useful in the design of a table, but generally it is best practice to create a dedicated field for the primary key and this is also the behaviour that you will observe in attribute tables viewed in ArcGIS Pro and QGIS.</p>
 <p><strong>Step 7:</strong> Create a new table of assignments that are due next week (up to four total). Include course code, assignment name, the percent weighting of the assignment on your final grade in that course, and the due date. Use the appropriate data types for each field and define a primary key.</p>
 <p>Now that the table and fields are defined, we will insert some data into the table. Inserting data uses the <code>INSERT</code> keyword followed by <code>VALUES</code> and then a comma-separated list of the values you want to insert in parentheses. For example:</p>
-<pre><code>INSERT INTO my_new_table VALUES (32767, false, &#39;hello world!&#39;);</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="analyze-relational-database.html#cb6-1" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> my_new_table <span class="kw">VALUES</span> (<span class="dv">32767</span>, <span class="kw">false</span>, <span class="st">&#39;hello world!&#39;</span>);</span></code></pre></div>
 <p><img src="images/02-psql-insert.png" width="90%" /></p>
 <p>If you want to insert a value for specific fields, then specify the field name(s) after the table name:</p>
-<pre><code>INSERT INTO my_new_table (this_field_is_int2, this_field_is_varchar_50) VALUES (-32768,&#39;hi again!&#39;);</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="analyze-relational-database.html#cb7-1" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> my_new_table (this_field_is_int2, this_field_is_varchar_50) <span class="kw">VALUES</span> (<span class="op">-</span><span class="dv">32768</span>,<span class="st">&#39;hi again!&#39;</span>);</span></code></pre></div>
 <p><img src="images/02-psql-insert-2.png" width="90%" /></p>
 <p>If you make a mistake or need to update a field later, then you use <code>UPDATE</code> and <code>SET</code> to identify the set of fields that should be updated. You can also test for NULL (empty values) using <code>IS NULL</code> or <code>IS NOT NULL</code>:</p>
-<pre><code>UPDATE my_new_table
-SET this_field_is_bool = true, this_field_is_varchar_50 = &#39;whoops!&#39;
-WHERE this_field_is_bool IS NULL;</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="analyze-relational-database.html#cb8-1" tabindex="-1"></a><span class="kw">UPDATE</span> my_new_table</span>
+<span id="cb8-2"><a href="analyze-relational-database.html#cb8-2" tabindex="-1"></a><span class="kw">SET</span> this_field_is_bool <span class="op">=</span> <span class="kw">true</span>, this_field_is_varchar_50 <span class="op">=</span> <span class="st">&#39;whoops!&#39;</span></span>
+<span id="cb8-3"><a href="analyze-relational-database.html#cb8-3" tabindex="-1"></a><span class="kw">WHERE</span> this_field_is_bool <span class="kw">IS</span> <span class="kw">NULL</span>;</span></code></pre></div>
 <p><img src="images/02-psql-update.png" width="90%" /></p>
 <p>Dates require special handling because if you just try to insert them as strings or otherwise, they are treated as literals. For dates, we need to use the special <code>TO_DATE</code> function:</p>
-<pre><code>INSERT INTO my_new_table (this_field_is_date) VALUES (TO_DATE(&#39;31-12-1963&#39;, &#39;DD-MM-YYYY&#39;));</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="analyze-relational-database.html#cb9-1" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> my_new_table (this_field_is_date) <span class="kw">VALUES</span> (<span class="fu">TO_DATE</span>(<span class="st">&#39;31-12-1963&#39;</span>, <span class="st">&#39;DD-MM-YYYY&#39;</span>));</span></code></pre></div>
 <p><strong>Step 8:</strong> Now fill in your table of assignments by inserting and/or updating the values as needed.</p>
 <p>Once you are satisfied with the state of your table, you will dump your entire PostGIS database to an output SQL file and this will be one of your deliverables for this lab. PostgreSQL features a utility program called <code>pg_dump</code> that will take any database and output an SQL statement in a file that can be used to re-create the database. In other words, <code>pg_dump</code> is a backup method. This is also really handy if you want to create a local backup of a remote server! If you want more practice, try using it on the UBC PostgreSQL server.</p>
 <p><strong>Step 9:</strong> Open a Windows command prompt (search “command”). Take note of your current working directory, which is probably something like <code>C:\Users\[your username]</code>. This is where your database SQL file will be saved to. If your command prompt shows your working directory as <code>C:\Program Files\QGIS x.xx.x</code> or similar, then you will first need to change to a directory where you have permission to write to. Usually, this is somewhere in your user folder, which you can navigate to in the terminal with the change directory <code>cd</code> command: <code>cd C:\Users\[your username]\Documents</code>.</p>
@@ -445,11 +445,11 @@ WHERE this_field_is_bool IS NULL;</code></pre>
 <p><strong>Step 2:</strong> Type <code>ogr2ogr --help</code> in the console and press “Enter” on your keyboard. Inspect all the flags <code>-</code> and arguments for this program.</p>
 <p>ogr2ogr is the primary utility program for working with vector data and as you can see, there are a lot of options! To show you some of the power of this little application, we are going to export some data from the UBC PostgreSQL server to our local machine, manipulate it, and then import it to our local PostGIS database.</p>
 <p><strong>Step 3:</strong> ogr2ogr is really useful for converting data between different formats and this is handy for exporting data out of a PostGIS database. Convert the ubcv_campus_trees table from the UBC PostgreSQL server with the following command:</p>
-<pre><code>ogr2ogr -f &quot;ESRI Shapefile&quot; ubcv_campus_trees.shp PG:&quot;host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE&quot; &quot;ubcv_campus_trees&quot;</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="analyze-relational-database.html#cb10-1" tabindex="-1"></a><span class="ex">ogr2ogr</span> <span class="at">-f</span> <span class="st">&quot;ESRI Shapefile&quot;</span> ubcv_campus_trees.shp PG:<span class="st">&quot;host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE&quot;</span> <span class="st">&quot;ubcv_campus_trees&quot;</span></span></code></pre></div>
 <p>Replace <code>STUDENT_PASSWORD_HERE</code> with the password that has been shared with the class.</p>
 <p>This command tells ogr2ogr to connect to the ubcv PostGIS database on the PostgreSQL server <code>PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE"</code>, grab the table named <code>"ubcv_campus_trees"</code>, and then return it to the local machine as an ESRI Shapefile <code>-f "ESRI Shapefile"</code>. The file will be saved in your current working directory from the OSGeo4W shell.</p>
 <p><strong>Step 4:</strong> You can also specify an SQL query on the input data. For example, the following command will only return the Forest Sciences Centre polygon from ubcv_buildings:</p>
-<pre><code>ogr2ogr -where bldg_code=&#39;FSC&#39; -f &quot;ESRI Shapefile&quot; ubcv_FSC.shp PG:&quot;host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE&quot; &quot;ubcv_buildings&quot;</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="analyze-relational-database.html#cb11-1" tabindex="-1"></a><span class="ex">ogr2ogr</span> <span class="at">-where</span> bldg_code=<span class="st">&#39;FSC&#39;</span> <span class="at">-f</span> <span class="st">&quot;ESRI Shapefile&quot;</span> ubcv_FSC.shp PG:<span class="st">&quot;host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE&quot;</span> <span class="st">&quot;ubcv_buildings&quot;</span></span></code></pre></div>
 <p>You can write more complex SQL statements with the <code>-sql</code> flag instead of <code>-where</code>.</p>
 <p><strong>Step 5:</strong> Getting data into a PostGIS database is unremarkably similar as to taking it out. Import the FSC polygon into your localhost PostGIS database using the same command as Step 3, but change the following:</p>
 <ul>
@@ -462,7 +462,7 @@ WHERE this_field_is_bool IS NULL;</code></pre>
 <p>You will receive no feedback in the terminal if you were successful, but you can check in QGIS, ArcGIS Pro, or by using the ogrinfo program.</p>
 <p>ogrinfo is a utility that is able to read a wide-variety of spatial data formats and return metadata for inspection. This program is useful for getting the geometry type of a file, the spatial extent of the features, and the coordinate system or the datum. You can also apply SQL queries and even inspect the attributes of specific features.</p>
 <p><strong>Step 6:</strong> Check that the FSC polygon was successfully added to your PostGIS database with the following command:</p>
-<pre><code>ogrinfo PG:&quot;host=localhost user=postgres dbname=mypostgisdb password=YOUR_LOCALHOST_PASSWORD&quot; &quot;ubcv_FSC&quot; -so</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="analyze-relational-database.html#cb12-1" tabindex="-1"></a><span class="ex">ogrinfo</span> PG:<span class="st">&quot;host=localhost user=postgres dbname=mypostgisdb password=YOUR_LOCALHOST_PASSWORD&quot;</span> <span class="st">&quot;ubcv_FSC&quot;</span> <span class="at">-so</span></span></code></pre></div>
 <p>The screenshot below is a small snippet of what is returned in the OSGeo4W terminal window. As you can see, we have access to the feature count, spatial extent, Spatial Reference System (SRS), and even all the field names and data types if you scroll farther down. The <code>-so</code> flag gives us this “summary output”.</p>
 <p><img src="images/02-ogrinfo-fsc.png" width="90%" /></p>
 <p><strong>Step 7:</strong> Repeat this process to import the ubcv_campus_trees.shp you created in Step 3 to your localhost PostGIS database.</p>
@@ -474,16 +474,16 @@ WHERE this_field_is_bool IS NULL;</code></pre>
 <p>Suppose we want to know what species of trees are planted next to the Forest Sciences Centre at UBC.</p>
 <p><strong>Step 1:</strong> Open psql and connect to your mypostgisdb database on your localhost PostgreSQL server.</p>
 <p><strong>Step 2:</strong> Buffer the ubcv_fsc polygon with the following SQL statement:</p>
-<pre><code>SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer FROM ubcv_fsc;</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb13-1"><a href="analyze-relational-database.html#cb13-1" tabindex="-1"></a><span class="kw">SELECT</span> ST_Buffer(wkb_geometry, <span class="dv">15</span>) <span class="kw">INTO</span> ubcv_fsc_buffer <span class="kw">FROM</span> ubcv_fsc;</span></code></pre></div>
 <p>This statement tells PostGIS to use the buffer function <code>ST_Buffer</code>, which requires a geometry field <code>wkb_geometry</code> and a buffer distance <code>15</code> (meters in our case, because we re-projected the polygon to UTM Zone 10N in the last task), on the FSC polygon <code>FROM ubcv_fsc</code>, and then write the resulting buffer to a new table <code>INTO ubcv_fsc_buffer</code>.</p>
 <p><strong>Step 3:</strong> Intersect the ubcv_campus_trees with the ubcv_fsc_buffer polygon you just made with the following SQL statement:</p>
-<pre><code>SELECT * INTO ubcv_fsc_trees FROM ubcv_campus_trees, ubcv_fsc_buffer WHERE ST_Intersects(wkb_geometry, st_buffer);</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb14-1"><a href="analyze-relational-database.html#cb14-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">INTO</span> ubcv_fsc_trees <span class="kw">FROM</span> ubcv_campus_trees, ubcv_fsc_buffer <span class="kw">WHERE</span> ST_Intersects(wkb_geometry, st_buffer);</span></code></pre></div>
 <p>The <code>ST_Intersects</code> takes two geometry fields <code>wkb_geometry</code> (ubcv_campus_trees) and <code>st_buffer</code> (ubcv_fsc_buffer), computes the intersection, and returns the features from the first geometry argument (ubcv_campus_trees) to a new table <code>INTO ubcv_fsc_trees</code>.</p>
 <p>If you get an error here like this, <code>ERROR:  ST_Intersects: Operation on mixed SRID geometries (Point, 4326) != (Polygon, 3157)</code> then you know that you have not correctly changed the projection of the ubcv_campus_trees data when you imported it into your localhost postgres database. Go back to the last task and check Steps 5-7.</p>
 <p><strong>Step 4:</strong> Open QGIS and then add ubcv_fsc, ubc_fsc_buffer, and ubcv_fsc_trees.wkb_geometry to your map to inspect them.</p>
 <p><img src="images/02-qgis-fsc-buffer.png" width="75%" /></p>
 <p><strong>Step 5:</strong> Now we will do a simple SQL query to determine the species that are planted around the Forest Sciences Building:</p>
-<pre><code>SELECT taxa, COUNT(*) AS frequency FROM ubcv_fsc_trees GROUP BY taxa ORDER BY COUNT(*) DESC;</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb15-1"><a href="analyze-relational-database.html#cb15-1" tabindex="-1"></a><span class="kw">SELECT</span> taxa, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> frequency <span class="kw">FROM</span> ubcv_fsc_trees <span class="kw">GROUP</span> <span class="kw">BY</span> taxa <span class="kw">ORDER</span> <span class="kw">BY</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">DESC</span>;</span></code></pre></div>
 <p>This will return the “taxa” column and create a new column called “frequency” that contains values of the <code>COUNT()</code> function. The <code>GROUP BY</code> statement is needed when we use an aggregation method like <code>COUNT()</code>. Finally, the relation is ordered by the aggregation result in descending <code>DESC</code> order.</p>
 <p><img src="images/02-psql-final-analysis.png" width="90%" /></p>
 <p><strong>Step 6:</strong> Modify the statement above to sort the taxa alphabetically.</p>
@@ -491,15 +491,15 @@ WHERE this_field_is_bool IS NULL;</code></pre>
 <p><strong>Step 7:</strong> Open QGIS. From the top menu toolbar, select <strong>Database</strong> then <strong>DB Manager…</strong> This will open a new window where you can do basically everything you did in this task and the prior task. You can import/export data to whatever format you want, inspect the database, tables, and even preview the spatial features.</p>
 <p><img src="images/02-qgis-db-manager.png" width="75%" /></p>
 <p><strong>Step 8:</strong> At the top of the DB Manager window there is a small button to open an SQL tab. Click that and then enter the buffer statement again, but modify the output table name so that you do not create a conflict:</p>
-<pre><code>SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer_qgis FROM ubcv_fsc;</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb16-1"><a href="analyze-relational-database.html#cb16-1" tabindex="-1"></a><span class="kw">SELECT</span> ST_Buffer(wkb_geometry, <span class="dv">15</span>) <span class="kw">INTO</span> ubcv_fsc_buffer_qgis <span class="kw">FROM</span> ubcv_fsc;</span></code></pre></div>
 <p>You should now have a new table in the database now called <strong>ubcv_fsc_buffer_qgis</strong>. You can also save the query by giving it a name in the <strong>Name</strong> field and even output the SQL query to a file. This can be helpful for managing large complex queries. The <strong>Create a view</strong> button will display the layer in your map view.</p>
 <p>Examine that query above carefully. Remember that <code>SELECT</code> operates on column names, so what exactly are we selecting when we apply a function on a column name? What is the output column name of that function that is returned in <strong>ubcv_fsc_buffer_qgis</strong>? Open the attribute table in QGIS and look at the column name. When we apply a function on a column and do not specify a name for the output column name of the function, then the default column name will simply be the name of the function. So in this case, the output column name will be <code>st_buffer</code>, which is not very informative.</p>
 <p>Note that the default behaviour of any <code>SELECT</code> is to simply return the existing column names. However, we could choose to rename any of those in the table that is returned. For example:</p>
-<pre><code>SELECT name AS a, bldg_code AS b, postal_code AS c FROM ubcv_buildings 
-WHERE bldg_code = &#39;FSC&#39;;</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb17-1"><a href="analyze-relational-database.html#cb17-1" tabindex="-1"></a><span class="kw">SELECT</span> name <span class="kw">AS</span> a, bldg_code <span class="kw">AS</span> b, postal_code <span class="kw">AS</span> c <span class="kw">FROM</span> ubcv_buildings </span>
+<span id="cb17-2"><a href="analyze-relational-database.html#cb17-2" tabindex="-1"></a><span class="kw">WHERE</span> bldg_code <span class="op">=</span> <span class="st">&#39;FSC&#39;</span>;</span></code></pre></div>
 <p>The <code>AS</code> is how we assign aliases to selected column names, which are returned in the new table. We can also completely omit <code>AS</code> and just provide the alias after the column name like:</p>
-<pre><code>SELECT name a, bldg_code b, postal_code c FROM ubcv_buildings 
-WHERE bldg_code = &#39;FSC&#39;;</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb18-1"><a href="analyze-relational-database.html#cb18-1" tabindex="-1"></a><span class="kw">SELECT</span> name a, bldg_code b, postal_code c <span class="kw">FROM</span> ubcv_buildings </span>
+<span id="cb18-2"><a href="analyze-relational-database.html#cb18-2" tabindex="-1"></a><span class="kw">WHERE</span> bldg_code <span class="op">=</span> <span class="st">&#39;FSC&#39;</span>;</span></code></pre></div>
 <p>You should spend some time understanding this behaviour because it is very important for how you structure more complex queries, which we will examine next.</p>
 <p><strong>Step 9:</strong> Using the <code>WITH</code> clause, combine all of our independent queries above into a single query in QGIS that buffers the FSC polygon by 15 m, intersects the buffer with the campus trees, and then reports the number of unique taxa around the building. See the screenshot below.</p>
 <p><img src="images/02-qgis-complex-sql.png" width="75%" /></p>

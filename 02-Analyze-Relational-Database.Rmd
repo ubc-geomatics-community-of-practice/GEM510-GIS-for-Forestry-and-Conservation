@@ -123,7 +123,7 @@ Use the following query to return the contents of the entire spatial_ref_sys tab
 
 Now we will create some new data, just to show you how to use some useful SQL keywords. We will start with aspatial data first, then move on to spatial data. You can create a new table in your database with the following syntax (note that you cannot simply copy-paste below, you need to supply actual data type variable names):
 
-```
+``` sql
 CREATE TABLE table-name (
 colunm-name-1 datatype,
 colunm-name-2 datatype,
@@ -146,7 +146,7 @@ kable(df, caption="Some PostgreSQL data types with example value ranges.")
 
 Here is an example of creating a new table with some different data types:
 
-```
+``` sql
 CREATE TABLE my_new_table (
 this_field_is_int2 int2,
 this_field_is_bool bool,
@@ -164,7 +164,7 @@ You can experiment with creating as many new tables as you want. If you need to 
 
 It is good practice to assign a field (multiple fields) as a primary key when you create a table. This is done by simply adding `PRIMARY KEY` after the field definition when you make the table. For example:
 
-```
+``` sql
 CREATE TABLE my_new_table (
 this_field_is_bigserial bigserial PRIMARY KEY,
 this_field_is_int2 int2,
@@ -175,7 +175,7 @@ this_field_is_varchar_50 varchar(50)
 
 The bigserial data type is especially useful for this purpose because it auto-increments as you add rows and can accommodate more than 18 _quintrillion_ rows, that is more than 18 million trillions! You can also create composite primary keys that are comprised of two or more fields to uniquely identify all rows:
 
-```
+``` sql
 CREATE TABLE my_new_table ( 
 this_field_is_int2 int2,
 this_field_is_bool bool,
@@ -190,7 +190,7 @@ Note that if you use a compound primary key, like in the example above, or if yo
 
 Now that the table and fields are defined, we will insert some data into the table. Inserting data uses the `INSERT` keyword followed by `VALUES` and then a comma-separated list of the values you want to insert in parentheses. For example:
 
-```
+``` sql
 INSERT INTO my_new_table VALUES (32767, false, 'hello world!');
 ```
 
@@ -200,7 +200,7 @@ INSERT INTO my_new_table VALUES (32767, false, 'hello world!');
 
 If you want to insert a value for specific fields, then specify the field name(s) after the table name:
 
-```
+``` sql
 INSERT INTO my_new_table (this_field_is_int2, this_field_is_varchar_50) VALUES (-32768,'hi again!');
 ```
 
@@ -210,7 +210,7 @@ INSERT INTO my_new_table (this_field_is_int2, this_field_is_varchar_50) VALUES (
 
 If you make a mistake or need to update a field later, then you use `UPDATE` and `SET` to identify the set of fields that should be updated. You can also test for NULL (empty values) using `IS NULL` or `IS NOT NULL`:
 
-```
+``` sql
 UPDATE my_new_table
 SET this_field_is_bool = true, this_field_is_varchar_50 = 'whoops!'
 WHERE this_field_is_bool IS NULL;
@@ -222,7 +222,7 @@ WHERE this_field_is_bool IS NULL;
 
 Dates require special handling because if you just try to insert them as strings or otherwise, they are treated as literals. For dates, we need to use the special `TO_DATE` function:
 
-```
+``` sql
 INSERT INTO my_new_table (this_field_is_date) VALUES (TO_DATE('31-12-1963', 'DD-MM-YYYY'));
 ```
 
@@ -250,8 +250,9 @@ You might notice `psql` can be run from the OSGeo4W shell and `pg_dump` is also 
 
 ogr2ogr is the primary utility program for working with vector data and as you can see, there are a lot of options! To show you some of the power of this little application, we are going to export some data from the UBC PostgreSQL server to our local machine, manipulate it, and then import it to our local PostGIS database.
 
-**Step 3:** ogr2ogr is really useful for converting data between different formats and this is handy for exporting data out of a PostGIS database. Convert the ubcv_campus_trees table from the UBC PostgreSQL server with the following command: 
-```
+**Step 3:** ogr2ogr is really useful for converting data between different formats and this is handy for exporting data out of a PostGIS database. Convert the ubcv_campus_trees table from the UBC PostgreSQL server with the following command:
+
+``` bash
 ogr2ogr -f "ESRI Shapefile" ubcv_campus_trees.shp PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_campus_trees"
 ```
 
@@ -260,7 +261,8 @@ Replace `STUDENT_PASSWORD_HERE` with the password that has been shared with the 
 This command tells ogr2ogr to connect to the ubcv PostGIS database on the PostgreSQL server `PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE"`, grab the table named `"ubcv_campus_trees"`, and then return it to the local machine as an ESRI Shapefile `-f "ESRI Shapefile"`. The file will be saved in your current working directory from the OSGeo4W shell.
 
 **Step 4:** You can also specify an SQL query on the input data. For example, the following command will only return the Forest Sciences Centre polygon from ubcv_buildings: 
-```
+
+``` bash
 ogr2ogr -where bldg_code='FSC' -f "ESRI Shapefile" ubcv_FSC.shp PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_buildings"
 ```
 
@@ -280,7 +282,7 @@ ogrinfo is a utility that is able to read a wide-variety of spatial data formats
 
 **Step 6:** Check that the FSC polygon was successfully added to your PostGIS database with the following command: 
 
-```
+``` bash
 ogrinfo PG:"host=localhost user=postgres dbname=mypostgisdb password=YOUR_LOCALHOST_PASSWORD" "ubcv_FSC" -so
 ```
 
@@ -304,7 +306,7 @@ Suppose we want to know what species of trees are planted next to the Forest Sci
 
 **Step 2:** Buffer the ubcv_fsc polygon with the following SQL statement:
 
-```
+``` sql
 SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer FROM ubcv_fsc;
 ```
 
@@ -312,7 +314,7 @@ This statement tells PostGIS to use the buffer function `ST_Buffer`, which requi
 
 **Step 3:** Intersect the ubcv_campus_trees with the ubcv_fsc_buffer polygon you just made with the following SQL statement:
 
-```
+``` sql
 SELECT * INTO ubcv_fsc_trees FROM ubcv_campus_trees, ubcv_fsc_buffer WHERE ST_Intersects(wkb_geometry, st_buffer);
 ```
 
@@ -328,7 +330,7 @@ If you get an error here like this, `ERROR:  ST_Intersects: Operation on mixed S
 
 **Step 5:** Now we will do a simple SQL query to determine the species that are planted around the Forest Sciences Building:
 
-```
+``` sql
 SELECT taxa, COUNT(*) AS frequency FROM ubcv_fsc_trees GROUP BY taxa ORDER BY COUNT(*) DESC;
 ```
 
@@ -350,7 +352,7 @@ These last few steps are just to illustrate that you can run the same SQL statem
 
 **Step 8:** At the top of the DB Manager window there is a small button to open an SQL tab. Click that and then enter the buffer statement again, but modify the output table name so that you do not create a conflict:
 
-```
+``` sql
 SELECT ST_Buffer(wkb_geometry, 15) INTO ubcv_fsc_buffer_qgis FROM ubcv_fsc;
 ```
 
@@ -360,14 +362,14 @@ Examine that query above carefully. Remember that `SELECT` operates on column na
 
 Note that the default behaviour of any `SELECT` is to simply return the existing column names. However, we could choose to rename any of those in the table that is returned. For example:
 
-```
+``` sql
 SELECT name AS a, bldg_code AS b, postal_code AS c FROM ubcv_buildings 
 WHERE bldg_code = 'FSC';
 ```
 
 The `AS` is how we assign aliases to selected column names, which are returned in the new table. We can also completely omit `AS` and just provide the alias after the column name like:
 
-```
+``` sql
 SELECT name a, bldg_code b, postal_code c FROM ubcv_buildings 
 WHERE bldg_code = 'FSC';
 ```
