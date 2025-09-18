@@ -230,9 +230,9 @@ INSERT INTO my_new_table (this_field_is_date) VALUES (TO_DATE('31-12-1963', 'DD-
 
 Once you are satisfied with the state of your table, you will dump your entire PostGIS database to an output SQL file and this will be one of your deliverables for this lab. PostgreSQL features a utility program called `pg_dump` that will take any database and output an SQL statement in a file that can be used to re-create the database. In other words, `pg_dump` is a backup method. This is also really handy if you want to create a local backup of a remote server! If you want more practice, try using it on the UBC PostgreSQL server.
 
-**Step 9:** Open a Windows command prompt (search "command"). Take note of your current working directory, which is probably something like `C:\Users\[your username]`. This is where your database SQL file will be saved to. If your command prompt shows your working directory as `C:\Program Files\QGIS x.xx.x` or similar, then you will first need to change to a directory where you have permission to write to. Usually, this is somewhere in your user folder, which you can navigate to in the terminal with the change directory `cd` command: `cd C:\Users\[your username]\Documents`. 
+**Step 9:** Open a Windows command prompt (search "command"). Take note of your current working directory, which is probably something like `C:\Users\[your username]`. This is where your database SQL file will be saved to. If your command prompt shows your working directory as `C:\Program Files\QGIS X.XX.X` or similar, then you will first need to change to a directory where you have permission to write to. Usually, this is somewhere in your user folder, which you can navigate to in the terminal with the change directory `cd` command: `cd C:\Users\[your username]\Documents`. 
 
-To dump your database, use the following command: `pg_dump -d mypostgisdb -U postgres -h localhost > mypostgisdb.sql`. You will be prompted to enter your password and then the new file `mypostgisdb.sql` will be saved in your working directory. 
+To dump your database, use the following command: `pg_dump -d mypostgisdb -U postgres -h localhost > mypostgisdb.sql`. You will be prompted to enter your password and then the new file `mypostgisdb.sql` will be saved in your working directory. If you see a command not found message, then type `where pg_dump`. Then copy the full path to the program executable when running the commands that follow, usually `"C:\Program Files\PostgreSQL\16\bin"`. Copy the path and then in command prompt type `set PATH=%PATH%;"C:\Program Files\PostgreSQL\16\bin"`, replacing `X.XX.X` with your current QGIS version. Try the `pg_dump` command again to ensure it works.
 
 **Step 10:** Check to make sure that you can load the database back into PostgreSQL. In psql, create a new empty database named mypostgisdb_backup. Then, enter the following command from the Windows command prompt: `psql -U postgres -h localhost mypostgisdb_backup < mypostgisdb.sql`. You can now query the postgisdb_backup database to check that it is a copy of your other mypostgisdb database.
 
@@ -244,9 +244,9 @@ Now that you have some basic understanding of viewing and manipulating tables, w
 
 **Step 1:** Open the OSGeo4W shell by searching for it in Windows. Enter the command `o-help` and inspect all the available programs.
 
-You might notice `psql` can be run from the OSGeo4W shell and `pg_dump` is also there. Some others we will cover in later labs, including `pdal` (Point Data Abstraction Library) pronounced "poodle", which handles LiDAR data, and many of the raster and image manipulation programs. For this lab, we are going to focus on two commonly used vector programs: [ogrinfo](https://gdal.org/programs/ogrinfo.html) and [ogr2ogr](https://gdal.org/programs/ogr2ogr.html).
+You might notice `psql` can be run from the OSGeo4W shell and `pg_dump` is also there. Some others we will cover in later labs, including `pdal` (Point Data Abstraction Library) pronounced "poodle" or "pee-dahl", which handles LiDAR data, and many of the raster and image manipulation programs. For this lab, we are going to focus on two commonly used vector programs: [ogrinfo](https://gdal.org/programs/ogrinfo.html) and [ogr2ogr](https://gdal.org/programs/ogr2ogr.html).
 
-**Step 2:** Type `ogr2ogr --help` in the console and press "Enter" on your keyboard. Inspect all the flags `-` and arguments for this program.
+**Step 2:** Type `ogr2ogr --help` in the console and press "Enter" on your keyboard. Inspect all the flags `-` and arguments for this program. If you see a command not found message, then type `where ogr2ogr`. Then copy the full path to the program executable when running the commands that follow, usually `"C:\Program Files\QGIS X.XX.X\bin\"`. Copy the path and then in command prompt type `set PATH=%PATH%;"C:\Program Files\QGIS X.XX.X\bin\"`, replacing `X.XX.X` with your current QGIS version. Try `ogr2ogr --help` again to ensure it works.
 
 ogr2ogr is the primary utility program for working with vector data and as you can see, there are a lot of options! To show you some of the power of this little application, we are going to export some data from the UBC PostgreSQL server to our local machine, manipulate it, and then import it to our local PostGIS database.
 
@@ -263,7 +263,7 @@ This command tells ogr2ogr to connect to the ubcv PostGIS database on the Postgr
 **Step 4:** You can also specify an SQL query on the input data. For example, the following command will only return the Forest Sciences Centre polygon from ubcv_buildings: 
 
 ``` bash
-ogr2ogr -where bldg_code='FSC' -f "ESRI Shapefile" ubcv_FSC.shp PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_buildings"
+ogr2ogr -where "bldg_code='FSC'" -f "ESRI Shapefile" ubcv_FSC.shp PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_buildings"
 ```
 
 You can write more complex SQL statements with the `-sql` flag instead of `-where`.
