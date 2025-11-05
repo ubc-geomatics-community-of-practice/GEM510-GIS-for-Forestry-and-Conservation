@@ -73,13 +73,13 @@ All data for this lab are accessible via the UBC PostgreSQL server. Instructions
 
 **Step 3:** From the top ribbon, navigate to the "Insert" tab, then click "Connections", and from the drop-down menu, select "New Database Connection". 
 
-```{r 03-arcgispro-postgres-connection-1, out.width= "75%", echo = FALSE}
+```{r 03-arcgispro-postgres-connection-1, out.width= "100%", echo = FALSE}
     knitr::include_graphics("images/03-arcgispro-postgres-connection-1.png")
 ```
 
 You can name it "UBC PostgreSQL Server" and for the host enter "FRST-PostgreSQL.ead.ubc.ca". The username and password will be provided to students enrolled in the course. Once you have correctly entered the correct credentials, ArcGIS Pro will do a "soft" connection to the server to retrieve the available databases. From the "Database" drop-down menu, select "vri" and then click "OK".
 
-```{r 03-arcgispro-postgres-connection-2, out.width= "50%", echo = FALSE}
+```{r 03-arcgispro-postgres-connection-2, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/03-arcgispro-postgres-connection-2.png")
 ```
 
@@ -237,7 +237,7 @@ def getSeralStage(bec, age):
 
 To better understand what is being done in this code chunk, the syntax is described below.
 
-```{r 03-PythonSyntax, out.width= "75%", echo = FALSE}
+```{r 03-PythonSyntax, out.width= "100%", echo = FALSE}
     knitr::include_graphics("images/03-PythonSyntax.jpg")
 ```
 
@@ -302,7 +302,7 @@ In the `LU_BEC =` textbox, paste:
 str(!landscape_unit_id!) + "_" + str(bec_zone_code!) + str(!bec_subzone!)
 ```
 
-```{r 03-lu-bec-calculate-field, out.width= "75%", echo = FALSE}
+```{r 03-lu-bec-calculate-field, out.width= "100%", echo = FALSE}
     knitr::include_graphics("images/03-lu-bec-calculate-field.png")
 ```
 
