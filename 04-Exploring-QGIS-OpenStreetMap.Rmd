@@ -95,55 +95,46 @@ This current view does not directly show you the OpenStreetMap data. Instead, yo
 
 In order to get the OpenStreetMap data, we need to install a plugin for QGIS. Plugins are written by a community of volunteer developers, some from organizations that pay for the plugin to be developed and then released as FOSS, and others just volunteer their time. Plugins are incredibly important for QGIS, because only basic features end up in the core GIS software. If there is ever something you want to do that is not a basic feature of QGIS, you probably need to search for a plugin or write one yourself!
 
-**Step 5:** From the menu bar at the top, click **Plugins** and then select **Manage and Install Plugins…** to open the **Plugin Manager**. Since these plugins are fetched from a server, you need to be connected to the internet to see plugins available for download. In the search bar, search for the **OSMDownloader** plugin. Click **Install Plugin**.
+**Step 5:** From the menu bar at the top, click **Plugins** and then select **Manage and Install Plugins…** to open the **Plugin Manager**. Since these plugins are fetched from a server, you need to be connected to the internet to see plugins available for download. In the search bar, search for the **QuickOSM** plugin. Click **Install Plugin**.
 
 ```{r 04-qgis-osm-downloader-plugin, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/04-qgis-osm-downloader-plugin.png")
 ```
 
-Once the plugin is installed, you can click **Close** to dismiss the Plugin Manager. Most plugins will automatically add an icon to your toolbar at the top, so search for and click the OSMDownloader icon that looks like this:
+Once the plugin is installed, you can click **Close** to dismiss the Plugin Manager. Most plugins will automatically add an icon to your toolbar at the top, so search for and click the QuickOSM icon that looks like this:
 
 ```{r 04-qgis-osm-downloader-icon, out.width= "30pt", echo = FALSE}
-    knitr::include_graphics("images/04-qgis-osm-downloader-icon.png")
+   knitr::include_graphics("images/04-qgis-osm-downloader-icon.png")
+```
+**Step 6:** When the QuickOSM dialogue window opens, select "Quick Query" from the left navigation panel. Find the field where it says "A village, a town..." and type "UBC" in the field, leave it set to "In". Note that you can also apply filters to subset the OSM data based on key-value pairs, but for this lab, we are going to grab all of the data for UBC so make sure the filters at the top are empty. Expand the "Advanced" option at the bottom and ensure that "Node", "Way", "Relation", "Points", "Lines", "Multilinestrings", and "Multipolygons" are all toggled on. Finally, in the "Directory" field, navigate to your QGIS project location or folder you are using for the lab and select "Geopackage" from the drop down menu. You do not need to specify an output filename. Run the query.
+
+Note: if you receive a timeout message when you run the query, try re-running the query until it succeeds.
+
+```{r 04-qgis-quick-osm.png, out.width= "50%", echo = FALSE}
+   knitr::include_graphics("images/04-qgis-quick-osm.png")
 ```
 
-Your cursor should now appear as a crosshair on your map and now you can select a rectangular area to fetch the OpenStreetMap data from.
+Now, you should now see an updated list of layers available in your QGIS Layers pane. 
 
-**Step 6:** Click and drag your cursor on the base map to select the UBC campus. A dialogue box will open showing you the extent of your selection. Save the file to the project folder your created earlier. Name the file **UBC.osm** and toggle on **Load layer after download**. Your coordinates need not be exactly the same as the image below, but you can modify your selection if you want by either manually editing the extent values (in decimal degrees) or clicking **Cancel** and then selecting again with your cursor.
+**Step 7:** Toggle off the OpenStreetMap base map and depending on how you made your selection in the last step, you should see something like below in your map.
 
-```{r 04-qgis-osm-downloader-extent, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/04-qgis-osm-downloader-extent.png")
-```
-
-```{r 04-qgis-osm-downloader-success, out.width= "25%", echo = FALSE}
-    knitr::include_graphics("images/04-qgis-osm-downloader-success.png")
-```
-
-A progress bar will appear at the top and then a message will be displayed that the download was successful. You should now see an updated list of layers available in your Layers pane. 
-
-```{r 04-qgis-osm-layers-toggle, out.width= "25%", echo = FALSE}
-    knitr::include_graphics("images/04-qgis-osm-layers-toggle.png")
-```
-
-**Step 7:** Toggle off the OpenStreetMap base map and depending on how you made your selection in the last step, you should see something like this in your map view:
+Note: if you see fewer number of points (or other features) in your map, then left-click the point layer from your "Layers" panel to highlight it, then click the symbology button at the top-left of the "Layers" panel, then change the symbology type to "Single Symbol" from the drop-down menu. Do not worry if the number of features still looks a bit different after changing the symbology, because OpenStreetMap is constantly being edited since the screenshot was taken.
 
 ```{r 04-qgis-osm-map, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/04-qgis-osm-map.png")
 ```
 
-You can also download OpenStreetMap data directly from the OpenStreetMap website and then drag and drop the .osm file directly into the QGIS map view or the Layers pane.
-
 ------------------------------------------------------------------------
 
 ## Task 2: Inspecting and processing OpenStreetMap data {.unnumbered}
 
-**Step 1:** Right-click the osm point layer in the Layers pane, select **Properties…** and then select the **Information** tab on the left navigation menu of the **Layer Properties** dialogue box. 
+**Step 1:** Right-click the osm point layer in the Layers pane, select **Properties…** and then select the **Information** tab on the left navigation menu of the **Layer Properties** dialogue box.
 
 ```{r 04-qgis-layer-properties, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/04-qgis-layer-properties.png")
 ```
 
-You should notice under **Information from provider** the **Storage** type is **OSM** and the **Coordinate Reference System (CRS)** is **EPSG:4326 – WGS 84**. OpenStreetMap data will always be distributed with these characteristics. At this point, it is important to recognize how different the OSM spatial data model is from other data structures like an ESRI Shapefile.
+You should notice that the **Coordinate Reference System (CRS)** is **EPSG:4326 – WGS 84**. OpenStreetMap data will always be distributed with latitude and longitude coordinates, because this is the native coordinate system used to map the nodes, the fundamental building blocks of the database.
 
 OSM files are comprised of **nodes**, **ways**, and **relations**. These generally correspond to points, lines, and polygons, but not exactly. Each of these feature types are described by **tags** or attributes. Nodes are a pair of latitude/longitude coordinates and can either be a building block for another type of feature (e.g., a way or relation) or they can have attributes of their own or both. A way is a list of two or more nodes that connect and form a line. Ways can be open (lines) or closed (areas). It is important to recognize that a node can participate in multiple ways simultaneously, while also describing itself as a discrete point feature. Relations are just that: they allow us to model relationships between existing nodes, ways, and even other relations. For example, individual islands might be represented by a closed way, but an archipelago would be represented by a relation that contains the closed ways for all the islands. In this way, the OSM data model is flexible and eliminates redundancies of spatial information such that nodes and ways can be recycled into all kinds of relationships.
 
@@ -154,47 +145,19 @@ OSM files are comprised of **nodes**, **ways**, and **relations**. These general
     knitr::include_graphics("images/04-osm-data-model.png")
 ```
 
-**Step 2:** Dismiss the **Layer Properties** dialogue box and then right-click the OSM point layer again in the Layers pane, but this time select **Open Attribute Table**. Your table might have a different number of features and different values for the attributes than what is shown below.
+**Step 2:** Dismiss the **Layer Properties** dialogue box and then right-click on one of your layers again in the Layers pane, but this time select **Open Attribute Table**. Your table might have a different number of features and different values for the attributes than what is shown below, because OpenStreetMap data are constantly edited.
 
 ```{r 04-osm-attribute-table, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/04-osm-attribute-table.png")
 ```
 
-The first field **osm_id** is the primary key of the node for the data you have downloaded. This is the primary key of all nodes in the planetary database of OpenStreetMap data (not just your file), which is why it starts from a very large number, 9,653,108,813 in the image above.
+The second field **osm_id** is the primary key of the node for the data you have downloaded. This is the primary key of all nodes in the planetary database of OpenStreetMap data (not just your file), which is why it starts from a very large number, 25,251,494 in the image above. 
 
-The remaining attributes are the tags, which might look random, and that is because OpenStreetMap was originally designed to store street information, but then evolved into a larger participatory community mapping project. Thus, we see there are some initial keys that relate to streets: **barrier**, **highway**, **address**, etc. But not all OpenStreetMap nodes are related to streets, so over time, the community has added many new tags, and most of these will not apply to every node, which is why we see so many **NULL** values. 
+The remaining attributes are the tags, which might look random, and that is because OpenStreetMap was originally designed to store street information, but then evolved into a larger participatory community mapping project. But not all OpenStreetMap nodes can logically be described by every tag, which is why we see so many **NULL** values.
 
-**Step 3:** Click and drag the **other_tags** attribute column to expand it so that you can see the other tags for each node. You might need to also scroll to the right to view it or maximize the attribute table view.
+##### Q2. EXTRA CREDIT: How could an Hstore data encoding affect how you can interact with and query the data in a relational database? (3 points) {.unnumbered}
 
-```{r 04-osm-other-tags, out.width= "75%", echo = FALSE}
-    knitr::include_graphics("images/04-osm-other-tags.png")
-```
-
-Notice how the **other_tags** are encoded as a comma-separated string list. These tags are structured as key-value pairs. For example, $“amenity” => “bench”$ indicates the key $“amenity”$ has a value $“bench”$. All the keys and values are always strings, even numerical values. On the one hand, this data scheme allows for many tags to be stored for any given node and irrelevant tags or attributes need not be stored at all. This type of data encoding is known as **Hstore** and is an alternative way to store information and reduces the size of an attribute table.
-
-##### Q2. How could an Hstore data encoding affect how you can interact with and query the data in a relational database? (3 points) {.unnumbered}
-
-In order to actually access any of the attributes in the other_tags field, we need to explode the Hstore. Exploding the Hstore means to parse all the tags for each tuple/node and create a new dataset that contains an attribute table with all the unique attribute fields in the way that we are normally accustomed to with the relational database model.
-
-**Step 3:** From the top navigation menu, click **Processing**, then select **Toolbox**. This opens the **Processing Toolbox** pane for QGIS where you can find all available tools.
-
-**Step 4:** In the search bar, search for the tool **Explode HStore field** and then double click the tool to open it. For the **Input Layer**, select the osm point layer from the drop-down menu and for **HStore field** select **other_tags**. For **Exploded**, enter **osm_points_exploded.gpkg** for the output file name geopackage and optionally the path to the directory where your project is located. You can click the icon to the right of the field and select **Save to File…** to navigate to your project directory.
-
-```{r 04-qgis-explode-hstore, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/04-qgis-explode-hstore.png")
-```
-
-If you get an error "Feature (XXXX) from "osm" has invalid geometry. Please fix the geometry or change the "Invalid features filtering" option for this input or globally in Processing settings" then you will need to click on the **Parameters** tab for the Explode HStore Field tool and click the little tool wrench next to the **Input Layer** and select **Skip (ignore) Features with Invalid Geometries** from the **Invalid feature filtering** drop down menu, then re-run the tool.
-
-```{r 04-qgis-invalid-geometry, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/04-qgis-invalid-geometry.png")
-```
-
-You should now find a new copy of your osm points in your **Layers** pane. It is also possible to achieve these results by using another popular plugin called **QuickOSM**, which allows you to refine your query based on available tags and it can also parse local .osm and .pbf files (the planetary OpenStreetMap dataset is distributed as a .pbf).
-
-**Step 5:** Repeat the last step again for the other OpenStreetMap layers, ensuring that you name the outputs to correspond to the data type (e.g., polygon, LineString, MultiLineString). You may need to inspect the layer properties to distinguish the two line layers.
-
-**Step 6:** Inspect the attribute table for the MultiLineString layer. 
+**Step 3:** Inspect the attribute table for your MultiLineString layer.
 
 ##### Q3. What do these features all have in common? (1 point) {.unnumbered}
 
@@ -204,13 +167,9 @@ MultiLineString is a multipart line feature that is represented as a single tupl
     knitr::include_graphics("images/04-qgis-identify-tool.png")
 ```
 
-**Step 7:** Toggle on the osm_polygons_exploded layer in the map view and then use the **Identify tool** to explore the polygon data and find a key that identifies the UBC campus boundary. Select and export that polygon to a new geopackage file in your project called **osm_ubc_campus_boundary**. Make sure you toggle on **Save only selected features** when you do the export. There might be several options, so you will need to sort through them until you get the proper boundary shown below.
+**Step 4:** Navigate to the UBC PostgreSQL database and add the "ubcv_legal_boundary" layer to your project. We are going to use this layer to actually select only the points/nodes that fall within UBC.
 
-```{r 04-qgis-osm-ubcv-boundary, out.width= "75%", echo = FALSE}
-    knitr::include_graphics("images/04-qgis-osm-ubcv-boundary.png")
-```
-
-**Step 8:** Use the **Select by Location** tool to select the osm_points_exploded by the campus polygon you just exported. Toggle on Intersect for the selection. Export the selected points to a new geopackage in your project called **osm_points_exploded_campus**. Ensure that **Save only selected features** is toggled on when you do the export. 
+**Step 5:** Use the **Select by Location** tool to select your point layer by the campus polygon you just added from the UBC PostgreSQL server. Toggle on Intersect for the selection. Export the selected points to the same "UBC.gpkg" geopackage in your project and name the layer **osm_points_campus**. Ensure that **Save only selected features** is toggled on when you do the export. 
 
 ```{r 04-qgis-select-by-location-tool, out.width= "30pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-select-by-location-tool.png")
@@ -222,25 +181,29 @@ Once you are satisfied with the export, return to the attribute table and click 
     knitr::include_graphics("images/04-qgis-deselect-all-features-tool.png")
 ```
 
-**Step 9:** Open the attribute table for the **osm_points_exploded_campus** layer and click the **Select features using an expression** icon. 
+**Step 6:** Open the attribute table for the **osm_points_campus** layer and click the **Select features using an expression** icon. 
 
 ```{r 04-qgis-select-features-using-expression-tool, out.width= "30pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-select-features-using-expression-tool.png")
 ```
 
-This displays the Select by Expression dialogue and you can enter in a query to subset the data. The expression goes into the blank left side of the dialogue, the center of the dialogue gives you options for constructing your query, and the right-side displays help information based on what is selected from the center. From the center, expand the **Fields and Values** item. There are a ton of tags! Let us search for a tag instead. Using the search bar above, type **natural**, then under Fields and Values double-click **natural**. This will add the field name to your statement on the left. On the right, click the **All Unique** button to see what values are available for this tag. We will select all trees, so double-click **tree**. Add an equal sign to your statement so that it reads $“natural” = ‘tree’$, as shown below. Notice how the key is in “double quotes” and the value is in ‘single quotes’. Click **Select Features** to execute the statement then close the dialogue and inspect the result.
+This displays the Select by Expression dialogue and you can enter in a query to subset the data. The expression goes into the blank left side of the dialogue, the center of the dialogue gives you options for constructing your query, and the right-side displays help information based on what is selected from the center. From the center, expand the **Fields and Values** item. There are a ton of tags! Let us search for a tag instead. Using the search bar above, type **natural**, then under Fields and Values double-click **natural**. This will add the field name to your statement on the left. On the right, click the **All Unique** button to see what values are available for this tag. We will select all trees, so double-click **tree**. Add an equal sign to your statement so that it reads $"natural" = 'tree'$, as shown below. Notice how the key is in "double quotes" and the value is in 'single quotes'. Click **Select Features** to execute the statement then close the dialogue and inspect the result.
 
 ```{r 04-qgis-select-by-expression, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/04-qgis-select-by-expression.png")
 ```
 
-**Step 10:** With the selection active from the last step, right-click the osm_points_exploded_campus layer in the Layers pane and select **Export** and then **Save Selected Features As…** and name the output **osm_campus_trees**. Ensure that **Save only selected features** is toggled on then click **OK**. Inspect the output in the map. Remember to deselect the attribute table!
+**Step 7:** With the selection active from the last step, right-click the "osm_points_campus" layer in the Layers pane and select **Export** and then **Save Selected Features As…** and name the output **osm_campus_trees**. Ensure that **Save only selected features** is toggled on then click **OK**. Inspect the output in the map. Remember to deselect the attribute table!
+
+How do the trees mapped in OpenStreetMap compare with the official trees mapped in the "ubcv_campus_trees" layer of the `ubcv` database?
 
 Notice that a lot of street trees are missing on campus? You can rectify this if you want, just sign up for an account at [OpenStreetMap.org](https://www.openstreetmap.org/) and start digitizing! You can also use [any of a number of free apps on iOS and Android](https://wiki.openstreetmap.org/wiki/IOS) to start mapping from your phone or to record GPS tracks.
 
-**Step 11:** Open the attribute table and use the Identify tool to find a key in the osm_polygons_exploded that you can use to identify buildings. Once you have identified the key, select all the buildings with an expression. Hint: statements involving $NULL$ values for keys need to use the $IS$ and $NOT$ operators, rather than $=$ (equal to) and $!=$ (not equal to).
+**Step 8:** Open the attribute table and use the Identify tool to find a key in the polygons layer that you can use to identify buildings. Once you have identified the key, select all the buildings with an expression. Hint: statements involving $NULL$ values for keys need to use the $IS$ and $NOT$ operators, rather than $=$ (equal to) and $!=$ (not equal to).
 
-**Step 12:** We are now going to modify the selection from the last step to only include buildings that are located on campus. Open the **Select by Location** tool and change **Select features** from to the **osm_polygons_exploded** layer. Toggle on **are within** for the geometric predicate and then **By comparing to the features from** should be set to the osm_ubc_campus_boundary polygon. Change **Modify current selection by** to **selecting within current selection**. This last part is important as we are basically taking what we select in the last step and selecting from that selection the buildings that are geographically within the UBC boundary. Click Run and then inspect the output to make sure only buildings within the UBC boundary are selected. When you are satisfied, export the selection to a new geopackage in your project called **osm_campus_buildings**. Again, make sure you toggle on **Save only selected features** and then deselect the layer when you are done.
+**Step 9:** We are now going to modify the selection from the last step to only include buildings that are located on campus. Open the **Select by Location** tool and change **Select features** from to the polygon layer. Toggle on **are within** for the geometric predicate and then **By comparing to the features from** should be set to the "ubcv_legal_boundary" layer that you added to your project from the `ubcv` database on the UBC PostgreSQL server. Change **Modify current selection by** to **selecting within current selection**. This last part is important as we are basically taking what we select in the last step and selecting from that selection the buildings that are geographically within the UBC boundary. Click "Run" and then inspect the output to make sure only buildings within the UBC boundary are selected. When you are satisfied, export the selection to a your "UBC.gpkg" geopackage in your project and name the layer **osm_campus_buildings**. Again, make sure you toggle on **Save only selected features** and then deselect the layer when you are done.
+
+How do the buildings mapped in OpenStreetMap compare with the official buidlings mapped in the "ubcv_buildings" layer of the `ubcv` database?
 
 ##### Q4. How could a value of "YES" for a key impact your analysis of that key instead of a more specific value? (1 point) {.unnumbered}
 
@@ -248,13 +211,13 @@ Notice that a lot of street trees are missing on campus? You can rectify this if
 
 ## Task 3: Simple spatial analysis with QGIS {.unnumbered}
 
-**Step 1:** From the top menu, select **Vector**, then **Geometry Tools**, then **Voronoi Polygons…** For the **Input layer**, select **osm_points_exploded_campus** and change the **Buffer region** to **100**.
+**Step 1:** From the top menu, select **Vector**, then **Geometry Tools**, then **Voronoi Polygons…** For the **Input layer**, select your points layer and change the **Buffer region** to **100**.
 
 ```{r 04-qgis-ellipse-icon, out.width= "30pt", echo = FALSE}
     knitr::include_graphics("images/04-qgis-ellipse-icon.png")
 ```
 
-Click the ellipse button next to the blank field for **Voronoi polygons** and select **Save to GeoPackage…** Name the output **osm_campus_voronoi** and then click **Run**. Inspect the output in the map. You should now have a Voronoi diagram that is a little larger than campus.
+Click the ellipse button next to the blank field for **Voronoi polygons** and select **Save to GeoPackage…** and select the "osm_points_campus" layer from your "UBC.gpkg" geopackage. Name the output **osm_campus_voronoi** and then click **Run**. Inspect the output in the map. You should now have a Voronoi diagram that is a little larger than campus.
 
 **Step 2:** From the main menu, click **Processing** and then **Toolbox** to open the **Processing toolbox** pane (if it is not already open). Search for the **Clip** tool and then clip the Voronoi polygons by the UBC campus boundary and name the output **osm_campus_voronoi_clip** then click **Run**. Inspect the output in the map. You should now see Voronoi polygons within the campus boundary as shown below.
 
@@ -274,7 +237,7 @@ Click the ellipse button next to the blank field for **Voronoi polygons** and se
 
 **Step 6:** For **Value**, select the **Area** field that you calculated earlier. The **Symbol** determines how the features will be filled and should be a solid color. Leave the Symbol as-is. 
 
-**Step 7:** The **Legend format** is used to programmatically modify the legend text entry in the final map. Because we have selected a Graduated symbology, we will have values that range from $\%1$ to the next value for that color $\%2$. You can add additional text here to indicate units. For example, $\%1 m² - \%2 m²$ will yield a legend entry that looks like “2425 m2 – 3425 m2”. Add units of square meters to the legend format.
+**Step 7:** The **Legend format** is used to programmatically modify the legend text entry in the final map. Because we have selected a Graduated symbology, we will have values that range from $\%1$ to the next value for that color $\%2$. You can add additional text here to indicate units. For example, $\%1 m² - \%2 m²$ will yield a legend entry that looks like "2425 m2 – 3425 m2". Add units of square meters to the legend format.
 
 **Step 8:** The **Color Ramp** controls the range of hues (H) and their saturation (S) and value (V). If you click directly on the default color ramp icon, it will open the Select Color Ramp dialogue window where you can modify both discrete and continuous color ramps. You can even control opacity of these values to get some interesting effects on your map. If you opened the Select Color Ramp dialogue, close it. Another option, is to choose a pre-defined color ramp using the downward pointing triangle just to the right of the color ramp. Select **Spectral**.
 
