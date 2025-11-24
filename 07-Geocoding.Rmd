@@ -40,7 +40,7 @@ Working with and manipulating your own geospatial data is essential for many geo
 - The map should show the neighbourhood for which you downloaded street
 tree data for
 - Parks symbolized by tree density 
-- Coordinate-created points (geocoded) and address-created points (AssignedTrees) symbolized differently from each other (do not include the entire tree dataset)
+- Coordinate-created points (geocoded) and address-created points symbolized differently from each other
 - Roads symbolized
 - An appropriate basemap
 
@@ -60,14 +60,13 @@ The remaining data for this lab are accessible via the UBC PostgreSQL server. In
 
 ## Task 1: Download and Prepare Data {.unnumbered}
 
-**Step 1:** The first dataset you will download is "street trees" data. Search for it with the search bar, then click the link for the dataset. You are going to want to export the data as a shapefile; click on the Export tab and look over the geographic file formats. You will notice that the download button for Shapefile is greyed out because there are too many records in the dataset. Keep the webpage open so you have
-access to the Metadata.
+**Step 1:** The first dataset you will download is "Public trees" data. Search for it with the search bar, then click the link for the dataset. You are going to want to export the data as a shapefile; click on the Export tab and look over the geographic file formats. You will notice that the download button for Shapefile is greyed out because there are too many records in the dataset. Keep the webpage open so you have access to the Metadata.
 
 ##### Q1. What is the maximum number of records you can export from the City of Vancouver open data portal as a shapefile? (1 point) {.unnumbered}
 
-**Step 2:** Instead of working with the entirety of the dataset, you will focus on one neighbourhood. To the left, there are filtering options. Scroll down to NEIGHBOURHOOD_NAME and choose the neighborhood with the highest number of trees. Now you should have the option to download street tree data.
+**Step 2:** Instead of working with the dataset for the entire city, you will focus on one neighbourhood. To the left, there are filtering options. Scroll down to NEIGHBOURHOOD_NAME and choose the neighborhood with the highest number of trees. Now you should have the option to download street tree data. Name the file "neighborhood_trees".
 
-**Step 3:** The second dataset you will download is "Parks Polygon Representation". There should be a point and a polygon dataset. Make sure you download the polygon dataset.
+**Step 3:** The second dataset you will download is "Parks - Polygon Representation". There should be a point and a polygon dataset. Make sure you download the polygon dataset.
 
 ------------------------------------------------------------------------
 
@@ -79,18 +78,9 @@ In this task, you will export a filtered table from a shapefile, and then you wi
 
 ##### Q2. What is the name of the column that designates when a tree was planted? (1 point) {.unnumbered}
 
-Sometimes, lots in cities are exceptionally large or are adjacent to more than one street. Because these lots only have one "true" address, urban foresters may make up addresses to designate more specific areas. Find the name of the column that designates whether or not the address for a tree was made up to associate the tree with a nearby lot. You are going to export just the data for trees that are assigned "Yes" in this column.
+**Step 2:** Open the attribute table for "neighborhood_trees" that you downloaded and add a new text field called "Address". On the top of the attribute table, there is a button that says "Add". The table will switch to field view. Name the field "Address" and select "Text" as the data type. Click "Save" in the top bar. Close "Field View" and return to the attribute table. Your new field should appear as the very last column in the dataset. Right-click the field and select "Calculate Field."
 
-**Step 2:** Right-click street-trees and select "Export Features."
-
-- **Input Rows:** street-trees 
-- **Output Location:** Where you want the table to be saved 
-- **Output Name:** AssignedTrees 
-- **Expression:** + New expression Where `Assigned` is equal to Y.
-
-**Step 3:** Open the attribute table for "AssignedTrees" and add a new text field to the data. On the top of the attribute table, there is a button that says "Add". The table will switch to field view. Name the field "Address" and select "Text" as the data type. Click "Save" in the top bar. Close "Field View" and return to the attribute table. Your new field should appear as the very last column in the dataset. Right-click the field and select "Calculate Field."
-
-The address locator you create in Task 3 requires addresses to be written in a specific way---street numbers and names must be in the same column. You will need to specify to ArcGIS that you are combining two strings (another designation for text data). Within the Fields menu under "Expression," double-click "civic_numb". You will notice that the field below the equal sign is now populated with !civic_numb!.
+The address locator you create in Task 3 requires addresses to be written in a specific way: street numbers and names must be in the same column. You will need to specify to ArcGIS that you are combining two strings (another designation for text data). Within the Fields menu under "Expression," double-click "civic_numb". You will notice that the field below the equal sign is now populated with !civic_numb!.
 
 To combine (i.e., concatenate) the two columns together, type the following code into the box: `str(!civic_numb!)+" "+str(!std_street!)`
 
@@ -104,7 +94,7 @@ Click "Apply". The Address field should now have street numbers and street names
 
 ## Task 3: Geocoding a Table of Addresses {.unnumbered}
 
-Many localities label their trees by address rather than by coordinates. In the street-trees file, all of the trees have addresses and coordinates. However, the trees with a value of "Y" for "Assigned" have addresses that were effectively made up for ease of finding the trees again. In this section of the lab, you will use a roads network layer for the Greater Vancouver Regional District (GVRD) to create an address locator for Vancouver. Then you will geocode the addresses from "AssignedTrees" to examine the differences between collecting data with addresses versus coordinates. An address locator allows you to look up addresses either manually or by uploading a table of addresses. This is helpful when you are searching for specific trees!
+Many localities label their trees by address rather than by coordinates. In the street-trees file, all of the trees have addresses and coordinates. In this section of the lab, you will use a roads network layer for the Greater Vancouver Regional District (GVRD) to create an address locator for Vancouver. Then you will geocode the addresses from your neighborhood to examine the differences between collecting data with addresses versus coordinates. An address locator allows you to look up addresses either manually or by uploading a table of addresses. This is helpful when you are searching for specific trees!
 
 **Step 1:** Connect to the `geocode` database on the UBC PostgreSQL server and load the "gvrd_roads" layer into your map.
 
@@ -143,13 +133,13 @@ You can also use the "Locate" tool to search an address using the ArcGIS World G
     knitr::include_graphics("images/07-locate.png")
 ```
 
-**Step 3:** Geocode a table of addresses using "GVRDaddresses". The table of addresses you will be geocoding is the "AssignedTrees" dataset. To access the geocoding tool, you can search for "Geocode Addresses".
+**Step 3:** Geocode a table of addresses using "GVRDaddresses". The table of addresses you will be geocoding is "neighborhood_trees" that you exported earlier. To access the geocoding tool, you can search for "Geocode Addresses".
 
-If you downloaded "AssignedTrees" as a shapefile instead of a table, then you will need to convert it to a table for this step. Right-click the layer in ArcGIS Pro and export it to a table.
+Earlier, we downloaded the neighborhood trees as a shapefile instead of a table, so we need to convert it to a table for this step. Right-click the layer in ArcGIS Pro and export it to a table.
 
 Below are the tool's parameters: 
 
-- **Input Table:** AssignedTrees 
+- **Input Table:** neighborhood_trees 
 - **Input Address Locator:** GVRDaddresses 
 - **Input Address Fields:** Single Field 
 - **Single Line Input:** Address
@@ -160,7 +150,7 @@ Leave the other default options and save the file as "geocoded".
 
 ##### Q3. Are all of the addresses a 100% match? Why or why not? (2 points) {.unnumbered}
 
-**Step 5:** Toggle the "AssignedTrees" and "geocoded" datasets on and off to look for similarities and differences.
+**Step 5:** Toggle the "neighborhood_trees" and "geocoded" datasets on and off to look for similarities and differences.
 
 ##### Q4. How do they visually compare to each other? Use specific examples in your explanation and make inferences about why you are seeing differences/similarities. (4 points) {.unnumbered}
 
@@ -188,7 +178,7 @@ Oftentimes, you will encounter geospatial data in Comma Separated Format (CSV) o
 
 Event layers are temporary layers, and without Object-ID fields they are not editable or selectable.
 
-**Step 3:** View "parktrees" in ArcGIS Pro. The trees should all be in Vancouver. If they are not, something was input incorrectly and you will have to repeat Step 2. Once the tree points are properly mapped, change the symbology. Right-click "parktrees" in the Contents Pane and choose "Symbology." A Symbology pop-up should appear. Click the symbol---and choose "Circle 3" from Gallery. Click the Properties Tab. Make the symbol smaller and change its colour.
+**Step 3:** View "parktrees" in ArcGIS Pro. The trees should all be in Vancouver. If they are not, something was input incorrectly and you will have to repeat Step 2. Once the tree points are properly mapped, change the symbology. Right-click "parktrees" in the Contents Pane and choose "Symbology." A Symbology pop-up should appear. Click the symbol and choose "Circle 3" from Gallery. Click the Properties Tab. Make the symbol smaller and change its colour.
 
 **Step 4:** Add "parks_polygon_representation" and a satellite basemap to your map (Map \> Basemap \> Imagery). In the Contents Pane, drag the basemap to the bottom so that it does not cover anything. Symbolize "parks_polygon_representation" so that you can clearly the basemap for each park. You can do this in the Contents Pane by right-clicking the coloured rectangle beneath "parks_polygon_representation" and choosing "Color Properties..." at the bottom. Adjust the colours and transparency as you see fit.
 
