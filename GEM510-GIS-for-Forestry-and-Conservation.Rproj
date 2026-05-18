@@ -1,4 +1,5 @@
 Version: 1.0
+ProjectId: 100308e7-d76f-4330-b8a0-455258c46576
 
 RestoreWorkspace: Default
 SaveWorkspace: Default
@@ -9,11 +10,10 @@ UseSpacesForTab: Yes
 NumSpacesForTab: 2
 Encoding: UTF-8
 
-RnwWeave: knitr
+RnwWeave: Sweave
 LaTeX: pdfLaTeX
 
 AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 
 BuildType: Website
-WebsitePath: ~/GEM510-GIS-for-Forestry-and-Conservation

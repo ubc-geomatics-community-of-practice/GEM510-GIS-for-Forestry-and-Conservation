@@ -5,7 +5,7 @@ author <- yml_content[["analyze-relational-database"]][["author"]]
 # Analyze a Relational Database {#analyze-relational-database}
 
 Written by
-```{r results='asis', echo=FALSE}
+```{r results="asis", echo=FALSE}
 cat(author)
 ```
 
@@ -92,7 +92,7 @@ If the above step fails, then you may need to first install PostGIS. Ordinarily,
 
 **Step 3b:** If prompted, enter your admin credential or ask your instructor to provide this credential for you.
 
-**Step 3c:** Select "PostgreSQL 16 (x64) on port 5432" from the drop down menu (or whatever version of PostgreSQL is installed on your machine). Click "Next".
+**Step 3c:** Select "PostgreSQL 18 (x64) on port 5432" from the drop down menu (or whatever version of PostgreSQL is installed on your machine). Click "Next".
 
 ```{r 02-stack-builder-1, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/02-stack-builder-1.png")
@@ -104,7 +104,7 @@ If the above step fails, then you may need to first install PostGIS. Ordinarily,
 
 **Step 4:** Listing the tables `\dt` will reveal the database has a table called "spatial_ref_sys". List the fields of this table with `\d spatial_ref_sys`.
 
-In addition to the field names, you will see there is an index called "spatial_ref_sys_pkey", which is the dedicated field for the primary key for this table, and a constraint check to ensure that srid's are valid only between $1$ and $998999$. You can test this constraint by trying to insert a new srid value of $0$: `INSERT INTO spatial_ref_sys (srid) VALUES (0);`. The returned message,
+In addition to the field names, you will see there is an index called "spatial_ref_sys_pkey", which is the dedicated field for the primary key for this table, and a constraint check to ensure that SRID values are valid only between $1$ and $998999$. You can test this constraint by trying to insert a new srid value of $0$: `INSERT INTO spatial_ref_sys (srid) VALUES (0);`. The returned message,
 
 ```
 ERROR:  new row for relation "spatial_ref_sys" violates check constraint spatial_ref_sys_srid_check"
@@ -134,7 +134,7 @@ colunm-name-3 datatype,
 
 Data types are very important and the shorthand notation for these in PostgreSQL are [listed on this web page](https://www.postgresql.org/docs/current/datatype.html) and some commonly used data types are reproduced below with examples. 
 
-``` {r echo = FALSE, warning = FALSE, results = 'asis'}
+``` {r echo = FALSE, warning = FALSE, results = "asis"}
 library(common)
 n <- c("int2","int4","int8","bigserial","float4","float8","bool","char(n)","varchar(n)","date")
 d <- c("Signed 2-byte integer","Signed 4-byte integer","Signed 8-byte integer","Autoincrementing 8-byte integer","Single prevision floating-point number (4 bytes)","Double precision floating-point number (8 bytes)","Logical Boolean","Fixed length character string where n is the number of permitted characters","Variable length character string where n is the maximum number of permitted characters","Calendar date")
@@ -158,7 +158,7 @@ this_field_is_varchar_50 varchar(50)
     knitr::include_graphics("images/02-psql-mynewtable.png")
 ```
 
-Watch out for unescaped parentheses when running multiline SQL statements! If you see `mypostgisdb=#`, then you are able to submit a new psql command or start an SQL statement. If you see `mypostgisdb=-`, then you have already started an SQL statement on a line above in the terminal. If you see `mypostgisdb=(`, then you have added an open parenthesis '(' somewhere in your statement on a line above. When running a SQL statement over multiple lines, you need to ensure that you enclose all parentheses and end the statement with a semicolon `;` in order to return the psql command line back to `mypostgisdb=#`. If you find yourself stuck an unable to exit `mypostgisdb=(`, try to close any open parentheses by typing `)` and pressing "Enter". If you find yourself unable to exit `mypostgisdb=-`, try ending the SQL statement by typing `;` and pressing "Enter". If both of those fail, you can try exiting the command with `CTRL + C`, which may also end psql and require you to reconnect to the database.
+Watch out for unescaped parentheses when running multiline SQL statements! If you see `mypostgisdb=#`, then you are able to submit a new psql command or start an SQL statement. If you see `mypostgisdb=-`, then you have already started an SQL statement on a line above in the terminal. If you see `mypostgisdb=(`, then you have added an open parenthesis "(" somewhere in your statement on a line above. When running a SQL statement over multiple lines, you need to ensure that you enclose all parentheses and end the statement with a semicolon `;` in order to return the psql command line back to `mypostgisdb=#`. If you find yourself stuck an unable to exit `mypostgisdb=(`, try to close any open parentheses by typing `)` and pressing "Enter". If you find yourself unable to exit `mypostgisdb=-`, try ending the SQL statement by typing `;` and pressing "Enter". If both of those fail, you can try exiting the command with `CTRL + C`, which may also end psql and require you to reconnect to the database.
 
 You can experiment with creating as many new tables as you want. If you need to delete a table, use the `DROP` keyword like this `DROP TABLE my_new_table;`.
 
@@ -240,11 +240,11 @@ To dump your database, use the following command: `pg_dump -d mypostgisdb -U pos
 
 ## Task 3: Import Spatial Data Using GDAL {.unnumbered}
 
-Now that you have some basic understanding of viewing and manipulating tables, we are going to look at some ways to import spatial data into your PostGIS database. To do this, we will be working with some utility programs in the Geospatial Data Abstraction Library (GDAL) pronounced "gee-dall". You will probably find the [GDAL documentation pages](https://gdal.org/programs/) very helpful for reference. GDAL is used in ArcGIS, GRASS, SAGA, QGIS, ENVI, Google Earth, and also has [Python bindings](https://gdal.org/api/python_bindings.html) and an [R package with bindings](https://cran.r-project.org/web/packages/rgdal/index.html). In short, GDAL is largely the workhorse behind most open source geospatial software packages.
+Now that you have some basic understanding of viewing and manipulating tables, we are going to look at some ways to import spatial data into your PostGIS database. To do this, we will be working with some utility programs in the Geospatial Data Abstraction Library (GDAL) pronounced "gee-dall". You will probably find the [GDAL documentation pages](https://gdal.org/en/stable/programs/) very helpful for reference. GDAL is used in ArcGIS, GRASS, SAGA, QGIS, ENVI, Google Earth, and also has [Python bindings](https://gdal.org/en/stable/api/python/python_bindings.html) and an [R package with bindings](https://cran.r-project.org/web/packages/sf/index.html). In short, GDAL is largely the workhorse behind most open source geospatial software packages.
 
 **Step 1:** Open the OSGeo4W shell by searching for it in Windows. Enter the command `o-help` and inspect all the available programs.
 
-You might notice `psql` can be run from the OSGeo4W shell and `pg_dump` is also there. Some others we will cover in later labs, including `pdal` (Point Data Abstraction Library) pronounced "poodle" or "pee-dahl", which handles LiDAR data, and many of the raster and image manipulation programs. For this lab, we are going to focus on two commonly used vector programs: [ogrinfo](https://gdal.org/programs/ogrinfo.html) and [ogr2ogr](https://gdal.org/programs/ogr2ogr.html).
+You might notice `psql` can be run from the OSGeo4W shell and `pg_dump` is also there. Some others we will cover in later labs, including `pdal` (Point Data Abstraction Library) pronounced "poodle" or "pee-dahl", which handles LiDAR data, and many of the raster and image manipulation programs. For this lab, we are going to focus on two commonly used vector programs: [ogrinfo](https://gdal.org/en/stable/programs/ogrinfo.html) and [ogr2ogr](https://gdal.org/en/stable/programs/ogr2ogr.html).
 
 **Step 2:** Type `ogr2ogr --help` in the console and press "Enter" on your keyboard. Inspect all the flags `-` and arguments for this program. If you see a command not found message, then type `where ogr2ogr`. Then copy the full path to the program executable when running the commands that follow, usually `"C:\Program Files\QGIS X.XX.X\bin\"`. Copy the path and then in command prompt type `set PATH=%PATH%;"C:\Program Files\QGIS X.XX.X\bin\"`, replacing `X.XX.X` with your current QGIS version. Try `ogr2ogr --help` again to ensure it works.
 
@@ -386,7 +386,7 @@ The `WITH` clause allows us to create temporary relations that can be referenced
 
 As you will see, this is slightly different than using the `INTO` method from our prior examples, which creates a new relation in our database. The benefit of `WITH` and `AS` is that the relation is ephemeral and only exists for the moment that the SQL entire statement is executed; no new relation is written into our database.
 
-**Step 10:** Using what you have learned, select one of the other [PostGIS overlay methods](https://postgis.net/docs/reference.html#Overlay_Functions) and then apply it to any two datasets in the `ubcv` database on the UBC PostgreSQL server. You must use the `WITH` clause and you must also use one of the [SQL aggregation functions](https://www.postgresql.org/docs/17/functions-aggregate.html). Refer to the examples provided in class and use those as a template to explore how these functions work. It is not important that your analysis makes sense, but it is important that your entire SQL statement can be executed from either QGIS or psql. Once your are satisfied with your SQL statement, copy and paste it to the assignment submission page on the course management system.
+**Step 10:** Using what you have learned, select one of the other [PostGIS overlay methods](https://postgis.net/docs/reference.html#Overlay_Functions) and then apply it to any two datasets in the `ubcv` database on the UBC PostgreSQL server. You must use the `WITH` clause and you must also use one of the [SQL aggregation functions](https://www.postgresql.org/docs/current/functions-aggregate.html). Refer to the examples provided in class and use those as a template to explore how these functions work. It is not important that your analysis makes sense, but it is important that your entire SQL statement can be executed from either QGIS or psql. Once your are satisfied with your SQL statement, copy and paste it to the assignment submission page on the course management system.
 
 Hint: Check what the geometry column name is called for the layers that you choose to use and enter those exactly as you see them into your overlay function. Make sure that you are using compatible geometries for the overlay method you choose and read the linked documentation above if you have any doubts!
 

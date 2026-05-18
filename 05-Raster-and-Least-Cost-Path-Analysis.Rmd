@@ -2,10 +2,12 @@
 yml_content <- yaml::read_yaml("chapterauthors.yml")
 author <- yml_content[["raster-least-cost-path-analysis"]][["author"]]
 ```
+
 # Raster and Least Cost Path Analysis {#raster-least-cost-path-analysis}
 
 Written by
-```{r results='asis', echo=FALSE}
+
+```{r results="asis", echo=FALSE}
 cat(author)
 ```
 
@@ -17,14 +19,14 @@ In this lab, you will explore many of the different raster operations using the 
 
 ## Learning Objectives {.unnumbered}
 
-- Describe the raster data model
-- Convert between image coordinates and geographic coordinates
-- Convert vector data to raster
-- Distinguish data types in rasters and identify appropriate encoding of sampled values for different phenomena
-- Mosaic rasters together
-- Evaluate expressions on rasters using arithmetic and relational operators
-- Combine rasters and calculate weighted overlays
-- Calculate a least cost path of a landscape indicator species
+-   Describe the raster data model
+-   Convert between image coordinates and geographic coordinates
+-   Convert vector data to raster
+-   Distinguish data types in rasters and identify appropriate encoding of sampled values for different phenomena
+-   Mosaic rasters together
+-   Evaluate expressions on rasters using arithmetic and relational operators
+-   Combine rasters and calculate weighted overlays
+-   Calculate a least cost path of a landscape indicator species
 
 ------------------------------------------------------------------------
 
@@ -46,35 +48,35 @@ All data for this lab are accessible via the UBC PostgreSQL server. Instructions
 
 Our first task is to define an Area of Interest (AOI) that will represent the extent of all of our raster processing.
 
-**Step 1:** Open QGIS and create a new project named "GrizzlyBear". 
+**Step 1:** Open QGIS and create a new project named "GrizzlyBear".
 
 **Step 2:** Connect to the `bear` database on the UBC PostgreSQL server and load the "grizzlybearmanagementareas" layer into your map. These polygons represent the Grizzly Bear population units or Bear Management Areas (BMA) in the Rocky Mountain foothills of Alberta ([Alberta Open Government License](https://open.alberta.ca/licence)). For this lab, we will be focusing on the Yellowhead BMA for our AOI.
 
-**Step 3:** Write an SQL query to select the Yellowhead BMA and then export it to your local QGIS project folder as a shapefile named "yellowhead_bma.shp", and change the "CRS" to NAD83 / UTM zone 11N (EPSG:26911).
+**Step 3:** Write an SQL query to select the Yellowhead BMA and then export it to your local QGIS project folder as a shapefile named "yellowhead_bma.shp", and change the "CRS" to NAD83, UTM zone 11N (EPSG:26911).
 
 We are going to rasterize this layer and do the basic raster processing outside of QGIS/ArcGIS Pro for a couple of reasons. First, setting the options and raster processing environments in QGIS/ArcGIS Pro is overly complicated and prone to error and unexpected behaviour. Second, you will learn how to use some valuable raster processing utilities of GDAL that can be easily batched and run in chain sequence (i.e., you can batch process large research datasets from a command line).
 
-**Step 4:** Open the OSGeo4W shell and navigate to your QGIS project folder using the change directory `cd` command. To do this, first copy the path of your project folder, usually something like `C:\Users\paul\Documents\QGIS\GrizzlyBear`. Then in the console type `cd C:\Users\paul\Documents\QGIS\GrizzlyBear` to change to that directory. 
+**Step 4:** Open the OSGeo4W shell and navigate to your QGIS project folder using the change directory `cd` command. To do this, first copy the path of your project folder, usually something like `C:\Users\paul\Documents\QGIS\GrizzlyBear`. Then in the console type `cd C:\Users\paul\Documents\QGIS\GrizzlyBear` to change to that directory.
 
-The first GDAL utility we are going to use is `gdal_rasterize` ([link to documentation](https://gdal.org/programs/gdal_rasterize.html)). This utility takes a vector input datasource and converts it to a raster in the output. The simplest usage is `gdal_rasterize <src_datasource> <dst_filename>`. All of the flags preceded by `-` are indicated as optional by the square brackets `[]`. If you do not use any of the flags when you run the utility, then the utility will use the default values/settings for those flags that are indicated in the documentation. The AOI raster we are going to create will specify a few conditions of all the other raster processing we will do:
+The first GDAL utility we are going to use is `gdal_rasterize` ([link to documentation](https://gdal.org/en/stable/programs/gdal_rasterize.html)). This utility takes a vector input datasource and converts it to a raster in the output. The simplest usage is `gdal_rasterize <src_datasource> <dst_filename>`. All of the flags preceded by `-` are indicated as optional by the square brackets `[]`. If you do not use any of the flags when you run the utility, then the utility will use the default values/settings for those flags that are indicated in the documentation. The AOI raster we are going to create will specify a few conditions of all the other raster processing we will do:
 
-- raster extent (number of rows/columns and geographic coordinates)
-- pixel/cell resolution
-- spatial reference system
+-   raster extent (number of rows/columns and geographic coordinates)
+-   pixel/cell resolution
+-   spatial reference system
 
-**Step 5:** In the OSGeo4W shell, enter the following command `gdal_rasterize -burn 1 -tr 20 20 -ot Byte -a_nodata -tap yellowhead_bma_utm.shp yellowhead_bma_utm.tif`. 
+**Step 5:** In the OSGeo4W shell, enter the following command `gdal_rasterize -burn 1 -tr 20 20 -ot Byte -a_nodata -tap yellowhead_bma_utm.shp yellowhead_bma_utm.tif`.
 
-- `-burn` flag indicates we want to assign a value of `1` to the output raster where the features intersect the new raster grid. 
+-   `-burn` flag indicates we want to assign a value of `1` to the output raster where the features intersect the new raster grid.
 
-- `-tr` flag indicates we want the output cell resolution to be 20 m (we know its meters because those are the units of the coordinate system) and this is specified twice `20 20`, once for the x-axis and again for the y-axis. 
+-   `-tr` flag indicates we want the output cell resolution to be 20 m (we know its meters because those are the units of the coordinate system) and this is specified twice `20 20`, once for the x-axis and again for the y-axis.
 
-- `-ot` flag indicates that we want the output data type of the raster to be `"Byte"`, which translates to a storage cost of 8 bits per pixel (bits per pixel × rows × columns = size of raster on disk).
+-   `-ot` flag indicates that we want the output data type of the raster to be `"Byte"`, which translates to a storage cost of 8 bits per pixel (bits per pixel × rows × columns = size of raster on disk).
 
-- `-a_nodata` flag indicates that we want to specifically set the nodata value as `nodata` (default is zero). This will come in handy later because nodata limits the number of cell calculations we need to perform while zero is a valid processing value.
+-   `-a_nodata` flag indicates that we want to specifically set the nodata value as `nodata` (default is zero). This will come in handy later because nodata limits the number of cell calculations we need to perform while zero is a valid processing value.
 
-- `-tap` flag (target aligned pixels) indicates that we want the new raster extent to be calculated using floor and ceiling functions:
+-   `-tap` flag (target aligned pixels) indicates that we want the new raster extent to be calculated using floor and ceiling functions:
 
-```
+```         
 ymax (top) = y_resolution × ceiling(ymax / y_resolution) = 20 × ceiling(5,936,280.447609 / 20) = 20 × 296,815 = 5,936,300
 ymin (bottom) = y_resolution × floor(ymin / y_resolution) = 20 × floor(5,753,454.574941 / 20) = 20 × 287,672 = 5,753,440
 xmin (left) = x_resolution × floor(xmin / x_resolution) = 20 × floor(401,496.997149 / 20) = 20 × 20,074 = 401,480
@@ -87,7 +89,7 @@ The above calculations are probably not immediately intuitive, but the idea is t
 
 ## Task 2: Seamless mosaicking {.unnumbered}
 
-A common task in raster analysis is mosaicking multiple rasters together to perform analysis on a single file over a larger extent. We will practice doing this with some ASTER Digital Elevation Models (DEM) that are distributed as non-overlapping tiles in WGS 1984 (EPSG:4326). The source for these data can be found at [NASA's Earth Science Data Systems portal](https://search.earthdata.nasa.gov), but we will be retrieving these data from the UBC PostgreSQL server instead.
+A common task in raster analysis is mosaicking multiple rasters together to perform analysis on a single file over a larger extent. We will practice doing this with some ASTER Digital Elevation Models (DEM) that are distributed as non-overlapping tiles in WGS 1984 (EPSG:4326). The source for these data can be found at [NASA Earth Science Data Systems portal](https://search.earthdata.nasa.gov), but we will be retrieving these data from the UBC PostgreSQL server instead.
 
 **Step 1:** Open your QGIS project and from the "Data Source Manager" connect to the `bear` database of the UBC PostgreSQL server. You should see a listing of 14 rasters there, which have names prefixed with "astgtmv003". Select all 14 and then click "Add". It is very important that you add the rasters using this method rather than from the "Browser" pane, otherwise you might have unexpected errors.
 
@@ -99,7 +101,7 @@ A common task in raster analysis is mosaicking multiple rasters together to perf
     knitr::include_graphics("images/05-qgis-aster-dem-tiles.png")
 ```
 
-**Step 2:** Open the "Layer Properties" for "astgtmv003_n51w115" and inspect the extent values and the pixel size. 
+**Step 2:** Open the "Layer Properties" for "astgtmv003_n51w115" and inspect the extent values and the pixel size.
 
 ##### Q1. What units are the extent and pixel size in? (1 point) {.unnumbered}
 
@@ -107,12 +109,12 @@ If you are wondering why the y pixel size is negative, it is to facilitate the c
 
 For example, to convert pixel `(i,j)` from image coordinates to geographic coordinates where the image origin `(0,0)` corresponds to geographic coordinates `(-115.0001388888889977,52.0001388888888982)` as is the case for "astgtmv003_n51w115" and the x pixel size is `0.000277778` and the y pixel size is `-0.000277778`:
 
-```
+```         
 Longitude(i) = -115.0001388888889977 + i × 0.000277778
 Latitude(j) = 52.0001388888888982 + j × -0.000277778
 ```
 
-##### Q2. Given the equations above, what is the exact latitude and longtiude of the pixel with image coordinates (1907,1918)? Show your work for full credit. (2 points) {.unnumbered} 
+##### Q2. Given the equations above, what is the exact latitude and longtiude of the pixel with image coordinates (1907,1918)? Show your work for full credit. (2 points) {.unnumbered}
 
 **Step 3:** Make sure the coordinate system for the map is initially set to `EPSG:4326` then copy the lat/lon coordinates from Q2 and paste them into the "Coordinate" field at the bottom of your QGIS screen in the format `latitude, longitude` and press "Enter". Change the scale to `1:500` and press "Enter". You should now be able to distinguish individual pixels. Click the coordinate reference system at the bottom right of the screen and change it from the default value of `EPSG:4326` (WGS 1984) to `EPSG:26911` (NAD 1983 UTM Zone 11N).
 
@@ -120,15 +122,14 @@ Latitude(j) = 52.0001388888888982 + j × -0.000277778
     knitr::include_graphics("images/05-qgis-project-srs.png")
 ```
 
-##### Q3. Why do the pixels now appear to be elongated along the y-axis? (2 points) {.unnumbered} 
+##### Q3. Why do the pixels now appear to be elongated along the y-axis? (2 points) {.unnumbered}
 
 **Step 4:** Save your PostgreSQL credential to your QGIS environment variables by opening the Python console from your toolbar in QGIS, click the small "Show editor" button, and then paste the following into the editor and click the "Run" button:
 
-```
+```         
 import os
-os.environ['PGUSER'] = 'student'
-os.environ['PGPASSWORD'] = 'studentpasswordhere'
-
+os.environ["PGUSER"] = "student"
+os.environ["PGPASSWORD"] = "studentpasswordhere"
 ```
 
 ```{r 05-qgis-python-environment-variables, out.width= "75%", echo = FALSE}
@@ -147,21 +148,21 @@ The mosaic still needs to be reprojected and clipped to the same extent as our A
 
 **Step 6:** Open the OSGeo4W shell and navigate to your project folder where you saved "aster_dem_wgs84.tif". Type the following command into the console and then hit "Enter": `gdalwarp -s_srs EPSG:4326 -t_srs EPSG:26911 -te 401480 5753440 661680 5936300 -tr 20 20 -r cubic aster_dem_wgs84.tif aster_dem_utm.tif`.
 
-- `-s_srs` flag defines the input (s = source) spatial reference system (coordinate system), which is WGS 1984 or `EPSG:4326`.
+-   `-s_srs` flag defines the input (s = source) spatial reference system (coordinate system), which is WGS 1984 or `EPSG:4326`.
 
-- `-t_srs` flag defines our target SRS, which is NAD 1983 UTM Zone 11N or `EPSG:26911`.
+-   `-t_srs` flag defines our target SRS, which is NAD 1983 UTM Zone 11N or `EPSG:26911`.
 
-- `-te` flag defines our target extent `xmin ymin xmax ymax`, which is the calculation we did in Task 1 `401480 5753440 661680 5936300`.
+-   `-te` flag defines our target extent `xmin ymin xmax ymax`, which is the calculation we did in Task 1 `401480 5753440 661680 5936300`.
 
-- `-tr` flag defines the target resolution, again specified twice for both axes `10 10`.
+-   `-tr` flag defines the target resolution, again specified twice for both axes `10 10`.
 
-- `-r` flag defines the re-sampling method. This is an important flag for `gdalwarp` because any time that you re-project a raster, you are resampling that raster. The term "resampling" comes from the fact that a raster is "sampled" to begin with. Each cell in a raster is a sample of some random variable over the extent of the raster, and the value of that sample is correct for the center of the cell. When we re-project a raster, the locations of the cells change, therefore we need to recalculate the samples or "resample" the raster. Our selected method of resampling in this case is `cubic`, which is a smoothing algorithm and well-suited for continuous data like elevation.
+-   `-r` flag defines the re-sampling method. This is an important flag for `gdalwarp` because any time that you re-project a raster, you are resampling that raster. The term "resampling" comes from the fact that a raster is "sampled" to begin with. Each cell in a raster is a sample of some random variable over the extent of the raster, and the value of that sample is correct for the center of the cell. When we re-project a raster, the locations of the cells change, therefore we need to recalculate the samples or "resample" the raster. Our selected method of resampling in this case is `cubic`, which is a smoothing algorithm and well-suited for continuous data like elevation.
 
-- `aster_dem_wgs84.tif` is the input raster and `aster_dem_utm.tif` is the output (resampled) raster. Inspect the output in QGIS.
+-   `aster_dem_wgs84.tif` is the input raster and `aster_dem_utm.tif` is the output (resampled) raster. Inspect the output in QGIS.
 
 Note that we did not use the `-ot` output data type flag, so `gdalwarp` used the `Int16` data type of our input raster. If you set `-ot Float32`, then you would see that the cubic resampling algorithm actually yields decimals instead of the integers that you see in the current output, but for our purposes that sub-meter level of precision is not needed.
 
-**Step 7:** Search for the "Raster Calculator" tool. Double-click the "aster_d    em_utm.tif" mosaic to add it to the expression, then click the multiply button "*", then double-click the "yellowhead_bma_utm.tif" raster to add it to the expression. Scroll down farther and click the ellipse "..." next to the "Output" field to save the output as "aster_dem_utm_aoi.tif". Click "Run" and then inspect the output in your map.
+**Step 7:** Search for the "Raster Calculator" tool. Double-click the "aster_d em_utm.tif" mosaic to add it to the expression, then click the multiply button "\*", then double-click the "yellowhead_bma_utm.tif" raster to add it to the expression. Scroll down farther and click the ellipse "..." next to the "Output" field to save the output as "aster_dem_utm_aoi.tif". Click "Run" and then inspect the output in your map.
 
 ```{r 05-qgis-aster-dem-mask, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/05-qgis-aster-dem-mask.png")
@@ -181,7 +182,7 @@ In this task, we will calculate a few derivative rasters that are going to repre
 
 **Step 4:** Open the OSGeo4W shell and navigate to your project folder. Run the `gdalwarp` utility again, parameterize it the same as before in Task 2, but change the `-s_srs` flag to `EPSG:3978`, the `-r` flag to `near`, the input file to `ca_forest_vlce2_2019.tif`, and the output file to `land_cover_utm.tif`. Inspect the output in QGIS.
 
-##### Q4. Why did we choose 'near' as the resampling method? (1 point) {.unnumbered}
+##### Q4. Why did we choose "near" as the resampling method? (1 point) {.unnumbered}
 
 **Step 5:** Use the "Raster Calculator" tool to multiply "yellowhead_bma_utm.tif" by "land_cover_utm.tif" and write the output to "land_cover_utm_aoi.tif".
 
@@ -198,7 +199,7 @@ knitr::kable(
 )
 ```
 
-**Step 6:** Open the "Reclassify by Table" tool. Select "land_cover_utm_aoi.tif" as the "Raster layer" and then click the ellipse "..." next to "Reclassification table". Populate the table with all the land cover codes. You will need to use some judgement and determine what would be reasonable values for the four missing codes in the table above. There is no right or wrong answer for these, but you will need to justify your choices. When you have filled in the table (see image below), change "Range boundaries" to "min <= value <= max", click "OK", and then name the output "land_cover_utm_aoi_cost.tif". Inspect the output in your map, you should have values ranging from 0 to 1. 
+**Step 6:** Open the "Reclassify by Table" tool. Select "land_cover_utm_aoi.tif" as the "Raster layer" and then click the ellipse "..." next to "Reclassification table". Populate the table with all the land cover codes. You will need to use some judgement and determine what would be reasonable values for the four missing codes in the table above. There is no right or wrong answer for these, but you will need to justify your choices. When you have filled in the table (see image below), change "Range boundaries" to "min \<= value \<= max", click "OK", and then name the output "land_cover_utm_aoi_cost.tif". Inspect the output in your map, you should have values ranging from 0 to 1.
 
 ```{r 05-qgis-reclassify-by-table, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/05-qgis-reclassify-by-table.png")
@@ -216,11 +217,11 @@ The last layer we are going to add is distance to roads as a simple proxy for hu
 
 **Step 10:** Open the "Raster Calculator" tool and add the expression `(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2`. Let us break this one down:
 
-- `1 / "yellowhead_roads_distance_utm@1"` would give us the inverse distances, however, cells that are roads have a distance of zero, and $1÷0=undefined=nodata$. Therefore, we need to add a fraction to the denominator.
+-   `1 / "yellowhead_roads_distance_utm@1"` would give us the inverse distances, however, cells that are roads have a distance of zero, and $1\div 0$ is undefined and returns NoData. Therefore, we need to add a fraction to the denominator.
 
-- `1 / ("yellowhead_roads_distance_utm@1" + 0.5)` avoids nodata values in the situation above, but now roads have a value of $1÷0.5=2$. We ultimately want these values to be between 0 and 1, with 1 representing roads.
+-   `1 / ("yellowhead_roads_distance_utm@1" + 0.5)` avoids nodata values in the situation above, but now roads have a value of $1\div 0.5=2$. We ultimately want these values to be between 0 and 1, with 1 representing roads.
 
-- `(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2` dividing everything by 2 causes the 0.5 fraction to be removed from all cells, and road cells to be assigned a value of $2÷2=1$.
+-   `(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2` dividing everything by 2 causes the 0.5 fraction to be removed from all cells, and road cells to be assigned a value of $2\div 2=1$.
 
 This way, the cost of traversing a roadway is 1 and decreases as you move away from the road. Change the "Reference layer" to "yellowhead_bma_utm.tif" and save the output as "yellowhead_roads_distance_utm_cost.tif". Inspect the output in your map and zoom in close to a road.
 
@@ -230,7 +231,7 @@ This way, the cost of traversing a roadway is 1 and decreases as you move away f
 
 Now that we have three different cost layers, slope, land cover, and distance to roads, we simply need to decide how to combine them into a single cost raster. This is made easy by the fact that all layers are scaled between 0 and 1. The simplest approach would be to add them all together, but this assumes equal-weighting given to each cost factor. It is also common to weight layers differently and this can be achieved by multiplying a set of weights to the layers that add up to 1. For example, to weight slope 10%, land cover 30%, and road distance 60%, we would use the formula $totalcost=slope×0.1+landcover×0.3+road×0.6$. Note that $totalcost=slope×0.33+landcover×0.33+road×0.33$ is functionally the same as $totalcost=slope+landcover+road$. Differences in the percentage weightings are not absolute difference, but relative. For example, 30% weight to land cover implies that land cover is weighted 3 times more than slope at 10%: $0.3÷0.1=3=300\%$.
 
-**Step 11:** Pick weightings for your three layers (the weights must sum to 1), then open the "Raster Calculator" tool and apply the formula above. Set the "Reference layer" to "yellowhead_bma_utm.tif" and save the output as "yellowhead_cost_raster.tif". 
+**Step 11:** Pick weightings for your three layers (the weights must sum to 1), then open the "Raster Calculator" tool and apply the formula above. Set the "Reference layer" to "yellowhead_bma_utm.tif" and save the output as "yellowhead_cost_raster.tif".
 
 ##### Q6. What was your rationale for selecting your weights? (2 points) {.unnumbered}
 
@@ -250,13 +251,13 @@ For this last task, we are going to perform the least cost path analysis in ArcG
 
 **Step 1:** Open a new ArcGIS Pro project and add the following layers to your map:
 
-- Total cost raster: "yellowhead_cost_raster.tif"
-- Aster DEM: "aster_dem_utm.tif"
-- Slope raster: "aster_slope_utm_aoi.tif" 
-- Land cover raster: "land_cover_utm_aoi.tif"
-- Road polylines: "yellowhead_roads_utm.shp"
-- Yellowhead source: "source.shp"
-- Yellowhead target: "target.shp"
+-   Total cost raster: "yellowhead_cost_raster.tif"
+-   Aster DEM: "aster_dem_utm.tif"
+-   Slope raster: "aster_slope_utm_aoi.tif"
+-   Land cover raster: "land_cover_utm_aoi.tif"
+-   Road polylines: "yellowhead_roads_utm.shp"
+-   Yellowhead source: "source.shp"
+-   Yellowhead target: "target.shp"
 
 **Step 2:** Open the "Distance Accumulation" tool and parameterize it according to the image below. You can save the two output rasters ("distance_accumulation_raster" and "backlink") in your project geodatabase or in your QGIS project folder as geotiffs, just be mindful that you cannot save a geotiff inside your geodatabase. This tool will take your source point and calculate the accumulative cost to travel to all other cells using a combination of the cost raster and the real geographic distance, both horizontal and vertical, which is why we supply the ASTER DEM.
 
@@ -294,4 +295,4 @@ The "backlink" raster shows us the direction of the least costly path back to th
 
 Raster analysis is comprised of manipulating base data, deriving new rasters, and weighting and combining rasters together in order to answer a spatial question. In this lab, you learned how to effectively set up a raster analysis through careful planning and choice of factors like raster extent, coordinate system, cell size, alignment, data type, and resampling algorithms. Rasters can lead to powerful spatial analyses like least cost path analysis due to the explicit encoding of information in the spatial neighborhood.
 
-Return to the **[Deliverables](#lab5-deliverables)** section to check off everything you need to submit for credit in the course management system.
+Return to the [**Deliverables**](#lab5-deliverables) section to check off everything you need to submit for credit in the course management system.

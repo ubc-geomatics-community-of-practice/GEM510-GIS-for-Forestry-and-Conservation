@@ -1,9 +1,3 @@
----
-editor_options:
-  markdown:
-    wrap: 72
----
-
 ```{r echo=FALSE}
 yml_content <- yaml::read_yaml("chapterauthors.yml")
 author <- yml_content[["geocoding"]][["author"]]
@@ -12,7 +6,7 @@ author <- yml_content[["geocoding"]][["author"]]
 # Geocoding {#geocoding}
 
 Written by
-```{r results='asis', echo=FALSE}
+```{r results="asis", echo=FALSE}
 cat(author)
 ```
 
@@ -98,9 +92,9 @@ Many localities label their trees by address rather than by coordinates. In the 
 
 **Step 1:** Connect to the `geocode` database on the UBC PostgreSQL server and load the "gvrd_roads" layer into your map.
 
-**Step 2:** Create an address locator, which is located in Analysis \> Tools \> Toolboxes \> Geocoding Tools \> Create Locator. You can also use the search bar to search for the tool by name.
+**Step 2:** Create an address locator, which is located in the Geoprocessing pane by selecting "Analysis", "Tools", "Toolboxes", "Geocoding Tools", and "Create Locator". You can also use the search bar to search for the tool by name.
 
-For the tool's parameters:
+For the tool parameters:
 
 -   **Country or Region:** Canada
 -   **Primary Table(s):** gvrd_roads
@@ -114,7 +108,7 @@ For the tool's parameters:
     -   **Street Name:** structured_name_a
     -   **Left City/Municipality:** left_loc_1
     -   **Right City/Municipality:** right_loc_1
--   All other fields leave as <NONE>
+-   All other fields leave as `<NONE>`
 -   **Language Code:** English
 
 Save the file as "GVRDaddresses".
@@ -133,11 +127,11 @@ You can also use the "Locate" tool to search an address using the ArcGIS World G
     knitr::include_graphics("images/07-locate.png")
 ```
 
-**Step 3:** Geocode a table of addresses using "GVRDaddresses". The table of addresses you will be geocoding is "neighborhood_trees" that you exported earlier. To access the geocoding tool, you can search for "Geocode Addresses".
+**Step 4:** Geocode a table of addresses using "GVRDaddresses". The table of addresses you will be geocoding is "neighborhood_trees" that you exported earlier. To access the geocoding tool, you can search for "Geocode Addresses".
 
 Earlier, we downloaded the neighborhood trees as a shapefile instead of a table, so we need to convert it to a table for this step. Right-click the layer in ArcGIS Pro and export it to a table.
 
-Below are the tool's parameters: 
+Use the following tool parameters: 
 
 - **Input Table:** neighborhood_trees 
 - **Input Address Locator:** GVRDaddresses 
@@ -146,11 +140,11 @@ Below are the tool's parameters:
 
 Leave the other default options and save the file as "geocoded".
 
-**Step 4:** Look at the attribute table. The score column shows from 0-100 based on how close the address in the address locator was able to match the input table. The mailbox icon with the arrows in the geocoding toolbar allows you to investigate the matches more in-depth. With a messy dataset, this becomes invaluable.
+**Step 5:** Look at the attribute table. The score column shows from 0-100 based on how close the address in the address locator was able to match the input table. The mailbox icon with the arrows in the geocoding toolbar allows you to investigate the matches more in-depth. With a messy dataset, this becomes invaluable.
 
 ##### Q3. Are all of the addresses a 100% match? Why or why not? (2 points) {.unnumbered}
 
-**Step 5:** Toggle the "neighborhood_trees" and "geocoded" datasets on and off to look for similarities and differences.
+**Step 6:** Toggle the "neighborhood_trees" and "geocoded" datasets on and off to look for similarities and differences.
 
 ##### Q4. How do they visually compare to each other? Use specific examples in your explanation and make inferences about why you are seeing differences/similarities. (4 points) {.unnumbered}
 
@@ -168,19 +162,19 @@ Oftentimes, you will encounter geospatial data in Comma Separated Format (CSV) o
 
 ##### Q7. Does ArcGIS Pro consider these data to be spatial? (1 point) {.unnumbered}
 
-**Step 2:** Right-click on the "parktrees" table in your Contents Pane and then select "Create Points From Table > Make XY Event Layer". Choose the appropriate column names for the X and Y fields. Leave the Z field blank. This is very important, if you choose the wrong columns the points will be nowhere near Vancouver! Specify the coordinate system by clicking on the Globe icon to the right-hand side of Coordinate System and locating NAD 1983 UTM Zone 10N under Projected Coordinate System \> UTM \> NAD 1983.
+**Step 2:** Right-click on the "parktrees" table in your Contents Pane and then select "Create Points From Table, then Make XY Event Layer". Choose the appropriate column names for the X and Y fields. Leave the Z field blank. This is very important because if you choose the wrong columns the points will be nowhere near Vancouver! Specify the coordinate system by clicking on the Globe icon to the right-hand side of Coordinate System and locating NAD 1983 UTM Zone 10N under Projected Coordinate System, UTM, and NAD 1983.
 
 ##### Q8. What does the z field represent? (1 point) {.unnumbered}
 
 ##### Q9. Which column did you choose for x, which column for y? (2 points) {.unnumbered}
 
- You have now created an "Event Layer." Export the Events layer as a shapefile (right-click the layer \> Data \> Export Features). Save it in your output folder as "parktrees". Add "parktrees" to your display.
+ You have now created an "Event Layer." Export the Events layer as a shapefile (right-click the layer, select "Data", and then select "Export Features"). Save it in your output folder as "parktrees". Add "parktrees" to your display.
 
 Event layers are temporary layers, and without Object-ID fields they are not editable or selectable.
 
 **Step 3:** View "parktrees" in ArcGIS Pro. The trees should all be in Vancouver. If they are not, something was input incorrectly and you will have to repeat Step 2. Once the tree points are properly mapped, change the symbology. Right-click "parktrees" in the Contents Pane and choose "Symbology." A Symbology pop-up should appear. Click the symbol and choose "Circle 3" from Gallery. Click the Properties Tab. Make the symbol smaller and change its colour.
 
-**Step 4:** Add "parks_polygon_representation" and a satellite basemap to your map (Map \> Basemap \> Imagery). In the Contents Pane, drag the basemap to the bottom so that it does not cover anything. Symbolize "parks_polygon_representation" so that you can clearly the basemap for each park. You can do this in the Contents Pane by right-clicking the coloured rectangle beneath "parks_polygon_representation" and choosing "Color Properties..." at the bottom. Adjust the colours and transparency as you see fit.
+**Step 4:** Add "parks_polygon_representation" and a satellite basemap to your map (from the "Map" tab, select "Basemap", and then select "Imagery"). In the Contents Pane, drag the basemap to the bottom so that it does not cover anything. Symbolize "parks_polygon_representation" so that you can clearly see the basemap for each park. You can do this in the Contents Pane by right-clicking the coloured rectangle beneath "parks_polygon_representation" and choosing "Color Properties..." at the bottom. Adjust the colours and transparency as you see fit.
 
 ##### Q10. What sort of discrepancies do you see between the number of trees in the satellite image versus the number of trees shown in the dataset? Do any specific parks stand out? Why might this be the case? (4 points) {.unnumbered}
 

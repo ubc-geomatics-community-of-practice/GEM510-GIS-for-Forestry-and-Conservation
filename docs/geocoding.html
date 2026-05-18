@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2025-12-19" />
+<meta name="date" content="2026-05-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -314,8 +314,8 @@ tree data for</li>
 <h2>Task 3: Geocoding a Table of Addresses<a href="geocoding.html#task-3-geocoding-a-table-of-addresses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Many localities label their trees by address rather than by coordinates. In the street-trees file, all of the trees have addresses and coordinates. In this section of the lab, you will use a roads network layer for the Greater Vancouver Regional District (GVRD) to create an address locator for Vancouver. Then you will geocode the addresses from your neighborhood to examine the differences between collecting data with addresses versus coordinates. An address locator allows you to look up addresses either manually or by uploading a table of addresses. This is helpful when you are searching for specific trees!</p>
 <p><strong>Step 1:</strong> Connect to the <code>geocode</code> database on the UBC PostgreSQL server and load the “gvrd_roads” layer into your map.</p>
-<p><strong>Step 2:</strong> Create an address locator, which is located in Analysis &gt; Tools &gt; Toolboxes &gt; Geocoding Tools &gt; Create Locator. You can also use the search bar to search for the tool by name.</p>
-<p>For the tool’s parameters:</p>
+<p><strong>Step 2:</strong> Create an address locator, which is located in the Geoprocessing pane by selecting “Analysis”, “Tools”, “Toolboxes”, “Geocoding Tools”, and “Create Locator”. You can also use the search bar to search for the tool by name.</p>
+<p>For the tool parameters:</p>
 <ul>
 <li><strong>Country or Region:</strong> Canada</li>
 <li><strong>Primary Table(s):</strong> gvrd_roads</li>
@@ -331,7 +331,7 @@ tree data for</li>
 <li><strong>Left City/Municipality:</strong> left_loc_1</li>
 <li><strong>Right City/Municipality:</strong> right_loc_1</li>
 </ul></li>
-<li>All other fields leave as <NONE></li>
+<li>All other fields leave as <code>&lt;NONE&gt;</code></li>
 <li><strong>Language Code:</strong> English</li>
 </ul>
 <p>Save the file as “GVRDaddresses”.</p>
@@ -340,9 +340,9 @@ tree data for</li>
 <p>Choose “GVRDaddresses” in the dropdown.</p>
 <p>You can also use the “Locate” tool to search an address using the ArcGIS World Geocoding Service. Type in the address of Queen Elizabeth Park (4600 Cambie St, Vancouver) and notice the map highlights near the park! The ArcGIS World Geocoding Service will consume credits through your ArcGIS account, so it is not the most cost-effective way to geocode many addresses.</p>
 <p><img src="images/07-locate.png" width="50%" /></p>
-<p><strong>Step 3:</strong> Geocode a table of addresses using “GVRDaddresses”. The table of addresses you will be geocoding is “neighborhood_trees” that you exported earlier. To access the geocoding tool, you can search for “Geocode Addresses”.</p>
+<p><strong>Step 4:</strong> Geocode a table of addresses using “GVRDaddresses”. The table of addresses you will be geocoding is “neighborhood_trees” that you exported earlier. To access the geocoding tool, you can search for “Geocode Addresses”.</p>
 <p>Earlier, we downloaded the neighborhood trees as a shapefile instead of a table, so we need to convert it to a table for this step. Right-click the layer in ArcGIS Pro and export it to a table.</p>
-<p>Below are the tool’s parameters:</p>
+<p>Use the following tool parameters:</p>
 <ul>
 <li><strong>Input Table:</strong> neighborhood_trees</li>
 <li><strong>Input Address Locator:</strong> GVRDaddresses</li>
@@ -350,10 +350,10 @@ tree data for</li>
 <li><strong>Single Line Input:</strong> Address</li>
 </ul>
 <p>Leave the other default options and save the file as “geocoded”.</p>
-<p><strong>Step 4:</strong> Look at the attribute table. The score column shows from 0-100 based on how close the address in the address locator was able to match the input table. The mailbox icon with the arrows in the geocoding toolbar allows you to investigate the matches more in-depth. With a messy dataset, this becomes invaluable.</p>
+<p><strong>Step 5:</strong> Look at the attribute table. The score column shows from 0-100 based on how close the address in the address locator was able to match the input table. The mailbox icon with the arrows in the geocoding toolbar allows you to investigate the matches more in-depth. With a messy dataset, this becomes invaluable.</p>
 <div id="q3.-are-all-of-the-addresses-a-100-match-why-or-why-not-2-points" class="section level5 unnumbered hasAnchor">
 <h5>Q3. Are all of the addresses a 100% match? Why or why not? (2 points)<a href="geocoding.html#q3.-are-all-of-the-addresses-a-100-match-why-or-why-not-2-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p><strong>Step 5:</strong> Toggle the “neighborhood_trees” and “geocoded” datasets on and off to look for similarities and differences.</p>
+<p><strong>Step 6:</strong> Toggle the “neighborhood_trees” and “geocoded” datasets on and off to look for similarities and differences.</p>
 </div>
 <div id="q4.-how-do-they-visually-compare-to-each-other-use-specific-examples-in-your-explanation-and-make-inferences-about-why-you-are-seeing-differencessimilarities.-4-points" class="section level5 unnumbered hasAnchor">
 <h5>Q4. How do they visually compare to each other? Use specific examples in your explanation and make inferences about why you are seeing differences/similarities. (4 points)<a href="geocoding.html#q4.-how-do-they-visually-compare-to-each-other-use-specific-examples-in-your-explanation-and-make-inferences-about-why-you-are-seeing-differencessimilarities.-4-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
@@ -372,17 +372,17 @@ tree data for</li>
 </div>
 <div id="q7.-does-arcgis-pro-consider-these-data-to-be-spatial-1-point" class="section level5 unnumbered hasAnchor">
 <h5>Q7. Does ArcGIS Pro consider these data to be spatial? (1 point)<a href="geocoding.html#q7.-does-arcgis-pro-consider-these-data-to-be-spatial-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p><strong>Step 2:</strong> Right-click on the “parktrees” table in your Contents Pane and then select “Create Points From Table &gt; Make XY Event Layer”. Choose the appropriate column names for the X and Y fields. Leave the Z field blank. This is very important, if you choose the wrong columns the points will be nowhere near Vancouver! Specify the coordinate system by clicking on the Globe icon to the right-hand side of Coordinate System and locating NAD 1983 UTM Zone 10N under Projected Coordinate System &gt; UTM &gt; NAD 1983.</p>
+<p><strong>Step 2:</strong> Right-click on the “parktrees” table in your Contents Pane and then select “Create Points From Table, then Make XY Event Layer”. Choose the appropriate column names for the X and Y fields. Leave the Z field blank. This is very important because if you choose the wrong columns the points will be nowhere near Vancouver! Specify the coordinate system by clicking on the Globe icon to the right-hand side of Coordinate System and locating NAD 1983 UTM Zone 10N under Projected Coordinate System, UTM, and NAD 1983.</p>
 </div>
 <div id="q8.-what-does-the-z-field-represent-1-point" class="section level5 unnumbered hasAnchor">
 <h5>Q8. What does the z field represent? (1 point)<a href="geocoding.html#q8.-what-does-the-z-field-represent-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 </div>
 <div id="q9.-which-column-did-you-choose-for-x-which-column-for-y-2-points" class="section level5 unnumbered hasAnchor">
 <h5>Q9. Which column did you choose for x, which column for y? (2 points)<a href="geocoding.html#q9.-which-column-did-you-choose-for-x-which-column-for-y-2-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p>You have now created an “Event Layer.” Export the Events layer as a shapefile (right-click the layer &gt; Data &gt; Export Features). Save it in your output folder as “parktrees”. Add “parktrees” to your display.</p>
+<p>You have now created an “Event Layer.” Export the Events layer as a shapefile (right-click the layer, select “Data”, and then select “Export Features”). Save it in your output folder as “parktrees”. Add “parktrees” to your display.</p>
 <p>Event layers are temporary layers, and without Object-ID fields they are not editable or selectable.</p>
 <p><strong>Step 3:</strong> View “parktrees” in ArcGIS Pro. The trees should all be in Vancouver. If they are not, something was input incorrectly and you will have to repeat Step 2. Once the tree points are properly mapped, change the symbology. Right-click “parktrees” in the Contents Pane and choose “Symbology.” A Symbology pop-up should appear. Click the symbol and choose “Circle 3” from Gallery. Click the Properties Tab. Make the symbol smaller and change its colour.</p>
-<p><strong>Step 4:</strong> Add “parks_polygon_representation” and a satellite basemap to your map (Map &gt; Basemap &gt; Imagery). In the Contents Pane, drag the basemap to the bottom so that it does not cover anything. Symbolize “parks_polygon_representation” so that you can clearly the basemap for each park. You can do this in the Contents Pane by right-clicking the coloured rectangle beneath “parks_polygon_representation” and choosing “Color Properties…” at the bottom. Adjust the colours and transparency as you see fit.</p>
+<p><strong>Step 4:</strong> Add “parks_polygon_representation” and a satellite basemap to your map (from the “Map” tab, select “Basemap”, and then select “Imagery”). In the Contents Pane, drag the basemap to the bottom so that it does not cover anything. Symbolize “parks_polygon_representation” so that you can clearly see the basemap for each park. You can do this in the Contents Pane by right-clicking the coloured rectangle beneath “parks_polygon_representation” and choosing “Color Properties…” at the bottom. Adjust the colours and transparency as you see fit.</p>
 </div>
 <div id="q10.-what-sort-of-discrepancies-do-you-see-between-the-number-of-trees-in-the-satellite-image-versus-the-number-of-trees-shown-in-the-dataset-do-any-specific-parks-stand-out-why-might-this-be-the-case-4-points" class="section level5 unnumbered hasAnchor">
 <h5>Q10. What sort of discrepancies do you see between the number of trees in the satellite image versus the number of trees shown in the dataset? Do any specific parks stand out? Why might this be the case? (4 points)<a href="geocoding.html#q10.-what-sort-of-discrepancies-do-you-see-between-the-number-of-trees-in-the-satellite-image-versus-the-number-of-trees-shown-in-the-dataset-do-any-specific-parks-stand-out-why-might-this-be-the-case-4-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>

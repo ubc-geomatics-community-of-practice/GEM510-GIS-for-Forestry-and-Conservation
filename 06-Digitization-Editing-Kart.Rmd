@@ -5,7 +5,7 @@ author <- yml_content[["digitization-editing-kart"]][["author"]]
 # Digitization and Editing with Kart {#digitization-editing-kart}
 
 Written by
-```{r results='asis', echo=FALSE}
+```{r results="asis", echo=FALSE}
 cat(author)
 ```
 
@@ -57,7 +57,7 @@ At the core of version control with Git, each change made to a file is tracked w
 
 **Step 4:** Create a directory on your computer where you can store your first Kart repository, which we will call `ubcv`. For example, `C:\Kart\ubcv`.
 
-**Step 5:** From the QGIS navigation bar at the top, select "Plugins" > "Kart" > "Repositories...". This opens the Kart repositories pane.
+**Step 5:** From the QGIS navigation bar at the top, select "Plugins", select "Kart", and then select "Repositories...". This opens the Kart repositories pane.
 
 ```{r 06-kart-repository-options, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-kart-repository-options.png")
@@ -77,7 +77,7 @@ Expand your repositories list and you should see your new repostiory. If you exp
     knitr::include_graphics("images/06-import-data-kart-repository.png")
 ```
 
-**Step 8:** Add the parameters to connect to the UBC PostgreSQL server. Be sure to switch to the "Basic" tab for credentials and add the student credential that was provided to the class. Once you have added the credential, click the "Load Tables" button to so a soft connection to the database. If the connection was successful, then select "ubcv_campus_trees" from the drop-down menu and then click "OK" to add the table to your Kart repository.
+**Step 8:** Add the parameters to connect to the UBC PostgreSQL server. Be sure to switch to the "Basic" tab for credentials and add the student credential that was provided to the class. Once you have added the credential, click the "Load Tables" button to establish a soft connection to the database. If the connection was successful, then select "ubcv_campus_trees" from the drop-down menu and then click "OK" to add the table to your Kart repository.
 
 ```{r 06-import-postgres-database-kart, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/06-import-postgres-database-kart.png")
@@ -91,7 +91,7 @@ We will be comparing this point dataset to a recent orthophoto of UBC Vancouver 
     knitr::include_graphics("images/06-add-ubc-orthophoto.png")
 ```
 
-UBC orthophotos are publicly available datasets that are also encoded as Cloud Optimized Geotiffs (COG), which enables fast retrieval and zoom levels for cloud-hosted raster datasets. If you find that the file hosted on the server is not very responsive, you can also download the geotiff to your computer and add it as a regular file. Note that these orthophotos are large files (~7 GB) and ensure you have enough disk space in the location you want to save it.
+UBC orthophotos are publicly available datasets that are also encoded as Cloud Optimized GeoTIFFs (COG), which enables fast retrieval and zoom levels for cloud-hosted raster datasets. If you find that the file hosted on the server is not very responsive, you can also download the GeoTIFF to your computer and add it as a regular file. Note that these orthophotos are large files (~7 GB) and ensure you have enough disk space in the location you want to save it.
 
 **Step 10:** Drag and drop the "ubcv_campus_trees" dataset into your map from the Kart repository pane. Your QGIS project should look something like what is shown below.
 
@@ -161,7 +161,7 @@ You can think of committing as a way of saving your work progress in your reposi
     knitr::include_graphics("images/06-qgis-kart-create-branch.png")
 ```
 
-**Step 3:** Right-click the top commit again and select "Switch to branch 'mybranch'...".
+**Step 3:** Right-click the top commit again and select "Switch to branch mybranch...".
 
 **Step 4:** Now working on "mybranch", start an editing session, pan around the orthophoto and add 5-10 more missing tree points. Do not change anything about the attributes, just click "OK" to dismiss after creating the point. Be sure to save your edits to the layer and then commit the change.
 

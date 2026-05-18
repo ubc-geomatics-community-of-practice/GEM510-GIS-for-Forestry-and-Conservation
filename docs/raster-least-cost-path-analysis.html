@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2025-12-19" />
+<meta name="date" content="2026-05-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -248,8 +248,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="raster-least-cost-path-analysis" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Lab 5</span> Raster and Least Cost Path Analysis<a href="raster-least-cost-path-analysis.html#raster-least-cost-path-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Written by
-Paul D. Pickell</p>
+<p>Written by</p>
+<p>Paul D. Pickell</p>
 <div id="lab-overview-4" class="section level2 unnumbered hasAnchor">
 <h2>Lab Overview<a href="raster-least-cost-path-analysis.html#lab-overview-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this lab, you will explore many of the different raster operations using the Geospatial Data Abstraction Library (GDAL). We will practice using these utilities directly from the command line and in QGIS. You will create a variety of different rasters from different sources and practice deriving new rasters through calculations. These efforts will culminate in a least cost path analysis in ArcGIS Pro. We will examine a critical conservation problem in western Alberta, Canada: Grizzly Bear (<em>Ursus arctos horribilis</em>) habitat and movement. Grizzly Bears are among the largest land predators in North America and have had much of their historical range reduced by human activity. The largest and most well-studied population now resides in the Rocky Mountain foothills of western Alberta.</p>
@@ -285,10 +285,10 @@ Paul D. Pickell</p>
 <p>Our first task is to define an Area of Interest (AOI) that will represent the extent of all of our raster processing.</p>
 <p><strong>Step 1:</strong> Open QGIS and create a new project named “GrizzlyBear”.</p>
 <p><strong>Step 2:</strong> Connect to the <code>bear</code> database on the UBC PostgreSQL server and load the “grizzlybearmanagementareas” layer into your map. These polygons represent the Grizzly Bear population units or Bear Management Areas (BMA) in the Rocky Mountain foothills of Alberta (<a href="https://open.alberta.ca/licence">Alberta Open Government License</a>). For this lab, we will be focusing on the Yellowhead BMA for our AOI.</p>
-<p><strong>Step 3:</strong> Write an SQL query to select the Yellowhead BMA and then export it to your local QGIS project folder as a shapefile named “yellowhead_bma.shp”, and change the “CRS” to NAD83 / UTM zone 11N (EPSG:26911).</p>
+<p><strong>Step 3:</strong> Write an SQL query to select the Yellowhead BMA and then export it to your local QGIS project folder as a shapefile named “yellowhead_bma.shp”, and change the “CRS” to NAD83, UTM zone 11N (EPSG:26911).</p>
 <p>We are going to rasterize this layer and do the basic raster processing outside of QGIS/ArcGIS Pro for a couple of reasons. First, setting the options and raster processing environments in QGIS/ArcGIS Pro is overly complicated and prone to error and unexpected behaviour. Second, you will learn how to use some valuable raster processing utilities of GDAL that can be easily batched and run in chain sequence (i.e., you can batch process large research datasets from a command line).</p>
 <p><strong>Step 4:</strong> Open the OSGeo4W shell and navigate to your QGIS project folder using the change directory <code>cd</code> command. To do this, first copy the path of your project folder, usually something like <code>C:\Users\paul\Documents\QGIS\GrizzlyBear</code>. Then in the console type <code>cd C:\Users\paul\Documents\QGIS\GrizzlyBear</code> to change to that directory.</p>
-<p>The first GDAL utility we are going to use is <code>gdal_rasterize</code> (<a href="https://gdal.org/programs/gdal_rasterize.html">link to documentation</a>). This utility takes a vector input datasource and converts it to a raster in the output. The simplest usage is <code>gdal_rasterize &lt;src_datasource&gt; &lt;dst_filename&gt;</code>. All of the flags preceded by <code>-</code> are indicated as optional by the square brackets <code>[]</code>. If you do not use any of the flags when you run the utility, then the utility will use the default values/settings for those flags that are indicated in the documentation. The AOI raster we are going to create will specify a few conditions of all the other raster processing we will do:</p>
+<p>The first GDAL utility we are going to use is <code>gdal_rasterize</code> (<a href="https://gdal.org/en/stable/programs/gdal_rasterize.html">link to documentation</a>). This utility takes a vector input datasource and converts it to a raster in the output. The simplest usage is <code>gdal_rasterize &lt;src_datasource&gt; &lt;dst_filename&gt;</code>. All of the flags preceded by <code>-</code> are indicated as optional by the square brackets <code>[]</code>. If you do not use any of the flags when you run the utility, then the utility will use the default values/settings for those flags that are indicated in the documentation. The AOI raster we are going to create will specify a few conditions of all the other raster processing we will do:</p>
 <ul>
 <li>raster extent (number of rows/columns and geographic coordinates)</li>
 <li>pixel/cell resolution</li>
@@ -311,7 +311,7 @@ xmax (right) = x_resolution × ceiling(xmax / x_resolution) = 20 × ceiling(661,
 </div>
 <div id="task-2-seamless-mosaicking" class="section level2 unnumbered hasAnchor">
 <h2>Task 2: Seamless mosaicking<a href="raster-least-cost-path-analysis.html#task-2-seamless-mosaicking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A common task in raster analysis is mosaicking multiple rasters together to perform analysis on a single file over a larger extent. We will practice doing this with some ASTER Digital Elevation Models (DEM) that are distributed as non-overlapping tiles in WGS 1984 (EPSG:4326). The source for these data can be found at <a href="https://search.earthdata.nasa.gov">NASA’s Earth Science Data Systems portal</a>, but we will be retrieving these data from the UBC PostgreSQL server instead.</p>
+<p>A common task in raster analysis is mosaicking multiple rasters together to perform analysis on a single file over a larger extent. We will practice doing this with some ASTER Digital Elevation Models (DEM) that are distributed as non-overlapping tiles in WGS 1984 (EPSG:4326). The source for these data can be found at <a href="https://search.earthdata.nasa.gov">NASA Earth Science Data Systems portal</a>, but we will be retrieving these data from the UBC PostgreSQL server instead.</p>
 <p><strong>Step 1:</strong> Open your QGIS project and from the “Data Source Manager” connect to the <code>bear</code> database of the UBC PostgreSQL server. You should see a listing of 14 rasters there, which have names prefixed with “astgtmv003”. Select all 14 and then click “Add”. It is very important that you add the rasters using this method rather than from the “Browser” pane, otherwise you might have unexpected errors.</p>
 <p><img src="images/05-qgis-data-source-manager.png" width="75%" /></p>
 <p><img src="images/05-qgis-aster-dem-tiles.png" width="75%" /></p>
@@ -332,9 +332,8 @@ Latitude(j) = 52.0001388888888982 + j × -0.000277778</code></pre>
 <h5>Q3. Why do the pixels now appear to be elongated along the y-axis? (2 points)<a href="raster-least-cost-path-analysis.html#q3.-why-do-the-pixels-now-appear-to-be-elongated-along-the-y-axis-2-points" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p><strong>Step 4:</strong> Save your PostgreSQL credential to your QGIS environment variables by opening the Python console from your toolbar in QGIS, click the small “Show editor” button, and then paste the following into the editor and click the “Run” button:</p>
 <pre><code>import os
-os.environ[&#39;PGUSER&#39;] = &#39;student&#39;
-os.environ[&#39;PGPASSWORD&#39;] = &#39;studentpasswordhere&#39;
-</code></pre>
+os.environ[&quot;PGUSER&quot;] = &quot;student&quot;
+os.environ[&quot;PGPASSWORD&quot;] = &quot;studentpasswordhere&quot;</code></pre>
 <p><img src="images/05-qgis-python-environment-variables.png" width="75%" /></p>
 <p>This step will automatically authenticate you each time you need to transact with the PostgreSQL server through the GDAL utilities. Your credential is only saved for the duration of your QGIS session, so once you close QGIS and re-open your project, you will need to come back to this step to save your environment variables. Close the python console and editor when you are done.</p>
 <p><strong>Step 5:</strong> From the QGIS processing toolbox, search for the “Merge” tool, filed under “GDAL Raster Miscellaneous”. This tool is the equivalent of the <code>gdal_merge</code> command-line utility tool, and it takes a set of rasters as input and creates a mosaic of those data. Click the ellipse “…” next to the “Input Layers” field and then click “Select All” to toggle on all the ASTER DEMs currently in your project. Expand the menu for “Output data type” and select “Int16”. Name the output “aster_dem_wgs84.tif”. Click “Run”. Notice when you run these GDAL tools, the log shows you the exact GDAL command that you can run in the command line, like we did in Task 1. Inspect the output in QGIS. Notice that we did not download any of the raster data to our local machine until this very last step.</p>
@@ -350,7 +349,7 @@ os.environ[&#39;PGPASSWORD&#39;] = &#39;studentpasswordhere&#39;
 <li><p><code>aster_dem_wgs84.tif</code> is the input raster and <code>aster_dem_utm.tif</code> is the output (resampled) raster. Inspect the output in QGIS.</p></li>
 </ul>
 <p>Note that we did not use the <code>-ot</code> output data type flag, so <code>gdalwarp</code> used the <code>Int16</code> data type of our input raster. If you set <code>-ot Float32</code>, then you would see that the cubic resampling algorithm actually yields decimals instead of the integers that you see in the current output, but for our purposes that sub-meter level of precision is not needed.</p>
-<p><strong>Step 7:</strong> Search for the “Raster Calculator” tool. Double-click the “aster_d em_utm.tif” mosaic to add it to the expression, then click the multiply button “*“, then double-click the”yellowhead_bma_utm.tif” raster to add it to the expression. Scroll down farther and click the ellipse “…” next to the “Output” field to save the output as “aster_dem_utm_aoi.tif”. Click “Run” and then inspect the output in your map.</p>
+<p><strong>Step 7:</strong> Search for the “Raster Calculator” tool. Double-click the “aster_d em_utm.tif” mosaic to add it to the expression, then click the multiply button “*”, then double-click the “yellowhead_bma_utm.tif” raster to add it to the expression. Scroll down farther and click the ellipse “…” next to the “Output” field to save the output as “aster_dem_utm_aoi.tif”. Click “Run” and then inspect the output in your map.</p>
 <p><img src="images/05-qgis-aster-dem-mask.png" width="75%" /></p>
 <hr />
 </div>
@@ -363,7 +362,7 @@ os.environ[&#39;PGPASSWORD&#39;] = &#39;studentpasswordhere&#39;
 <p><strong>Step 3:</strong> Open the “Data source manager”, connect to the <code>bear</code> database on the UBC PostgreSQL server, and add the “ca_forest_vlce2_2019” raster to your map. This layer is a clipping of a <a href="https://opendata.nfis.org/mapserver/nfis-change_eng.html">national land cover dataset for Canada</a> for the year 2019. The values of the raster refer to specific land covers. Open the properties for the layer. As you can see, it has a different coordinate system, resolution, and extent than our AOI. Export this raster as a GeoTiff to your local project folder and keep the output name the same.</p>
 <p><strong>Step 4:</strong> Open the OSGeo4W shell and navigate to your project folder. Run the <code>gdalwarp</code> utility again, parameterize it the same as before in Task 2, but change the <code>-s_srs</code> flag to <code>EPSG:3978</code>, the <code>-r</code> flag to <code>near</code>, the input file to <code>ca_forest_vlce2_2019.tif</code>, and the output file to <code>land_cover_utm.tif</code>. Inspect the output in QGIS.</p>
 <div id="q4.-why-did-we-choose-near-as-the-resampling-method-1-point" class="section level5 unnumbered hasAnchor">
-<h5>Q4. Why did we choose ‘near’ as the resampling method? (1 point)<a href="raster-least-cost-path-analysis.html#q4.-why-did-we-choose-near-as-the-resampling-method-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<h5>Q4. Why did we choose “near” as the resampling method? (1 point)<a href="raster-least-cost-path-analysis.html#q4.-why-did-we-choose-near-as-the-resampling-method-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p><strong>Step 5:</strong> Use the “Raster Calculator” tool to multiply “yellowhead_bma_utm.tif” by “land_cover_utm.tif” and write the output to “land_cover_utm_aoi.tif”.</p>
 <p>We want to use the land cover layer as an input to our cost surface, but the values of the land cover raster are codes, which are nominal data. These values cannot directly be compared as-is. For example, the code for water is 20 and the code for herbs is 100. These numbers do not imply that herbs is 5 times more costly than water, they are simply numerical placeholders for the concept of land cover. We need to define and then assign proper values for each land cover that represents the cost or resistance for Grizzly Bears to traverse a cell of that land cover. We can do this by reclassifying the land cover raster. Below is a table indicating the land cover class codes and some proposed cost values scaled between 0 (no cost) and 1 (highest cost):</p>
 <table>
@@ -448,9 +447,9 @@ os.environ[&#39;PGPASSWORD&#39;] = &#39;studentpasswordhere&#39;
 <p><strong>Step 9:</strong> Search for the “Proximity (Raster Distance)” tool. The input layer will be “yellowhead_roads_utm.tif”. Name the output as “yellowhead_roads_distance_utm.tif”. Ensure that your QGIS map project CRS is set to <code>EPSG:26911</code> in the bottom right hand corner, then click “Run” and inspect the output in the map.</p>
 <p><strong>Step 10:</strong> Open the “Raster Calculator” tool and add the expression <code>(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2</code>. Let us break this one down:</p>
 <ul>
-<li><p><code>1 / "yellowhead_roads_distance_utm@1"</code> would give us the inverse distances, however, cells that are roads have a distance of zero, and <span class="math inline">\(1÷0=undefined=nodata\)</span>. Therefore, we need to add a fraction to the denominator.</p></li>
-<li><p><code>1 / ("yellowhead_roads_distance_utm@1" + 0.5)</code> avoids nodata values in the situation above, but now roads have a value of <span class="math inline">\(1÷0.5=2\)</span>. We ultimately want these values to be between 0 and 1, with 1 representing roads.</p></li>
-<li><p><code>(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2</code> dividing everything by 2 causes the 0.5 fraction to be removed from all cells, and road cells to be assigned a value of <span class="math inline">\(2÷2=1\)</span>.</p></li>
+<li><p><code>1 / "yellowhead_roads_distance_utm@1"</code> would give us the inverse distances, however, cells that are roads have a distance of zero, and <span class="math inline">\(1\div 0\)</span> is undefined and returns NoData. Therefore, we need to add a fraction to the denominator.</p></li>
+<li><p><code>1 / ("yellowhead_roads_distance_utm@1" + 0.5)</code> avoids nodata values in the situation above, but now roads have a value of <span class="math inline">\(1\div 0.5=2\)</span>. We ultimately want these values to be between 0 and 1, with 1 representing roads.</p></li>
+<li><p><code>(1 / ("yellowhead_roads_distance_utm@1" + 0.5)) / 2</code> dividing everything by 2 causes the 0.5 fraction to be removed from all cells, and road cells to be assigned a value of <span class="math inline">\(2\div 2=1\)</span>.</p></li>
 </ul>
 <p>This way, the cost of traversing a roadway is 1 and decreases as you move away from the road. Change the “Reference layer” to “yellowhead_bma_utm.tif” and save the output as “yellowhead_roads_distance_utm_cost.tif”. Inspect the output in your map and zoom in close to a road.</p>
 <p><img src="images/05-qgis-roads-cost.png" width="50%" /></p>
@@ -499,7 +498,7 @@ os.environ[&#39;PGPASSWORD&#39;] = &#39;studentpasswordhere&#39;
 <div id="summary-4" class="section level2 unnumbered hasAnchor">
 <h2>Summary<a href="raster-least-cost-path-analysis.html#summary-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Raster analysis is comprised of manipulating base data, deriving new rasters, and weighting and combining rasters together in order to answer a spatial question. In this lab, you learned how to effectively set up a raster analysis through careful planning and choice of factors like raster extent, coordinate system, cell size, alignment, data type, and resampling algorithms. Rasters can lead to powerful spatial analyses like least cost path analysis due to the explicit encoding of information in the spatial neighborhood.</p>
-<p>Return to the <strong><a href="raster-least-cost-path-analysis.html#lab5-deliverables">Deliverables</a></strong> section to check off everything you need to submit for credit in the course management system.</p>
+<p>Return to the <a href="raster-least-cost-path-analysis.html#lab5-deliverables"><strong>Deliverables</strong></a> section to check off everything you need to submit for credit in the course management system.</p>
 
 </div>
 </div>
