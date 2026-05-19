@@ -6,7 +6,6 @@ author <- yml_content[["raster-least-cost-path-analysis"]][["author"]]
 # Raster and Least Cost Path Analysis {#raster-least-cost-path-analysis}
 
 Written by
-
 ```{r results="asis", echo=FALSE}
 cat(author)
 ```
