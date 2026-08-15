@@ -232,7 +232,7 @@ Once you are satisfied with the state of your table, you will dump your entire P
 
 **Step 9:** Open a Windows command prompt (search "command"). Take note of your current working directory, which is probably something like `C:\Users\[your username]`. This is where your database SQL file will be saved to. If your command prompt shows your working directory as `C:\Program Files\QGIS X.XX.X` or similar, then you will first need to change to a directory where you have permission to write to. Usually, this is somewhere in your user folder, which you can navigate to in the terminal with the change directory `cd` command: `cd C:\Users\[your username]\Documents`. 
 
-To dump your database, use the following command: `pg_dump -d mypostgisdb -U postgres -h localhost > mypostgisdb.sql`. You will be prompted to enter your password and then the new file `mypostgisdb.sql` will be saved in your working directory. If you see a command not found message, then type `where pg_dump`. Then copy the full path to the program executable when running the commands that follow, usually `"C:\Program Files\PostgreSQL\16\bin"`. Copy the path and then in command prompt type `set PATH=%PATH%;"C:\Program Files\PostgreSQL\16\bin"`, replacing `X.XX.X` with your current QGIS version. Try the `pg_dump` command again to ensure it works.
+To dump your database, use the following command: `pg_dump -d mypostgisdb -U postgres -h localhost > mypostgisdb.sql`. You will be prompted to enter your password and then the new file `mypostgisdb.sql` will be saved in your working directory. If you see a command not found message, then type `where pg_dump`. Then copy the full path to the program executable when running the commands that follow, usually `"C:\Program Files\PostgreSQL\XX\bin"`. Copy the path and then in command prompt type `set PATH=%PATH%;"C:\Program Files\PostgreSQL\XX\bin"`, replacing `XX` with your current PostgreSQL version. Try the `pg_dump` command again to ensure it works.
 
 **Step 10:** Check to make sure that you can load the database back into PostgreSQL. In psql, create a new empty database named mypostgisdb_backup. Then, enter the following command from the Windows command prompt: `psql -U postgres -h localhost mypostgisdb_backup < mypostgisdb.sql`. You can now query the postgisdb_backup database to check that it is a copy of your other mypostgisdb database.
 
@@ -253,17 +253,17 @@ ogr2ogr is the primary utility program for working with vector data and as you c
 **Step 3:** ogr2ogr is really useful for converting data between different formats and this is handy for exporting data out of a PostGIS database. Convert the ubcv_campus_trees table from the UBC PostgreSQL server with the following command:
 
 ``` bash
-ogr2ogr -f "ESRI Shapefile" ubcv_campus_trees.shp PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_campus_trees"
+ogr2ogr -f "ESRI Shapefile" ubcv_campus_trees.shp PG:"host=FRST-GIS.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_campus_trees"
 ```
 
 Replace `STUDENT_PASSWORD_HERE` with the password that has been shared with the class. 
 
-This command tells ogr2ogr to connect to the ubcv PostGIS database on the PostgreSQL server `PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE"`, grab the table named `"ubcv_campus_trees"`, and then return it to the local machine as an ESRI Shapefile `-f "ESRI Shapefile"`. The file will be saved in your current working directory from the OSGeo4W shell.
+This command tells ogr2ogr to connect to the ubcv PostGIS database on the PostgreSQL server `PG:"host=FRST-GIS.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE"`, grab the table named `"ubcv_campus_trees"`, and then return it to the local machine as an ESRI Shapefile `-f "ESRI Shapefile"`. The file will be saved in your current working directory from the OSGeo4W shell.
 
 **Step 4:** You can also specify an SQL query on the input data. For example, the following command will only return the Forest Sciences Centre polygon from ubcv_buildings: 
 
 ``` bash
-ogr2ogr -where "bldg_code='FSC'" -f "ESRI Shapefile" ubcv_FSC.shp PG:"host=FRST-PostgreSQL.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_buildings"
+ogr2ogr -where "bldg_code='FSC'" -f "ESRI Shapefile" ubcv_FSC.shp PG:"host=FRST-GIS.ead.ubc.ca user=student dbname=ubcv password=STUDENT_PASSWORD_HERE" "ubcv_buildings"
 ```
 
 You can write more complex SQL statements with the `-sql` flag instead of `-where`.

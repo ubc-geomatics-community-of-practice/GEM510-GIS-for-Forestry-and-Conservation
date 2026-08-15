@@ -65,11 +65,11 @@ All data for this lab are accessible via the UBC PostgreSQL server. Instructions
 
 **Step 4:** From the pgAdmin dashboard, click "Add New Server".
 
-```{r 01-pgadmin-dashboard, out.width= "75%", echo = FALSE}
+```{r 01-pgadmin-dashboard, out.width= "100%", echo = FALSE}
     knitr::include_graphics("images/01-pgadmin-dashboard.png")
 ```
 
-**Step 5:** Name the connection "UBC PostgreSQL Server". Click the "Connection" tab, enter FRST-PostgreSQL.ead.ubc.ca for the Host Name, change the Username to "student", and then enter the password that has been shared with the class. Leave everything else as the default, but you can choose to save the password if you want. Click "Save". If the password is correct, then pgAdmin should automatically connect to the server and you will see it listed in the Browser, just expand "Servers".
+**Step 5:** Name the connection "UBC PostgreSQL Server". Click the "Connection" tab, enter FRST-GIS.ead.ubc.ca for the Host Name, change the Username to "student", and then enter the password that has been shared with the class. Leave everything else as the default, but you can choose to save the password if you want. Click "Save". If the password is correct, then pgAdmin should automatically connect to the server and you will see it listed in the Browser, just expand "Servers".
 
 ```{r 01-pgadmin-new-server-connection, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/01-pgadmin-new-server-connection.png")
@@ -77,21 +77,17 @@ All data for this lab are accessible via the UBC PostgreSQL server. Instructions
 
 Although the connection was automatic this time, each time you start pgAdmin, you will need to reconnect to the server after entering your master password. This is as simple as double-clicking the server name from the server list or right-click and select "Connect Server".
 
-```{r 01-pgadmin-connect, out.width= "90%", echo = FALSE}
-    knitr::include_graphics("images/01-pgadmin-connect.png")
-```
-
-**Step 6:** From the Browser or Object Explorer pane on the left, expand "Servers", "PostgreSQL 15", "Databases", "ubcv", "Schemas", then expand "public", then expand "Tables" to view all the tables in the ubcv database. 
+**Step 6:** From the Browser or Object Explorer pane on the left, expand "Servers", "PostgreSQL XX" (where "XX" is your current PostgreSQL version), "Databases", "ubcv", "Schemas", then expand "public", then expand "Tables" to view all the tables in the ubcv database. 
 
 **Step 7:** Right-click on a table and then select "View/Edit Data" > "All Rows". pgAdmin will create an SQL query and then show the result. This is one way to view the attribute table from pgAdmin.
 
-```{r 01-pgadmin-ubcv-buildings, out.width= "90%", echo = FALSE}
+```{r 01-pgadmin-ubcv-buildings, out.width= "100%", echo = FALSE}
     knitr::include_graphics("images/01-pgadmin-ubcv-buildings.png")
 ```
 
 **Step 8:** You can also execute your own SQL query. Right-click on a table and select "Query Tool". At the top, you can write any SQL query you want then click the Run button that looks like a triangle from the top ribbon. pgAdmin will return the resulting table below.
 
-```{r 01-pgadmin-ubcv-query, out.width= "90%", echo = FALSE}
+```{r 01-pgadmin-ubcv-query, out.width= "100%", echo = FALSE}
     knitr::include_graphics("images/01-pgadmin-ubcv-query.png")
 ```
 
@@ -101,13 +97,13 @@ Although the connection was automatic this time, each time you start pgAdmin, yo
 
 **Step 1:** Open QGIS. From the Browser pane on the left, right-click "PostgreSQL" and select "New Connection".
 
-```{r 01-qgis-postgres-connection, out.width= "75%", echo = FALSE}
+```{r 01-qgis-postgres-connection, out.width= "40%", echo = FALSE}
     knitr::include_graphics("images/01-qgis-postgres-connection.png")
 ```
 
 **Step 2:** In your Browser pane, you should now see the ubcv database connection. Expand it to see the available public schema, then expand that to see all available tables that have geometries. You can double-click any of these or click-and-drag into your empty project to view them.
 
-```{r 01-qgis-browser-ubcv, out.width= "75%", echo = FALSE}
+```{r 01-qgis-browser-ubcv, out.width= "25%", echo = FALSE}
     knitr::include_graphics("images/01-qgis-browser-ubcv.png")
 ```
 
@@ -125,7 +121,7 @@ At this point, keep in mind that all the data still live on the postgres server.
 
 Note that the layer you just created does not actually exist outside your QGIS project. If you navigate into the properties of this layer, you will see the Source is simply a reference to the data that are still stored on the postgres server. This can be a really efficient way to handle data without unnecessarily copying it to a new file!
 
-```{r 01-qgis-query-properties, out.width= "75%", echo = FALSE}
+```{r 01-qgis-query-properties, out.width= "100%", echo = FALSE}
     knitr::include_graphics("images/01-qgis-query-properties.png")
 ```
 
@@ -139,7 +135,7 @@ Note that the layer you just created does not actually exist outside your QGIS p
 
 **Step 2:** From the top ribbon, navigate to the "Insert" tab, then click "Connections", and from the drop-down menu, select "New Database Connection". Enter the database connection details in the same way that you did in the prior tasks. Once you have correctly entered the correct credentials, ArcGIS Pro will do a "soft" connection to the server to retrieve the available databases. From the "Database" drop-down menu, select "ubcv" and then click "OK".
 
-```{r 01-arcgispro-postgres-connection, out.width= "75%", echo = FALSE}
+```{r 01-arcgispro-postgres-connection, out.width= "40%", echo = FALSE}
     knitr::include_graphics("images/01-arcgispro-postgres-connection.png")
 ```
 
@@ -169,7 +165,7 @@ You will be returned to the Properties dialogue of the layer you added in your m
 
 **Step 1:** From your Windows search bar, search for "psql" and open the SQL Shell (psql) application. This will open a command prompt and allow you to interact with the PostgreSQL server directly using mostly SQL statements. 
 
-The prompt should say `Server [localhost]:`. Type "FRST-PostgreSQL.ead.ubc.ca" and then hit "Enter" on your keyboard.
+The prompt should say `Server [localhost]:`. Type "FRST-GIS.ead.ubc.ca" and then hit "Enter" on your keyboard.
 
 The prompt should then say `Database [postgres]:`. Type "ubcv" and then press "Enter" on your keyboard.
 

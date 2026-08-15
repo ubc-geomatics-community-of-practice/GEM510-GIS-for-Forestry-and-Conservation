@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2026-08-13" />
+<meta name="date" content="2026-08-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -290,31 +290,30 @@ Paul D. Pickell</p>
 <p><strong>Step 3:</strong> Upon starting pgAdmin, you will be prompted to set a master password. This is an important step as this master password will be used to encrypt all other passwords you use to connect to various server databases. DO NOT USE THE SAME PASSWORD AS YOU WILL USE FOR ANY DATABASE!</p>
 <p><img src="images/01-pgadmin-master-password.png" width="75%" /></p>
 <p><strong>Step 4:</strong> From the pgAdmin dashboard, click “Add New Server”.</p>
-<p><img src="images/01-pgadmin-dashboard.png" width="75%" /></p>
-<p><strong>Step 5:</strong> Name the connection “UBC PostgreSQL Server”. Click the “Connection” tab, enter FRST-PostgreSQL.ead.ubc.ca for the Host Name, change the Username to “student”, and then enter the password that has been shared with the class. Leave everything else as the default, but you can choose to save the password if you want. Click “Save”. If the password is correct, then pgAdmin should automatically connect to the server and you will see it listed in the Browser, just expand “Servers”.</p>
+<p><img src="images/01-pgadmin-dashboard.png" width="100%" /></p>
+<p><strong>Step 5:</strong> Name the connection “UBC PostgreSQL Server”. Click the “Connection” tab, enter FRST-GIS.ead.ubc.ca for the Host Name, change the Username to “student”, and then enter the password that has been shared with the class. Leave everything else as the default, but you can choose to save the password if you want. Click “Save”. If the password is correct, then pgAdmin should automatically connect to the server and you will see it listed in the Browser, just expand “Servers”.</p>
 <p><img src="images/01-pgadmin-new-server-connection.png" width="75%" /></p>
 <p>Although the connection was automatic this time, each time you start pgAdmin, you will need to reconnect to the server after entering your master password. This is as simple as double-clicking the server name from the server list or right-click and select “Connect Server”.</p>
-<p><img src="images/01-pgadmin-connect.png" width="90%" /></p>
-<p><strong>Step 6:</strong> From the Browser or Object Explorer pane on the left, expand “Servers”, “PostgreSQL 15”, “Databases”, “ubcv”, “Schemas”, then expand “public”, then expand “Tables” to view all the tables in the ubcv database.</p>
+<p><strong>Step 6:</strong> From the Browser or Object Explorer pane on the left, expand “Servers”, “PostgreSQL XX” (where “XX” is your current PostgreSQL version), “Databases”, “ubcv”, “Schemas”, then expand “public”, then expand “Tables” to view all the tables in the ubcv database.</p>
 <p><strong>Step 7:</strong> Right-click on a table and then select “View/Edit Data” &gt; “All Rows”. pgAdmin will create an SQL query and then show the result. This is one way to view the attribute table from pgAdmin.</p>
-<p><img src="images/01-pgadmin-ubcv-buildings.png" width="90%" /></p>
+<p><img src="images/01-pgadmin-ubcv-buildings.png" width="100%" /></p>
 <p><strong>Step 8:</strong> You can also execute your own SQL query. Right-click on a table and select “Query Tool”. At the top, you can write any SQL query you want then click the Run button that looks like a triangle from the top ribbon. pgAdmin will return the resulting table below.</p>
-<p><img src="images/01-pgadmin-ubcv-query.png" width="90%" /></p>
+<p><img src="images/01-pgadmin-ubcv-query.png" width="100%" /></p>
 <hr />
 </div>
 <div id="task-2-explore-with-qgis" class="section level2 unnumbered hasAnchor">
 <h2>Task 2: Explore with QGIS<a href="introduction-postgresql-postgis.html#task-2-explore-with-qgis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Step 1:</strong> Open QGIS. From the Browser pane on the left, right-click “PostgreSQL” and select “New Connection”.</p>
-<p><img src="images/01-qgis-postgres-connection.png" width="75%" /></p>
+<p><img src="images/01-qgis-postgres-connection.png" width="40%" /></p>
 <p><strong>Step 2:</strong> In your Browser pane, you should now see the ubcv database connection. Expand it to see the available public schema, then expand that to see all available tables that have geometries. You can double-click any of these or click-and-drag into your empty project to view them.</p>
-<p><img src="images/01-qgis-browser-ubcv.png" width="75%" /></p>
+<p><img src="images/01-qgis-browser-ubcv.png" width="25%" /></p>
 <p><strong>Step 3:</strong> Spend some time exploring the data. Open the attribute tables. View the properties and metadata. What is the EPSG code for the Coordinate Reference System (CRS) for these data?</p>
 <p>At this point, keep in mind that all the data still live on the postgres server. You may have already seen the other databases on the server. If you want to view the data in those databases, you will need to create a new database connection for each database that you want to connect to. Feel free to explore the data in the other databases, noting that what is available at any given time may be different from what you see in the screenshots in this lab. The UBC PostgreSQL server hosts many databases that are used for research and teaching!</p>
 <p><strong>Step 4:</strong> You can also execute SQL queries in QGIS directly from the PostGIS database. From the Browser pane, right-click any available table in the PostGIS database and then select “Execute SQL…”. In the dialogue window that opens, you will see a default SQL query that will return the first 10 features (tuples) of the selected relation.</p>
 <p><img src="images/01-qgis-query.png" width="75%" /></p>
 <p><strong>Step 5:</strong> Write an SQL query to return some subset of the data then click the “Execute” button. QGIS will return a preview of the attribute table for the query. From here, you can export this as a layer to view the result in the map. Expand “Load as a new layer” and then toggle on “Column(s) with unique values” and ensure the field is set to “ogc_fid”, this is the primary key for the table in PostGIS. Toggle on “Geometry column” and ensure the field is set to “wkb_geometry”, this is the “Well Known Binary” format used to represent features in PostGIS. Finally, change the “Layer name” to something to distinguish your query from others and then click “Load layer” and then “Close”. The result of the SQL query should now appear as a layer in your QGIS map.</p>
 <p>Note that the layer you just created does not actually exist outside your QGIS project. If you navigate into the properties of this layer, you will see the Source is simply a reference to the data that are still stored on the postgres server. This can be a really efficient way to handle data without unnecessarily copying it to a new file!</p>
-<p><img src="images/01-qgis-query-properties.png" width="75%" /></p>
+<p><img src="images/01-qgis-query-properties.png" width="100%" /></p>
 <p><strong>Step 5:</strong> You can export any table in the PostGIS database to your local computer by right-clicking the table name in the PostGIS database and then selecting “Export Layer” &gt; “To File…”. From the new dialogue window, you can configure the output file however you want. You can do the same for the query layer by right-clicking the query layer created in Step 5 and selecting “Export” &gt; “Save Features As…”.</p>
 <hr />
 </div>
@@ -322,7 +321,7 @@ Paul D. Pickell</p>
 <h2>Task 3: Explore with ArcGIS Pro<a href="introduction-postgresql-postgis.html#task-3-explore-with-arcgis-pro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Step 1:</strong> Start ArcGIS Pro and create a new project.</p>
 <p><strong>Step 2:</strong> From the top ribbon, navigate to the “Insert” tab, then click “Connections”, and from the drop-down menu, select “New Database Connection”. Enter the database connection details in the same way that you did in the prior tasks. Once you have correctly entered the correct credentials, ArcGIS Pro will do a “soft” connection to the server to retrieve the available databases. From the “Database” drop-down menu, select “ubcv” and then click “OK”.</p>
-<p><img src="images/01-arcgispro-postgres-connection.png" width="75%" /></p>
+<p><img src="images/01-arcgispro-postgres-connection.png" width="40%" /></p>
 <p><strong>Step 3:</strong> From the top ribbon, navigate to the “Map” tab, then click “Add Data”. From the dialogue window that opens, expand “Databases”, and you will see your local project geodatabase that was created when you initiated the project and the newly added postgres server. Click the postgres server connection to view the tables and then add a layer to your map.</p>
 <p><img src="images/01-arcgispro-postrges-catalog.png" width="75%" /></p>
 <p><strong>Step 4:</strong> Once you have added a layer to your map, right-click it in your Contents pane and open the properties. Again, like the query layer you created in QGIS, you will see this layer is a dynamic reference to the data on the PostGIS database.</p>
@@ -335,7 +334,7 @@ Paul D. Pickell</p>
 <div id="task-4-explore-with-psql-shell" class="section level2 unnumbered hasAnchor">
 <h2>Task 4: Explore with psql Shell<a href="introduction-postgresql-postgis.html#task-4-explore-with-psql-shell" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Step 1:</strong> From your Windows search bar, search for “psql” and open the SQL Shell (psql) application. This will open a command prompt and allow you to interact with the PostgreSQL server directly using mostly SQL statements.</p>
-<p>The prompt should say <code>Server [localhost]:</code>. Type “FRST-PostgreSQL.ead.ubc.ca” and then hit “Enter” on your keyboard.</p>
+<p>The prompt should say <code>Server [localhost]:</code>. Type “FRST-GIS.ead.ubc.ca” and then hit “Enter” on your keyboard.</p>
 <p>The prompt should then say <code>Database [postgres]:</code>. Type “ubcv” and then press “Enter” on your keyboard.</p>
 <p>The prompt should then say <code>Port [5432]:</code>. This is the default port that the PostgreSQL server uses. Press “Enter” on your keyboard to accept the default port.</p>
 <p>The prompt should then say <code>Username [postgres]:</code>. Type “student” and then press “Enter” on your keyboard.</p>
