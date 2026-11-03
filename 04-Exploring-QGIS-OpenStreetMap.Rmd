@@ -109,7 +109,7 @@ Once the plugin is installed, you can click **Close** to dismiss the Plugin Mana
 
 
 
-Once you click on the QuickOSM icon, A box will appear showing CTR, Hiking, and Urban, select **Urban**, and below where it says “A village, a town...” type **UBC**, leave it set to "In", and click on "Run preset". 
+Once you click on the QuickOSM icon, A box will appear showing CTR, Hiking, and Urban, select **Urban**, and below where it says “A village, a town...” type **University of British Columbia**, leave it set to "In", and click on "Run preset". 
 
 ```{r 04-qgis-quick-osm.png, out.width= "50%", echo = FALSE}
    # knitr::include_graphics("images/04-qgis-quick-osm.png")
