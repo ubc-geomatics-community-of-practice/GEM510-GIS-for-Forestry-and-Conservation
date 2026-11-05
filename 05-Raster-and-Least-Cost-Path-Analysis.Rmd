@@ -122,6 +122,7 @@ Latitude(j) = 52.0001388888888982 + j × -0.000277778
 
 ##### Q3. Why do the pixels now appear to be elongated along the y-axis? (2 points) {.unnumbered} 
 
+
 **Step 4:** Save your PostgreSQL credential to your QGIS environment variables by opening the Python console from your toolbar in QGIS, click the small "Show editor" button, and then paste the following into the editor and click the "Run" button:
 
 ```
@@ -175,13 +176,16 @@ In this task, we will calculate a few derivative rasters that are going to repre
 
 **Step 1:** Open your QGIS project and search for the "Slope" tool. Add "aster_dem_utm_aoi.tif" as the "Elevation layer" and save the output to "aster_slope_utm_aoi.tif". Inspect the output in your map.
 
-**Step 2:** We are going to adjust the slope values to a range of 0 and 1. This is easily done by dividing all values by 90, which is the theoretical maximum slope in degrees. Open the "Raster Calculator" tool and type the expression `"aster_slope_utm_aoi@1" / 90`. Change the "Reference layer" to "yellowhead_bma_utm.tif", click "OK", and name the output "aster_slope_utm_aoi_cost.tif" then click "Run". Inspect the output in your map, you should now have values between 0 and 1.
+**Step 2:** We are going to adjust the slope values to a range of 0 and 1. This is easily done by dividing all values by 90, which is the theoretical maximum slope in degrees. Open the "Raster Calculator" tool and type the expression `"aster_slope_utm_aoi@1" / 90`. Change the "Reference layer" to "yellowhead_bma_utm.tif", click "OK", and name the output "aster_slope_utm_aoi_cost.tif" then click "Run". Depending on your QGIS version, the Reference layer field might not show up, but no worries. Just make sure the Spatial Extent and Output CRS are set to the correct AOI values (Xmin: 401480, Ymin: 5753440, Xmax: 661680, Ymax: 5936300, EPSG:26911). If everything looks good, you can continue without selecting a reference layer.
+
+Inspect the output in your map, you should now have values between 0 and 1.
 
 **Step 3:** Open the "Data source manager", connect to the `bear` database on the UBC PostgreSQL server, and add the "ca_forest_vlce2_2019" raster to your map. This layer is a clipping of a [national land cover dataset for Canada](https://opendata.nfis.org/mapserver/nfis-change_eng.html) for the year 2019. The values of the raster refer to specific land covers. Open the properties for the layer. As you can see, it has a different coordinate system, resolution, and extent than our AOI. Export this raster as a GeoTiff to your local project folder and keep the output name the same.
 
 **Step 4:** Open the OSGeo4W shell and navigate to your project folder. Run the `gdalwarp` utility again, parameterize it the same as before in Task 2, but change the `-s_srs` flag to `EPSG:3978`, the `-r` flag to `near`, the input file to `ca_forest_vlce2_2019.tif`, and the output file to `land_cover_utm.tif`. Inspect the output in QGIS.
 
 ##### Q4. Why did we choose 'near' as the resampling method? (1 point) {.unnumbered}
+
 
 **Step 5:** Use the "Raster Calculator" tool to multiply "yellowhead_bma_utm.tif" by "land_cover_utm.tif" and write the output to "land_cover_utm_aoi.tif".
 
