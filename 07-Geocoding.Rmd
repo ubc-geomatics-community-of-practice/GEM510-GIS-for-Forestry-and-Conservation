@@ -62,19 +62,15 @@ The remaining data for this lab are accessible via the UBC PostgreSQL server. In
 
 **Step 3:** The second dataset you will download is "Parks - Polygon Representation". There should be a point and a polygon dataset. Make sure you download the polygon dataset.
 
-------------------------------------------------------------------------
+Next, you will export a filtered table from a shapefile, and then you will add a field so the table can be used in the next task.
 
-## Task 2: Prepare Data {.unnumbered}
-
-In this task, you will export a filtered table from a shapefile, and then you will add a field so the table can be used in the next task.
-
-**Step 1:** Open up the metadata for the public trees for the Location you selected. It should be under the "Schema" tab on the top of your Local Area table. Look through the metadata and familiarize yourself with what each column means. For example, one column designates what is the tree diameter.
+**Step 4:** Open up the metadata for the public trees for the Location you selected. It should be under the "Schema" tab on the top of your Local Area table. Look through the metadata and familiarize yourself with what each column means. For example, one column designates what is the tree diameter.
 
 ##### Q2. What is the name of the column that designates what is the tree diameter? (1 point) {.unnumbered}
 
 ------------------------------------------------------------------------
 
-## Task 3: Geocoding a Table of Addresses {.unnumbered}
+## Task 2: Geocoding a Table of Addresses {.unnumbered}
 
 Many localities label their trees by address rather than by coordinates. In the public trees file, all of the trees have addresses and coordinates. In this section of the lab, you will use a roads network layer for the Greater Vancouver Regional District (GVRD) to create an address locator for Vancouver. Then you will geocode the addresses from your Local Area to examine the differences between collecting data with addresses versus coordinates. An address locator allows you to look up addresses either manually or by uploading a table of addresses. This is helpful when you are searching for specific trees!
 
@@ -138,7 +134,7 @@ Leave the other default options and save the file as "geocoded".
 
 ------------------------------------------------------------------------
 
-## Task 4: Create a shapefile from tabular data {.unnumbered}
+## Task 3: Create a shapefile from tabular data {.unnumbered}
 
 Oftentimes, you will encounter geospatial data in Comma Separated Format (CSV) or tabular format. For example, if you collect field data and enter it into a spreadsheet. Although each value in the dataset may have geographic or projected coordinates, the data may not be immediately accessible in a spatial data format. In this portion of the lab, you will practice converting tabular data into shapefiles. Then, you will work with the shapefiles you have created.
 

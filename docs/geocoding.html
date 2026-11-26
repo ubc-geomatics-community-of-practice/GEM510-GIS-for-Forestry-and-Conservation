@@ -23,7 +23,7 @@
 <meta name="author" content="Paul D. Pickell" />
 
 
-<meta name="date" content="2026-10-05" />
+<meta name="date" content="2026-11-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -221,9 +221,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#lab7-deliverables"><i class="fa fa-check"></i>Deliverables</a></li>
 <li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#data-6"><i class="fa fa-check"></i>Data</a></li>
 <li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#task-1-download-and-prepare-data"><i class="fa fa-check"></i>Task 1: Download and Prepare Data</a></li>
-<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#task-2-prepare-data"><i class="fa fa-check"></i>Task 2: Prepare Data</a></li>
-<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#task-3-geocoding-a-table-of-addresses"><i class="fa fa-check"></i>Task 3: Geocoding a Table of Addresses</a></li>
-<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#task-4-create-a-shapefile-from-tabular-data"><i class="fa fa-check"></i>Task 4: Create a shapefile from tabular data</a></li>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#task-2-geocoding-a-table-of-addresses"><i class="fa fa-check"></i>Task 2: Geocoding a Table of Addresses</a></li>
+<li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#task-3-create-a-shapefile-from-tabular-data"><i class="fa fa-check"></i>Task 3: Create a shapefile from tabular data</a></li>
 <li class="chapter" data-level="" data-path="geocoding.html"><a href="geocoding.html#summary-6"><i class="fa fa-check"></i>Summary</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -270,7 +269,7 @@ Amy Blood</p>
 <p><input type="checkbox" unchecked> Answers to the questions posed throughout the lab (20 points)</input></p>
 <p><input type="checkbox" unchecked> Final map (10 points)</input></p>
 <ul>
-<li>The map should show the neighbourhood for which you downloaded street
+<li>The map should show the neighborhood for which you downloaded street
 tree data for</li>
 <li>Parks symbolized by tree density</li>
 <li>Coordinate-created points (geocoded) and address-created points symbolized differently from each other</li>
@@ -281,38 +280,29 @@ tree data for</li>
 </div>
 <div id="data-6" class="section level2 unnumbered hasAnchor">
 <h2>Data<a href="geocoding.html#data-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>You will be downloading some of your data from the <a href="https://opendata.vancouver.ca/pages/home/">City of Vancouver Open Data Portal</a>.</p>
+<p>You will be downloading some of your data from the <a href="https://opendata.vancouver.ca/pages/home/">City of Vancouver Open Data Portal</a>. You can also check for updates to the page at this link: <a href="https://opendata.vancouver.ca/pages/portal-news/">City of Vancouver Open Data Portal News</a>.</p>
 <p><img src="images/07-cov-data-portal.png" width="75%" /></p>
 <p>The remaining data for this lab are accessible via the UBC PostgreSQL server. Instructions for connecting to the server and data store are given in the tasks below and prior labs.</p>
 <hr />
 </div>
 <div id="task-1-download-and-prepare-data" class="section level2 unnumbered hasAnchor">
 <h2>Task 1: Download and Prepare Data<a href="geocoding.html#task-1-download-and-prepare-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Step 1:</strong> The first dataset you will download is “Public trees” data. Search for it with the search bar, then click the link for the dataset. You are going to want to export the data as a shapefile; click on the Export tab and look over the geographic file formats. You will notice that the download button for Shapefile is greyed out because there are too many records in the dataset. Keep the webpage open so you have access to the Metadata.</p>
-<div id="q1.-what-is-the-maximum-number-of-records-you-can-export-from-the-city-of-vancouver-open-data-portal-as-a-shapefile-1-point" class="section level5 unnumbered hasAnchor">
-<h5>Q1. What is the maximum number of records you can export from the City of Vancouver open data portal as a shapefile? (1 point)<a href="geocoding.html#q1.-what-is-the-maximum-number-of-records-you-can-export-from-the-city-of-vancouver-open-data-portal-as-a-shapefile-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p><strong>Step 2:</strong> Instead of working with the dataset for the entire city, you will focus on one neighbourhood. To the left, there are filtering options. Scroll down to NEIGHBOURHOOD_NAME and choose the neighborhood with the highest number of trees. Now you should have the option to download street tree data. Name the file “neighborhood_trees”.</p>
+<p><strong>Step 1:</strong> The first dataset you will download is “Public trees” data. Use the search bar to find it, then click the result to explore the data. The overview provides a Overview description and options for exploring the dataset in more detail.</p>
+<p><strong>Step 2</strong> For this lab, you will download the data in a geographic file format and focus on a single local area within Vancouver. Select “Explore data”, then scroll down to “Local Area” in the left panel and select the local area with the highest number of trees. Download the data by clicking on the download icon on top.</p>
+<div id="q1.-what-is-the-maximum-number-of-records-you-can-export-from-the-city-of-vancouver-open-data-portal-as-a-shapefile-hint-look-for-the-webpage-updates-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q1. What is the maximum number of records you can export from the City of Vancouver open data portal as a shapefile? HINT: Look for the webpage updates (1 point)<a href="geocoding.html#q1.-what-is-the-maximum-number-of-records-you-can-export-from-the-city-of-vancouver-open-data-portal-as-a-shapefile-hint-look-for-the-webpage-updates-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p><strong>Step 3:</strong> The second dataset you will download is “Parks - Polygon Representation”. There should be a point and a polygon dataset. Make sure you download the polygon dataset.</p>
+<p>Next, you will export a filtered table from a shapefile, and then you will add a field so the table can be used in the next task.</p>
+<p><strong>Step 4:</strong> Open up the metadata for the public trees for the Location you selected. It should be under the “Schema” tab on the top of your Local Area table. Look through the metadata and familiarize yourself with what each column means. For example, one column designates what is the tree diameter.</p>
+</div>
+<div id="q2.-what-is-the-name-of-the-column-that-designates-what-is-the-tree-diameter-1-point" class="section level5 unnumbered hasAnchor">
+<h5>Q2. What is the name of the column that designates what is the tree diameter? (1 point)<a href="geocoding.html#q2.-what-is-the-name-of-the-column-that-designates-what-is-the-tree-diameter-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <hr />
 </div>
 </div>
-<div id="task-2-prepare-data" class="section level2 unnumbered hasAnchor">
-<h2>Task 2: Prepare Data<a href="geocoding.html#task-2-prepare-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In this task, you will export a filtered table from a shapefile, and then you will add a field so the table can be used in the next task.</p>
-<p><strong>Step 1:</strong> Open up the metadata for the street trees file. It should be under the “Information” tab on the City of Vancouver data portal website. Look through the metadata and familiarize yourself with what each column means. For example, one column designates when a tree was planted.</p>
-<div id="q2.-what-is-the-name-of-the-column-that-designates-when-a-tree-was-planted-1-point" class="section level5 unnumbered hasAnchor">
-<h5>Q2. What is the name of the column that designates when a tree was planted? (1 point)<a href="geocoding.html#q2.-what-is-the-name-of-the-column-that-designates-when-a-tree-was-planted-1-point" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p><strong>Step 2:</strong> Open the attribute table for “neighborhood_trees” that you downloaded and add a new text field called “Address”. On the top of the attribute table, there is a button that says “Add”. The table will switch to field view. Name the field “Address” and select “Text” as the data type. Click “Save” in the top bar. Close “Field View” and return to the attribute table. Your new field should appear as the very last column in the dataset. Right-click the field and select “Calculate Field.”</p>
-<p>The address locator you create in Task 3 requires addresses to be written in a specific way: street numbers and names must be in the same column. You will need to specify to ArcGIS that you are combining two strings (another designation for text data). Within the Fields menu under “Expression,” double-click “civic_numb”. You will notice that the field below the equal sign is now populated with !civic_numb!.</p>
-<p>To combine (i.e., concatenate) the two columns together, type the following code into the box: <code>str(!civic_numb!)+" "+str(!std_street!)</code></p>
-<p><img src="images/07-calculate-field.png" width="50%" /></p>
-<p>Click “Apply”. The Address field should now have street numbers and street names.</p>
-<hr />
-</div>
-</div>
-<div id="task-3-geocoding-a-table-of-addresses" class="section level2 unnumbered hasAnchor">
-<h2>Task 3: Geocoding a Table of Addresses<a href="geocoding.html#task-3-geocoding-a-table-of-addresses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Many localities label their trees by address rather than by coordinates. In the street-trees file, all of the trees have addresses and coordinates. In this section of the lab, you will use a roads network layer for the Greater Vancouver Regional District (GVRD) to create an address locator for Vancouver. Then you will geocode the addresses from your neighborhood to examine the differences between collecting data with addresses versus coordinates. An address locator allows you to look up addresses either manually or by uploading a table of addresses. This is helpful when you are searching for specific trees!</p>
+<div id="task-2-geocoding-a-table-of-addresses" class="section level2 unnumbered hasAnchor">
+<h2>Task 2: Geocoding a Table of Addresses<a href="geocoding.html#task-2-geocoding-a-table-of-addresses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Many localities label their trees by address rather than by coordinates. In the public trees file, all of the trees have addresses and coordinates. In this section of the lab, you will use a roads network layer for the Greater Vancouver Regional District (GVRD) to create an address locator for Vancouver. Then you will geocode the addresses from your Local Area to examine the differences between collecting data with addresses versus coordinates. An address locator allows you to look up addresses either manually or by uploading a table of addresses. This is helpful when you are searching for specific trees!</p>
 <p><strong>Step 1:</strong> Connect to the <code>geocode</code> database on the UBC PostgreSQL server and load the “gvrd_roads” layer into your map.</p>
 <p><strong>Step 2:</strong> Create an address locator, which is located in the Geoprocessing pane by selecting “Analysis”, “Tools”, “Toolboxes”, “Geocoding Tools”, and “Create Locator”. You can also use the search bar to search for the tool by name.</p>
 <p>For the tool parameters:</p>
@@ -322,14 +312,14 @@ tree data for</li>
 <li><strong>Role:</strong> Street Address</li>
 <li><strong>Field Map:</strong>
 <ul>
-<li><strong>Feature ID:</strong> ogc_fid</li>
+<li><strong>Feature ID:</strong> fid</li>
 <li><strong>Left House Number From:</strong> from_left_house_number</li>
 <li><strong>Left House Number To:</strong> to_left_house_number</li>
 <li><strong>Right House Number From:</strong> from_right_house_number</li>
 <li><strong>Right House Number To:</strong> to_right_house_number</li>
-<li><strong>Street Name:</strong> structured_name_a</li>
-<li><strong>Left City/Municipality:</strong> left_loc_1</li>
-<li><strong>Right City/Municipality:</strong> right_loc_1</li>
+<li><strong>Street Name:</strong> structured_name_1</li>
+<li><strong>Left City/Municipality:</strong> left_locality</li>
+<li><strong>Right City/Municipality:</strong> right_locality</li>
 </ul></li>
 <li>All other fields leave as <code>&lt;NONE&gt;</code></li>
 <li><strong>Language Code:</strong> English</li>
@@ -360,8 +350,8 @@ tree data for</li>
 <hr />
 </div>
 </div>
-<div id="task-4-create-a-shapefile-from-tabular-data" class="section level2 unnumbered hasAnchor">
-<h2>Task 4: Create a shapefile from tabular data<a href="geocoding.html#task-4-create-a-shapefile-from-tabular-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="task-3-create-a-shapefile-from-tabular-data" class="section level2 unnumbered hasAnchor">
+<h2>Task 3: Create a shapefile from tabular data<a href="geocoding.html#task-3-create-a-shapefile-from-tabular-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Oftentimes, you will encounter geospatial data in Comma Separated Format (CSV) or tabular format. For example, if you collect field data and enter it into a spreadsheet. Although each value in the dataset may have geographic or projected coordinates, the data may not be immediately accessible in a spatial data format. In this portion of the lab, you will practice converting tabular data into shapefiles. Then, you will work with the shapefiles you have created.</p>
 <p><strong>Step 1:</strong> Connect to the <code>geocode</code> database on the UBC PostgreSQL server and load the “parktrees” table into your map. There should be six columns and many rows. Each row represents a tree in a Vancouver Park.</p>
 <div id="q5.-how-many-trees-are-represented-in-this-file-1-point" class="section level5 unnumbered hasAnchor">
