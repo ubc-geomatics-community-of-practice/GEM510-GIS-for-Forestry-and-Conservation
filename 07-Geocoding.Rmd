@@ -31,7 +31,7 @@ Working with and manipulating your own geospatial data is essential for many geo
 
 <input type="checkbox" unchecked> Final map (10 points)</input>
 
-- The map should show the neighbourhood for which you downloaded street
+- The map should show the neighborhood for which you downloaded street
 tree data for
 - Parks symbolized by tree density 
 - Coordinate-created points (geocoded) and address-created points symbolized differently from each other
@@ -42,7 +42,7 @@ tree data for
 
 ## Data {.unnumbered}
 
-You will be downloading some of your data from the [City of Vancouver Open Data Portal](https://opendata.vancouver.ca/pages/home/).
+You will be downloading some of your data from the [City of Vancouver Open Data Portal](https://opendata.vancouver.ca/pages/home/). You can also check for updates to the page at this link: [City of Vancouver Open Data Portal News](https://opendata.vancouver.ca/pages/portal-news/). 
 
 ```{r 07-cov-data-portal, out.width= "75%", echo = FALSE}
     knitr::include_graphics("images/07-cov-data-portal.png")
@@ -54,11 +54,11 @@ The remaining data for this lab are accessible via the UBC PostgreSQL server. In
 
 ## Task 1: Download and Prepare Data {.unnumbered}
 
-**Step 1:** The first dataset you will download is "Public trees" data. Search for it with the search bar, then click the link for the dataset. You are going to want to export the data as a shapefile; click on the Export tab and look over the geographic file formats. You will notice that the download button for Shapefile is greyed out because there are too many records in the dataset. Keep the webpage open so you have access to the Metadata.
+**Step 1:** The first dataset you will download is "Public trees" data. Use the search bar to find it, then click the result to explore the data. The overview provides a Overview description and options for exploring the dataset in more detail. 
 
-##### Q1. What is the maximum number of records you can export from the City of Vancouver open data portal as a shapefile? (1 point) {.unnumbered}
+**Step 2** For this lab, you will download the data in a geographic file format and focus on a single local area within Vancouver. Select "Explore data", then scroll down to "Local Area" in the left panel and select the local area with the highest number of trees. Download the data by clicking on the download icon on top. 
 
-**Step 2:** Instead of working with the dataset for the entire city, you will focus on one neighbourhood. To the left, there are filtering options. Scroll down to NEIGHBOURHOOD_NAME and choose the neighborhood with the highest number of trees. Now you should have the option to download street tree data. Name the file "neighborhood_trees".
+##### Q1. What is the maximum number of records you can export from the City of Vancouver open data portal as a shapefile? HINT: Look for the webpage updates (1 point) {.unnumbered}
 
 **Step 3:** The second dataset you will download is "Parks - Polygon Representation". There should be a point and a polygon dataset. Make sure you download the polygon dataset.
 
@@ -68,27 +68,15 @@ The remaining data for this lab are accessible via the UBC PostgreSQL server. In
 
 In this task, you will export a filtered table from a shapefile, and then you will add a field so the table can be used in the next task.
 
-**Step 1:** Open up the metadata for the street trees file. It should be under the "Information" tab on the City of Vancouver data portal website. Look through the metadata and familiarize yourself with what each column means. For example, one column designates when a tree was planted.
+**Step 1:** Open up the metadata for the public trees for the Location you selected. It should be under the "Schema" tab on the top of your Local Area table. Look through the metadata and familiarize yourself with what each column means. For example, one column designates what is the tree diameter.
 
-##### Q2. What is the name of the column that designates when a tree was planted? (1 point) {.unnumbered}
-
-**Step 2:** Open the attribute table for "neighborhood_trees" that you downloaded and add a new text field called "Address". On the top of the attribute table, there is a button that says "Add". The table will switch to field view. Name the field "Address" and select "Text" as the data type. Click "Save" in the top bar. Close "Field View" and return to the attribute table. Your new field should appear as the very last column in the dataset. Right-click the field and select "Calculate Field."
-
-The address locator you create in Task 3 requires addresses to be written in a specific way: street numbers and names must be in the same column. You will need to specify to ArcGIS that you are combining two strings (another designation for text data). Within the Fields menu under "Expression," double-click "civic_numb". You will notice that the field below the equal sign is now populated with !civic_numb!.
-
-To combine (i.e., concatenate) the two columns together, type the following code into the box: `str(!civic_numb!)+" "+str(!std_street!)`
-
-```{r 07-calculate-field, out.width= "50%", echo = FALSE}
-    knitr::include_graphics("images/07-calculate-field.png")
-```
-
-Click "Apply". The Address field should now have street numbers and street names.
+##### Q2. What is the name of the column that designates what is the tree diameter? (1 point) {.unnumbered}
 
 ------------------------------------------------------------------------
 
 ## Task 3: Geocoding a Table of Addresses {.unnumbered}
 
-Many localities label their trees by address rather than by coordinates. In the street-trees file, all of the trees have addresses and coordinates. In this section of the lab, you will use a roads network layer for the Greater Vancouver Regional District (GVRD) to create an address locator for Vancouver. Then you will geocode the addresses from your neighborhood to examine the differences between collecting data with addresses versus coordinates. An address locator allows you to look up addresses either manually or by uploading a table of addresses. This is helpful when you are searching for specific trees!
+Many localities label their trees by address rather than by coordinates. In the public trees file, all of the trees have addresses and coordinates. In this section of the lab, you will use a roads network layer for the Greater Vancouver Regional District (GVRD) to create an address locator for Vancouver. Then you will geocode the addresses from your Local Area to examine the differences between collecting data with addresses versus coordinates. An address locator allows you to look up addresses either manually or by uploading a table of addresses. This is helpful when you are searching for specific trees!
 
 **Step 1:** Connect to the `geocode` database on the UBC PostgreSQL server and load the "gvrd_roads" layer into your map.
 
@@ -100,14 +88,14 @@ For the tool parameters:
 -   **Primary Table(s):** gvrd_roads
 -   **Role:** Street Address
 -   **Field Map:**
-    -   **Feature ID:** ogc_fid
+    -   **Feature ID:** fid
     -   **Left House Number From:** from_left_house_number
     -   **Left House Number To:** to_left_house_number
     -   **Right House Number From:** from_right_house_number
     -   **Right House Number To:** to_right_house_number
-    -   **Street Name:** structured_name_a
-    -   **Left City/Municipality:** left_loc_1
-    -   **Right City/Municipality:** right_loc_1
+    -   **Street Name:** structured_name_1
+    -   **Left City/Municipality:** left_locality
+    -   **Right City/Municipality:** right_locality
 -   All other fields leave as `<NONE>`
 -   **Language Code:** English
 
